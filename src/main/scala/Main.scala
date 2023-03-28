@@ -6,7 +6,7 @@ val eol = sys.props("line.separator")
 def PgrenzeO_U(b: Int = 2) = "---------" * b + eol
 def PgrenzeL_R(b: Int = 2) = "|       |"
 def PgrenzeL_RZ(b: Int = 2) = "|   " + zahl() + "   |"
-def PgrenzeL_RO(b: Int = 2) = "|   O   |"
+def PgrenzeL_RO(b: Int = 200) = "|   O   |"
 def feldLeer(b: Int = 2) = PgrenzeL_R() * b + eol
 def feldO(b: Int = 2) = PgrenzeL_RO() * b + eol
 def feldX(b: Int = 2) = PgrenzeL_RZ() * b + eol
