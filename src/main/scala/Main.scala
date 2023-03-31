@@ -53,5 +53,5 @@ def feldO(b: Int = 2) = PgrenzeL_RO() * b + eol
 def feldX(b: Int = 2) = PgrenzeL_RZ() * b + eol
 def zahl(b: Int = 0) = "x"
 def feld(b: Int = 2) = feldLeer(b) + feldO(b) + feldX(b) + feldLeer(b)
-def ausgaben(b: Int = 88) =
+def ausgaben(b: Int = 99) =
   ((PgrenzeO_U(b) + feld(b)) * b + PgrenzeO_U(b))
