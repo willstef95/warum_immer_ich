@@ -4,6 +4,7 @@ import scala.annotation.switch
   println("Herzlich Willkommen bei dem Spiel wii")
   print(ausgaben())
 
+/*
 val dice_bottom = "‾‾‾‾‾‾‾‾‾‾"
 val dice_top = "__________"
 val dice_2m = "| ▢   ▢ |"
@@ -30,6 +31,8 @@ def dice_5 =
 def dice_6 =
   dice_top + eol + dice_2m + eol + dice_2m + eol + dice_2m + eol + dice_bottom + eol
 
+
+
 def eol = sys.props("line.separator")
 def PgrenzeO_U(b: Int = 2) = "---------" * b + eol
 def PgrenzeL_R(b: Int = 2) = "|       |"
@@ -40,5 +43,9 @@ def feldO(b: Int = 2) = PgrenzeL_RO() * b + eol
 def feldX(b: Int = 2) = PgrenzeL_RZ() * b + eol
 def zahl(b: Int = 0) = "x"
 def feld(b: Int = 2) = feldLeer(b) + feldO(b) + feldX(b) + feldLeer(b)
-def ausgaben(b: Int = 88) =
+def ausgaben(b: Int = 2) =
   ((PgrenzeO_U(b) + feld(b)) * b + PgrenzeO_U(b))
+ */
+
+def ausgaben(b: Int = 2) =
+  (b + 2)
