@@ -1,8 +1,12 @@
+package de.htwg.se.wii.model
+
 import scala.util.Random
 import scala.annotation.switch
-@main def hello(): Unit =
-  println("Herzlich Willkommen bei dem Spiel wii")
-  print(ausgaben())
+
+@main def wii(): Unit =
+  println("Herzlich Willkommen zum Spiel wii")
+  val dice = Dice(8)
+  print(dice.roll())
 
 /*
 val dice_bottom = "‾‾‾‾‾‾‾‾‾‾"
@@ -46,6 +50,3 @@ def feld(b: Int = 2) = feldLeer(b) + feldO(b) + feldX(b) + feldLeer(b)
 def ausgaben(b: Int = 2) =
   ((PgrenzeO_U(b) + feld(b)) * b + PgrenzeO_U(b))
  */
-
-def ausgaben(b: Int = 2) =
-  (b + 2)
