@@ -1,7 +1,7 @@
 package de.htwg.se.wii.model
 
-class Dice(size: Int = 6):
+case class Dice(size: Int = 6):
+  val r = scala.util.Random
   def roll(): Int = {
-    val r = scala.util.Random
     r.nextInt(size)
   }
