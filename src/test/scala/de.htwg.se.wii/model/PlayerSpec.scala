@@ -17,13 +17,13 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       }
     }
 
-    "not set to any value " should {
+    "not set to value 3" should {
       val player = Player(3)
       val stat = player.stat()
       val show = player.show()
       "have 7 Strips" in {
-        stat should be()
-        show should endWith("|||||||")
+        stat should be(3)
+        show should endWith("|||")
       }
     }
 
