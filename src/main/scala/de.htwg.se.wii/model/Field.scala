@@ -21,5 +21,20 @@ case class Field(matrix: Matrix[Hole]):
         bar(cellWidth, size)
       )
   override def toString = mesh()
-  def put(hole: Hole, x: Int, y: Int) = copy(matrix.replaceCell(y, x, hole))
-  def get(x: Int, y: Int): Hole = matrix.cell(x, y)
+
+  def put(hole: Hole, pos: Int) = {
+    val (x, y) = translateW(pos)
+    copy(matrix.replaceCell(x, y, hole))
+  }
+
+  def get(roll: Int): Hole = {
+    val (x, y) = translateW(roll)
+    matrix.cell(x, y)
+  }
+  def translateW(gewurfelt: Int) = {
+    val x = gewurfelt % (size)
+    val y =
+      if (gewurfelt % (size - 1) == 0) gewurfelt / size
+      else gewurfelt / size
+    (x, y)
+  }

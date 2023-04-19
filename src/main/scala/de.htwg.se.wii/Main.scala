@@ -27,16 +27,10 @@ import scala.io.StdIn.readLine
 
   val wurfel = readLine()
 
-  val gewurfelt = dice.roll()
+  val gewurfelt = 3
 
   println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
 
-  val x = gewurfelt % (size)
-  val y =
-    if (gewurfelt % (size - 1) == 0) gewurfelt / size
-    else gewurfelt / size
-
-  print(x, y)
-
-  val field2 = field.put(Hole.X, x, y)
+  val field2 = field.put(Hole.X, gewurfelt)
   print(field2)
+  print(field2.get(3))
