@@ -1,7 +1,7 @@
 import java.io.File
 
 enum Hole:
-  case Full, Empty
+  case X, O
 
 case class Field(rows: Vector[Vector[Hole]] = [[Full,Empty],[Empty,Full],[Empty,Empty]]):
   def clear(size: Int): Field = copy(Vector.tabulate(size, size) { (row, col) =>

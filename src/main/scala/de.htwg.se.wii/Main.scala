@@ -7,6 +7,14 @@ import scala.annotation.switch
   println("Herzlich Willkommen zum Spiel wii")
   val dice = Dice(8)
   val eol = sys.props("line.separator")
-  print("Gewuerfelte Zahl: " + dice.roll() + endl)
+  print("Gewuerfelte Zahl: " + dice.roll() + eol)
+  print(field)
+  print(field.get(2, 2))
+  field.put(Hole.O, 2, 2)
+  print(field.get(2, 2))
+  print(field)
+  field.replaceCell(2, 2, Hole.O)
 
-  val feld1 = new Field(3)
+val field = new Field(3, Hole.X)
+// field.replaceCell(2, 2, Hole.O)
+// field.def
