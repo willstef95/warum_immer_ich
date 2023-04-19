@@ -92,10 +92,10 @@ class FieldSpec extends AnyWordSpec {
         )
       }
     }
-    "filled with Empty" should {
+    "Number 4 is X" should {
       var field = new Field(3, Hole.O)
       field.put(Hole.X, 4)
-      "have an X after two put" in {
+      "get return Hole x" in {
         field.get(4) should be(Hole.X)
       }
     }

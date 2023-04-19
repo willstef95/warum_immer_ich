@@ -27,10 +27,10 @@ import scala.io.StdIn.readLine
 
   val wurfel = readLine()
 
-  val gewurfelt = 3
+  val gewurfelt = 6
 
   println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
 
   val field2 = field.put(Hole.X, gewurfelt)
   print(field2)
-  print(field2.get(3))
+  print(field2.get(6))
