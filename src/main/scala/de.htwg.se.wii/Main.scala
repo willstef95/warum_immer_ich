@@ -11,21 +11,18 @@ import scala.io.StdIn.readLine
   val playerNumbOut =
     playerNumb match {
       case Some(i) => "OK Es spielen " + i + " Spieler mit."
-      case None    => "Das war leider keine Zahl :)"
+      case None    => "Das war leidr keine Zahl :)"
     }
 
   val dice = Dice(8)
   val eol = sys.props("line.separator")
   print("Gewuerfelte Zahl: " + dice.roll() + eol)
-<<<<<<< HEAD
   print(field)
   print(field.get(2, 2))
   field.put(Hole.O, 2, 2)
   print(field.get(2, 2))
   print(field)
   field.replaceCell(2, 2, Hole.O)
-=======
->>>>>>> 08b9690ca4c47d0883e4bfe32deecd6e0e6efd55
 
 val field = new Field(3, Hole.X)
 // field.replaceCell(2, 2, Hole.O)
