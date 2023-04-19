@@ -20,18 +20,23 @@ import scala.io.StdIn.readLine
 
   val dice = Dice((size * size))
 
-  println(s"Spieler1: , $namePlayer1 beginnt")
-
   val field = new Field(size, Hole.O)
   print(field)
-  field.replaceCell(2, 2, Hole.O)
 
-  // println(s"Gewuerfelte Zahl: " + dice.roll() + eol)
-  // print(field.get(2, 2))
-  // field.put(Hole.O, 2, 2)
-  // print(field.get(2, 2))
-  // print(field)
-  // field.replaceCell(2, 2, Hole.O)
+  println(s"Spieler1: $namePlayer1 beginnt")
 
-// val field = new Field(3, Hole.X)
-// field.def
+  val wurfel = readLine()
+
+  val gewurfelt = dice.roll()
+
+  println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
+
+  val x = gewurfelt % (size)
+  val y =
+    if (gewurfelt % (size - 1) == 0) gewurfelt / size
+    else gewurfelt / size
+
+  print(x, y)
+
+  val field2 = field.put(Hole.X, x, y)
+  print(field2)

@@ -21,5 +21,5 @@ case class Field(matrix: Matrix[Hole]):
         bar(cellWidth, size)
       )
   override def toString = mesh()
-  def put(hole: Hole, x: Int, y: Int) = copy(matrix.replaceCell(x, y, hole))
+  def put(hole: Hole, x: Int, y: Int) = copy(matrix.replaceCell(y, x, hole))
   def get(x: Int, y: Int): Hole = matrix.cell(x, y)

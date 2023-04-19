@@ -8,10 +8,10 @@ class DiceSpec extends AnyWordSpec with Matchers {
   "Dice" when {
 
     "not set to any value " should {
-      val dice = Dice()
+      val dice = Dice(6)
       val num = dice.roll()
       "have value between 1-6" in {
-        num should (be >= 1 and be <= 6)
+        num should (be >= 0 and be <= 5)
       }
     }
 
