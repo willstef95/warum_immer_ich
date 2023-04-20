@@ -38,6 +38,7 @@ import util.control.Breaks._
       else gewurfelt / size
     print(x, y)
 
+<<<<<<< HEAD
     breakable {
       if (gewurfelt == 0) {
         print(field)
@@ -50,3 +51,12 @@ import util.control.Breaks._
 
     }
   }
+=======
+  val gewurfelt = 6
+
+  println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
+
+  val field2 = field.put(Hole.X, gewurfelt)
+  print(field2)
+  print(field2.get(6))
+>>>>>>> 4e88c16224682e5a495ebdbc40012f495511cf62

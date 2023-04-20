@@ -69,7 +69,7 @@ class FieldSpec extends AnyWordSpec {
     }
     "filled with Empty" should {
       var field = new Field(3, Hole.O)
-      "be empty initially" in {
+      "be initiall with O" in {
         field.toString should be(("""#+---+---+---+
           #| O | O | O |
           #+---+---+---+
@@ -80,7 +80,7 @@ class FieldSpec extends AnyWordSpec {
           #""").stripMargin('#'))
       }
       "have an X after two put" in {
-        field.put(Hole.X, 1, 1).toString should be(
+        field.put(Hole.X, 4).toString should be(
           ("""#+---+---+---+
           #| O | O | O |
           #+---+---+---+
@@ -92,6 +92,12 @@ class FieldSpec extends AnyWordSpec {
         )
       }
     }
+    "Number 4 is X" should {
+      var field = new Field(3, Hole.O)
+      field.put(Hole.X, 4)
+      "get return Hole x" in {
+        field.get(4) should be(Hole.X)
+      }
+    }
   }
-
 }
