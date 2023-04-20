@@ -91,12 +91,17 @@ class FieldSpec extends AnyWordSpec {
           #""").stripMargin('#')
         )
       }
+
+      "Number 4 is O" should {
+        "get return Hole O" in {
+          field.get(4) should be(Hole.O)
+        }
+      }
     }
-    "Number 4 is X" should {
-      var field = new Field(3, Hole.O)
-      field.put(Hole.X, 4)
-      "get return Hole x" in {
-        field.get(4) should be(Hole.X)
+    "roll is 6" should {
+      val field = new Field(3, Hole.O)
+      "translate return (2,0)" in {
+        field.translateW(6) should be(2, 0)
       }
     }
   }

@@ -1,19 +1,20 @@
 import java.io.File
 
-enum Hole:
-  case X, O
+var field = new Field(3, Hole.O)
+field.put(Hole.X, 4)
+print(field.get)
 
-case class Field(rows: Vector[Vector[Hole]] = [[Full,Empty],[Empty,Full],[Empty,Empty]]):
-  def clear(size: Int): Field = copy(Vector.tabulate(size, size) { (row, col) =>
-    Hole.Empty
-  })
-  def cell(row: Int, col: Int): Hole = rows(row)(col)
-  val size: Int = rows.size
-  // def show(): String = {}
-
-val field = new Field(Vector[])
-
-/** def holestat() = print("Is in process")
+/** enum Hole: case X, O
+  *
+  * case class Field(rows: Vector[Vector[Hole]] =
+  * [[Full,Empty],[Empty,Full],[Empty,Empty]]): def clear(size: Int): Field =
+  * copy(Vector.tabulate(size, size) { (row, col) => Hole.Empty }) def cell(row:
+  * Int, col: Int): Hole = rows(row)(col) val size: Int = rows.size // def
+  * show(): String = {}
+  *
+  * val field = new Field(Vector[])
+  *
+  * def holestat() = print("Is in process")
   *
   * def eol = sys.props("line.separator") def PgrenzeO_U(b: Int = 2) =
   * "---------" * b + eol def PgrenzeL_R(b: Int = 2) = "| |" def PgrenzeL_RZ(b:
