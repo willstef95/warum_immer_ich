@@ -32,8 +32,8 @@ case class Field(matrix: Matrix[Hole]):
     matrix.cell(x, y)
   }
   def translateW(gewurfelt: Int) = {
-    val x = gewurfelt % (size)
-    val y =
+    val y = gewurfelt % (size)
+    val x =
       if (gewurfelt % (size - 1) == 0) gewurfelt / size
       else gewurfelt / size
     (x, y)

@@ -22,23 +22,15 @@ import util.control.Breaks._
   val dice = Dice((size * size))
 
   var field = new Field(size, Hole.O)
-  // print(field)
 
   println(s"Spieler1: $namePlayer1 beginnt")
   for (a <- 1 to 7) {
     print(field)
-
     println("Enter fuer Wuerfeln")
     val wurfel = readLine()
     val gewurfelt = dice.roll()
     println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
-    val x = gewurfelt % (size)
-    val y =
-      if (gewurfelt % (size - 1) == 0) gewurfelt / size
-      else gewurfelt / size
-    print(x, y)
 
-<<<<<<< HEAD
     breakable {
       if (gewurfelt == 0) {
         print(field)
@@ -46,17 +38,8 @@ import util.control.Breaks._
       }
       println(gewurfelt + eol)
       field =
-        if (field.get(x, y) == Hole.X) field.put(Hole.O, x, y)
-        else field.put(Hole.X, x, y)
+        if (field.get(gewurfelt) == Hole.X) field.put(Hole.O, gewurfelt)
+        else field.put(Hole.X, gewurfelt)
 
     }
   }
-=======
-  val gewurfelt = 6
-
-  println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
-
-  val field2 = field.put(Hole.X, gewurfelt)
-  print(field2)
-  print(field2.get(6))
->>>>>>> 4e88c16224682e5a495ebdbc40012f495511cf62
