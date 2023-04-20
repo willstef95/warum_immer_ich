@@ -3,6 +3,7 @@ package de.htwg.se.wii.model
 import scala.util.Random
 import scala.annotation.switch
 import scala.io.StdIn.readLine
+import util.control.Breaks._
 
 @main def wii(): Unit =
   val eol = sys.props("line.separator")
@@ -20,23 +21,32 @@ import scala.io.StdIn.readLine
 
   val dice = Dice((size * size))
 
-  val field = new Field(size, Hole.O)
-  print(field)
+  var field = new Field(size, Hole.O)
+  // print(field)
 
   println(s"Spieler1: $namePlayer1 beginnt")
+  for (a <- 1 to 7) {
+    print(field)
 
-  val wurfel = readLine()
+    println("Enter fuer Wuerfeln")
+    val wurfel = readLine()
+    val gewurfelt = dice.roll()
+    println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
+    val x = gewurfelt % (size)
+    val y =
+      if (gewurfelt % (size - 1) == 0) gewurfelt / size
+      else gewurfelt / size
+    print(x, y)
 
-  val gewurfelt = dice.roll()
+    breakable {
+      if (gewurfelt == 0) {
+        print(field)
+        break
+      }
+      println(gewurfelt + eol)
+      field =
+        if (field.get(x, y) == Hole.X) field.put(Hole.O, x, y)
+        else field.put(Hole.X, x, y)
 
-  println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
-
-  val x = gewurfelt % (size)
-  val y =
-    if (gewurfelt % (size - 1) == 0) gewurfelt / size
-    else gewurfelt / size
-
-  print(x, y)
-
-  val field2 = field.put(Hole.X, x, y)
-  print(field2)
+    }
+  }
