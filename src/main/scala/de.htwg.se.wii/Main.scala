@@ -22,24 +22,50 @@ import util.control.Breaks._
   val dice = Dice((size * size))
 
   var field = new Field(size, Hole.O)
+  var state = true
+  var treffer = true
 
-  println(s"Spieler1: $namePlayer1 beginnt")
-  for (a <- 1 to 7) {
-    print(field)
-    println("Enter fuer Wuerfeln")
-    val wurfel = readLine()
-    val gewurfelt = dice.roll()
-    println(s"Gewuerfelte Zahl: $gewurfelt" + eol)
+  for (a <- 1 to 10) {
+    if (state) {
+      println(s"Spieler1: $namePlayer1 darf Wuerfeln")
+      print(field)
+      println("Enter fuer Wuerfeln")
+      val wurfel = readLine()
+      val gewurfelt = dice.roll()
+      println(s"$namePlayer1 wurfelte: $gewurfelt $eol")
 
-    breakable {
-      if (gewurfelt == 0) {
-        print(field)
-        break
+      breakable {
+        if (gewurfelt == 0) {
+          // print(field)
+          break
+        }
+        field =
+          if (field.get(gewurfelt) == Hole.X) field.put(Hole.O, gewurfelt)
+          else field.put(Hole.X, gewurfelt)
+
+        if (field.get(gewurfelt) == Hole.O) {
+          state = false
+        }
       }
-      println(gewurfelt + eol)
-      field =
-        if (field.get(gewurfelt) == Hole.X) field.put(Hole.O, gewurfelt)
-        else field.put(Hole.X, gewurfelt)
+    } else {
+      println(s"Spieler2: $namePlayer2 darf Wuerfeln")
+      print(field)
+      println("Enter fuer Wuerfeln")
+      val wurfel = readLine()
+      val gewurfelt = dice.roll()
+      println(s"$namePlayer2 wurfelte: $gewurfelt $eol")
 
+      breakable {
+        if (gewurfelt == 0) {
+          print(field)
+          break
+        }
+        field =
+          if (field.get(gewurfelt) == Hole.X) field.put(Hole.O, gewurfelt)
+          else field.put(Hole.X, gewurfelt)
+        if (field.get(gewurfelt) == Hole.O) {
+          state = true
+        }
+      }
     }
   }
