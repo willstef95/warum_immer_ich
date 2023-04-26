@@ -6,6 +6,7 @@ import scala.io.StdIn.readLine
 import util.control.Breaks._
 
 @main def wii(): Unit =
+
   val eol = sys.props("line.separator")
 
   println("Herzlich Willkommen zum Spiel wii")
