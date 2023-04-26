@@ -6,7 +6,7 @@ import model.Hole
 import util.Observable
 
 case class Controller(var field: Field) extends Observable:
-  def put(hole: Hole, x: Int): Unit =
-    field = field.put(hole, x)
+  override def toString(): String = field.toString
+  def put(hole: Hole, pos: Int): Unit =
+    field = field.put(hole, pos)
     notifyObservers
-  override def toString: String = field.toString
