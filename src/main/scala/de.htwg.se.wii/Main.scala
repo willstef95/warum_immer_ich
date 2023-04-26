@@ -8,14 +8,18 @@ import model.Hole
 import scala.util.Random
 import scala.annotation.switch
 import scala.io.StdIn.readLine
-// import util.control.Breaks._
 
 @main def run(): Unit =
 
   println("Hallo wii")
-  val field = new Field(3, Hole.O)
+  println(
+    "Wie gross soll das Spielfeld sein? 2x2,3x3,4x4,5x5... Bitte geben Sie eine Zahl ein"
+  )
+
+  val size = readLine().toInt
+  val field = new Field(size, Hole.O)
   val controller = Controller(field)
-  val tui = TUI(controller)
+  val tui = TUI(controller, size)
   tui.run
 
   // val eol = sys.props("line.separator")

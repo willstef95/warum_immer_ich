@@ -5,12 +5,47 @@ import controller.Controller
 import model.Hole
 import scala.io.StdIn.readLine
 import util.Observer
+import scala.util.Random
+import scala.annotation.switch
+import model.Dice
+import scala.util.control.Breaks._
 
-class TUI(controller: Controller) extends Observer:
+class TUI(controller: Controller, size: Int) extends Observer:
   controller.add(this)
-
-  override def update: Unit = ???
+  val dice = Dice((size * size))
+  val namePlayer1 = "Stefan"
+  val namePlayer2 = "Hannes"
+  val eol = sys.props("line.separator")
+  var state = true
+  var treffer = true
 
   def run: Unit =
+    // println(controller.field.toString)
+    println("Los geht das Spiel")
+    gameLoop()
+
+  override def update = println(controller.toString())
+
+  def gameLoop(): Unit =
     println(controller.field.toString)
-    println("Los gehts1")
+    for (a <- 1 to 5) {
+
+      println("Enter fuer Wuerfeln")
+      val wurfel = readLine()
+      val gewurfelt = dice.roll()
+      breakable {
+        if (gewurfelt == 0) {
+          println("Wurde 0 gewurfelt bleibt das spielfeld gleich")
+          // Player--
+          break
+        }
+        if (controller.get(gewurfelt) == Hole.X) {
+          controller.put(Hole.O, gewurfelt)
+        } else {
+          controller.put(Hole.X, gewurfelt)
+        }
+        break
+      }
+    }
+
+    // println(controller.field.toString)

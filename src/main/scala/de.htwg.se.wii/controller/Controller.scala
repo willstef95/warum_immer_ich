@@ -10,3 +10,6 @@ case class Controller(var field: Field) extends Observable:
   def put(hole: Hole, pos: Int): Unit =
     field = field.put(hole, pos)
     notifyObservers
+  def get(pos: Int): Hole =
+    var hole = field.get(pos)
+    hole
