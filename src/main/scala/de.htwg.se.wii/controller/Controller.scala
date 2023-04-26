@@ -1,5 +1,4 @@
 package de.htwg.se.wii
-
 package controller
 
 import model.Field

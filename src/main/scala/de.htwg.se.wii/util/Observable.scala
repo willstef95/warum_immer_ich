@@ -1,4 +1,5 @@
 package de.htwg.se.wii
+
 package util
 
 trait Observer:
