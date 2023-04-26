@@ -27,14 +27,14 @@ case class Field(matrix: Matrix[Hole]):
     copy(matrix.replaceCell(x, y, hole))
   }
 
-  def get(roll: Int): Hole = {
-    val (x, y) = translateW(roll)
+  def get(pos: Int): Hole = {
+    val (x, y) = translateW(pos)
     matrix.cell(x, y)
   }
-  def translateW(gewurfelt: Int) = {
-    val y = gewurfelt % (size)
+  def translateW(roll: Int) = {
+    val y = roll % (size)
     val x =
-      if (gewurfelt % (size - 1) == 0) gewurfelt / size
-      else gewurfelt / size
+      if (roll % (size - 1) == 0) roll / size
+      else roll / size
     (x, y)
   }
