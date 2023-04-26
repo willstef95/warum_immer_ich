@@ -1,6 +1,4 @@
-package de.htwg.se.wii
-
-package util
+package de.htwg.se.wii.util
 
 trait Observer:
   def update: Unit
