@@ -1,11 +1,16 @@
-package de.htwg.se.wii.model
+package de.htwg.se.wii
+package controller
+
+import model.Field
+import model.Hole
+import util.Observable
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.controller.Controller
 
 class ControllerSpec extends AnyWordSpec {
-  "A TicTacToe controller" when {}
+  "A wii controller" when {}
   "filled with Empty" should {
     val field = new Field(3, Hole.O)
     val controller = Controller(field)
