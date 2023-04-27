@@ -13,14 +13,10 @@ import scala.util.control.Breaks._
 class TUI(controller: Controller, size: Int) extends Observer:
   controller.add(this)
   val dice = Dice((size * size))
-  val namePlayer1 = "Stefan"
-  val namePlayer2 = "Hannes"
+
   val eol = sys.props("line.separator")
-  var state = true
-  var treffer = true
 
   def run: Unit =
-    // println(controller.field.toString)
     println("Los geht das Spiel")
     gameLoop()
 
@@ -28,15 +24,13 @@ class TUI(controller: Controller, size: Int) extends Observer:
 
   def gameLoop(): Unit =
     println(controller.field.toString)
-    for (a <- 1 to 5) {
-
+    for (a <- 1 to 10) {
       println("Enter fuer Wuerfeln")
       val wurfel = readLine()
       val gewurfelt = dice.roll()
       breakable {
         if (gewurfelt == 0) {
           println("Wurde 0 gewurfelt bleibt das spielfeld gleich")
-          // Player--
           break
         }
         if (controller.get(gewurfelt) == Hole.X) {
@@ -47,5 +41,3 @@ class TUI(controller: Controller, size: Int) extends Observer:
         break
       }
     }
-
-    // println(controller.field.toString)
