@@ -13,7 +13,14 @@ import scala.util.control.Breaks._
 class TUI(controller: Controller, size: Int) extends Observer:
   controller.add(this)
   val dice = Dice((size * size))
+<<<<<<< HEAD
 
+=======
+  println("Name Spieler1 : ")
+  val namePlayer1 = readLine
+  println("Name Spieler2 : ")
+  val namePlayer2 = readLine
+>>>>>>> 7b2a2335661dc18acb98d0248934e94be77ee031
   val eol = sys.props("line.separator")
 
   def run: Unit =
@@ -35,6 +42,7 @@ class TUI(controller: Controller, size: Int) extends Observer:
         }
         if (controller.get(gewurfelt) == Hole.X) {
           controller.put(Hole.O, gewurfelt)
+          // conroller.lose(player)
         } else {
           controller.put(Hole.X, gewurfelt)
         }
