@@ -10,7 +10,6 @@ import scala.annotation.switch
 import scala.io.StdIn.readLine
 
 @main def run(): Unit =
-
   println("Hallo wii")
   println(
     "Wie gross soll das Spielfeld sein? 2x2,3x3,4x4,5x5... Bitte geben Sie eine Zahl ein"
@@ -18,7 +17,7 @@ import scala.io.StdIn.readLine
 
   val size = readLine().toInt
   val field = new Field(size, Hole.O)
-  val controller = Controller(field)
+  val controller = Controller(field, size)
   val tui = TUI(controller, size)
   tui.run
 
