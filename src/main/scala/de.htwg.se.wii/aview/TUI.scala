@@ -14,15 +14,26 @@ class TUI(controller: Controller, size: Int) extends Observer:
 
   val eol = sys.props("line.separator")
 
-  def run: Unit =
+  def run: Unit = {
     println("Los geht das Spiel")
+    controller.init(init())
     gameLoop()
+  }
+
+  def init(): (String, String) = {
+    println("Name Spieler 1:")
+    val namePlayer1 = readLine
+    println("Name Spieler 2:")
+    val namePlayer2 = readLine
+    (namePlayer1, namePlayer2)
+  }
 
   override def update = println(controller.toString())
 
   def gameLoop(): Unit =
     println(controller.pensdown())
     println("Enter fuer Wuerfeln")
+    // println(s"${controller.game.names(0)}")
     val input = readLine()
     input match
       case "q" =>

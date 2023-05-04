@@ -9,13 +9,13 @@ import model.Game
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(5, 5)
+  var game = new Game()
   override def toString(): String = field.toString
   def put(hole: Hole, pos: Int): Unit =
     field = field.put(hole, pos)
     notifyObservers
   def get(pos: Int): Hole =
-    var hole = field.get(pos)
+    val hole = field.get(pos)
     hole
   def roll(): Int =
     val roll = dice.roll()
@@ -24,3 +24,7 @@ case class Controller(var field: Field, size: Int) extends Observable:
     println(s"Spieler hat: ${game.pensPlayer1} Stifte")
     val x = game.pensPlayer1 - 1
     game = game.copy(pensPlayer1 = x)
+  def init(names: (String, String)) = {
+    game = new Game(names)
+
+  }
