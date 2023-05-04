@@ -21,6 +21,7 @@ class TUI(controller: Controller, size: Int) extends Observer:
   override def update = println(controller.toString())
 
   def gameLoop(): Unit =
+    println(controller.pensdown())
     println("Enter fuer Wuerfeln")
     val input = readLine()
     input match
@@ -32,7 +33,6 @@ class TUI(controller: Controller, size: Int) extends Observer:
           if (gewurfelt == 0) {
             println("Wurde 0 gewurfelt bleibt das spielfeld gleich")
             println(controller.field.toString)
-
             break
           }
           if (controller.get(gewurfelt) == Hole.X) {
