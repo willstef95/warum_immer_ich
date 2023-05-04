@@ -13,7 +13,7 @@ class ControllerSpec extends AnyWordSpec {
   "A wii controller" when {}
   "filled with Empty" should {
     val field = new Field(3, Hole.O)
-    val controller = Controller(field)
+    val controller = Controller(field, 3)
     "be initiall with O" in {
       controller.toString should be(("""#+---+---+---+
           #| O | O | O |

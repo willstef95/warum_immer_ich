@@ -33,6 +33,7 @@ var john =
   Person("John", 30, Address("123 Main St", "Anytown", "CA", "12345"))
 
 println(john)
+println(john.age)
 
 john = john.copy(age = 31)
 john = john.copy(name = "Hannes")

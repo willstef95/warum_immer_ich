@@ -22,36 +22,50 @@ class TUI(controller: Controller, size: Int) extends Observer:
 
   def init(): (String, String) = {
     println("Name Spieler 1:")
-    val namePlayer1 = readLine
+    val Player1 = readLine
     println("Name Spieler 2:")
-    val namePlayer2 = readLine
-    (namePlayer1, namePlayer2)
+    val Player2 = readLine
+    (Player1, Player2)
   }
 
   override def update = println(controller.toString())
 
-  def gameLoop(): Unit =
-    println(controller.pensdown())
+  var stat = 1
+
+  def gameLoop(): Unit = {
+
+    println(s"Es ist ${controller.game.names(stat - 1)}")
     println("Enter fuer Wuerfeln")
-    // println(s"${controller.game.names(0)}")
     val input = readLine()
     input match
       case "q" =>
       case _ => {
         val gewurfelt = controller.roll()
         breakable {
-
           if (gewurfelt == 0) {
             println("Wurde 0 gewurfelt bleibt das spielfeld gleich")
-            println(controller.field.toString)
+            println(controller.pensdown(stat))
+            update
             break
           }
           if (controller.get(gewurfelt) == Hole.X) {
             controller.put(Hole.O, gewurfelt)
+            controller.pensup(stat)
           } else {
             controller.put(Hole.X, gewurfelt)
+            println(controller.pensdown(stat))
           }
           break
         }
-        gameLoop()
+        breakable {
+          if (controller.game.pens1 == 0 || controller.game.pens2 == 0)
+            break
+
+          if (stat == 1) { stat = 2 }
+          else { stat = 1 }
+
+          gameLoop()
+        }
+
       }
+  }
