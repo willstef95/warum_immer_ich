@@ -10,7 +10,7 @@ import scala.runtime.LazyVals.Names
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+  var game = new Game(("Spieler1", "Spieler2"), 5, 5)
 
   override def toString(): String = field.toString
   def put(hole: Hole, pos: Int): Unit =
@@ -22,25 +22,26 @@ case class Controller(var field: Field, size: Int) extends Observable:
   def roll(): Int =
     val roll = dice.roll()
     roll
-  def pensdown(spieler: Int): Unit =
+  def pensdown(spieler: Int): Int =
     if (spieler == 1) {
       val x = game.pens1 - 1
       game = game.copy(pens1 = x)
-      println(s"Spieler ${game.names(spieler - 1)} hat: ${game.pens1} Stifte")
+      x
     } else {
       val x = game.pens2 - 1
       game = game.copy(pens2 = x)
-      println(s"Spieler ${game.names(spieler - 1)} hat: ${game.pens2} Stifte")
+      x
     }
-  def pensup(spieler: Int): Unit =
+
+  def pensup(spieler: Int): Int =
     if (spieler == 1) {
       val x = game.pens1 + 1
       game = game.copy(pens1 = x)
-      println(s"Spieler ${game.names(spieler - 1)} hat: ${game.pens1} Stifte")
+      x
     } else {
       val x = game.pens2 + 1
       game = game.copy(pens2 = x)
-      println(s"Spieler ${game.names(spieler - 1)} hat: ${game.pens2} Stifte")
+      x
     }
   def init(names: (String, String)) = {
     game = game.copy(names)

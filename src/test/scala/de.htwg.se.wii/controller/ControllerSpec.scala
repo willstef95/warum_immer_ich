@@ -8,12 +8,16 @@ import util.Observable
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.controller.Controller
+import de.htwg.se.wii.model.Game
+import de.htwg.se.wii.model.Dice
 
 class ControllerSpec extends AnyWordSpec {
   "A wii controller" when {}
   "filled with Empty" should {
     val field = new Field(3, Hole.O)
     val controller = Controller(field, 3)
+    // var game = new Game(("Spieler1", "Spieler2"), 5, 5)
+
     "be initiall with O" in {
       controller.toString should be(("""#+---+---+---+
           #| O | O | O |
@@ -30,5 +34,35 @@ class ControllerSpec extends AnyWordSpec {
         controller.get(4) should be(Hole.O)
       }
     }
+    "pens down" should {
+      "get return n-1" in {
+        controller.pensdown(1) should be(4)
+        controller.pensdown(2) should be(4)
+
+      }
+    }
+    "pens up" should {
+      "get return n+1" in {
+        controller.pensup(1) should be(5)
+        controller.pensup(2) should be(5)
+
+      }
+    }
+    "not set to any value " should {
+      val dice = Dice(6)
+
+      val num = controller.roll()
+      "have value between 1-6" in {
+        num should (be >= 0 and be <= 5)
+      }
+    }
   }
+  // "Dice" when {
+  //   "not set to any value " should {
+  //     val num = controller.roll()
+  //     "have value between 1-6" in {
+  //       num should (be >= 0 and be <= 5)
+  //     }
+  //   }
+  // }
 }
