@@ -50,23 +50,24 @@ class TUI(controller: Controller, size: Int) extends Observer:
           }
           if (controller.get(gewurfelt) == Hole.X) {
             controller.put(Hole.O, gewurfelt)
-            val pen = controller.pensup(stat)
             println(
-              s"Spieler ${controller.game.names(stat - 1)} hat: ${pen} Stifte"
+              s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensup(stat)} Stifte"
             )
-
           } else {
             controller.put(Hole.X, gewurfelt)
-            val pen = controller.pensdown(stat)
             println(
-              s"Spieler ${controller.game.names(stat - 1)} hat: ${pen} Stifte"
+              s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensdown(stat)} Stifte"
             )
           }
           break
         }
         breakable {
-          if (controller.game.pens1 == 0 || controller.game.pens2 == 0)
+          if (controller.game.pens1 == 0 || controller.game.pens2 == 0) {
+            println(
+              s"${controller.game.names(stat - 1)} hat das Spiel gewonnen!"
+            )
             break
+          }
 
           if (stat == 1) { stat = 2 }
           else { stat = 1 }
