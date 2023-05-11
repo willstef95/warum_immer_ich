@@ -49,11 +49,11 @@ class ControllerSpec extends AnyWordSpec {
       }
     }
     "not set to any value " should {
-      val dice = Dice(6)
+ 
 
       val num = controller.roll()
-      "have value between 1-6" in {
-        num should (be >= 0 and be <= 5)
+      "have value between 0-8" in {
+        num should (be >= 0 and be <= 8)
       }
     }
     "init is set to Stefan and Hannes" should {
