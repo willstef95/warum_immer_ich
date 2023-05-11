@@ -56,13 +56,11 @@ class ControllerSpec extends AnyWordSpec {
         num should (be >= 0 and be <= 5)
       }
     }
+    "init is set to Stefan and Hannes" should {
+      controller.init("Stefan", "Hannes")
+      "game has those names" in {
+        controller.game.names should be("Stefan", "Hannes")
+      }
+    }
   }
-  // "Dice" when {
-  //   "not set to any value " should {
-  //     val num = controller.roll()
-  //     "have value between 1-6" in {
-  //       num should (be >= 0 and be <= 5)
-  //     }
-  //   }
-  // }
 }

@@ -44,5 +44,5 @@ case class Controller(var field: Field, size: Int) extends Observable:
       x
     }
   def init(names: (String, String)) = {
-    game = game.copy(names)
+    game = game.copy(names = names)
   }
