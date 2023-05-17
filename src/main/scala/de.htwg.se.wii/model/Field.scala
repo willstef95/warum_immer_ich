@@ -1,5 +1,7 @@
 package de.htwg.se.wii.model
 
+import de.htwg.se.wii.holes.*
+
 case class Field(matrix: Matrix[Hole]):
   def this(size: Int, filling: Hole) = this(new Matrix(size, filling))
   val size = matrix.size
@@ -24,11 +26,11 @@ case class Field(matrix: Matrix[Hole]):
 
   def putX(pos: Int) = {
     val (x, y) = translateW(pos)
-    copy(matrix.replaceCell(x, y, Hole.X))
+    copy(matrix.replaceCell(x, y, Hole(HoleX)))
   }
   def putO(pos: Int) = {
     val (x, y) = translateW(pos)
-    copy(matrix.replaceCell(x, y, Hole.O))
+    copy(matrix.replaceCell(x, y, Hole(HoleO)))
   }
 
   def get(pos: Int): Hole = {
