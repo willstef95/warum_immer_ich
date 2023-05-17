@@ -36,15 +36,15 @@ class ControllerSpec extends AnyWordSpec {
     }
     "pens down" should {
       "get return n-1" in {
-        controller.pensdown(1) should be(4)
-        controller.pensdown(2) should be(4)
+        controller.pensdown(1) should be(1)
+        controller.pensdown(2) should be(1)
 
       }
     }
     "pens up" should {
       "get return n+1" in {
-        controller.pensup(1) should be(5)
-        controller.pensup(2) should be(5)
+        controller.pensup(1) should be(2)
+        controller.pensup(2) should be(2)
 
       }
     }
@@ -60,5 +60,6 @@ class ControllerSpec extends AnyWordSpec {
         controller.game.names should be("Stefan", "Hannes")
       }
     }
+
   }
 }

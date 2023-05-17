@@ -10,13 +10,12 @@ import de.htwg.se.wii.controller.Controller
 
 class TUISpec extends AnyWordSpec {
 
+  var field = new Field(3, Hole.O)
+  val controller = Controller(field, 3)
+  val tui = new TUI(controller, 3)
+  controller.put(Hole.X, 2)
+
   "the tui" should {
-
-    var field = new Field(3, Hole.O)
-    val controller = Controller(field, 3)
-    val tui = new TUI(controller, 3)
-    controller.put(Hole.X, 2)
-
     "get Hole.x back" in {
       controller.get(2) should be(Hole.X)
     }
@@ -31,25 +30,30 @@ class TUISpec extends AnyWordSpec {
           #""").stripMargin('#'))
 
     }
+    "es wurde 0 gewürfelt" in {
+      tui.roll0(0) should be(true)
+    }
+    "es wurde nicht 0 gewürfelt" in {
+      tui.rollNot0(2) should be(true)
+    }
+
+    "field set on O" in {
+      tui.oSetzen(2) should be(true)
+    }
+    "field set on X" in {
+      tui.xSetzen(1) should be(true)
+    }
+    "name spieler 1 abfragen" in {
+      controller.game.names(0) should be("Spieler1")
+    }
 
   }
-
+  "A TUI" when {
+    "tui exit" in {
+      tui.processInput("q") should be(false)
+    }
+    "tui runs" in {
+      tui.processInput(" ") should be(true)
+    }
+  }
 }
-
-//   "not update the field with an invalid input" in {
-//     val input = "invalid\n"
-//     val in = new java.io.StringReader(input)
-//     Console.withIn(in) {
-//       tui.gameLoop()
-//     }
-//     controller.get(1) shouldEqual Hole.Empty
-//   }
-
-//   "exit the game loop when 'q' is entered" in {
-//     val input = "q\n"
-//     val in = new java.io.StringReader(input)
-//     Console.withIn(in) {
-//       tui.gameLoop()
-//     }
-//     controller.get(1) shouldEqual Hole.Empty
-//   }
