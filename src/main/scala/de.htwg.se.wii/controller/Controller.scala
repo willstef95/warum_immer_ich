@@ -10,12 +10,12 @@ import scala.runtime.LazyVals.Names
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 5, 5)
+  var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
   override def toString(): String = field.toString
   def put(hole: Hole, pos: Int): Unit =
     field = field.put(hole, pos)
-    notifyObservers
+    notifyObservers()
   def get(pos: Int): Hole =
     val hole = field.get(pos)
     hole

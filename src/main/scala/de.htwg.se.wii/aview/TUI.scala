@@ -33,7 +33,6 @@ class TUI(controller: Controller, size: Int) extends Observer:
   var stat = 1
 
   def gameLoop(): Unit = {
-
     println(s"Es ist ${controller.game.names(stat - 1)}")
     println("Enter fuer Wuerfeln")
     val input = readLine()
@@ -61,19 +60,27 @@ class TUI(controller: Controller, size: Int) extends Observer:
           }
           break
         }
-        breakable {
-          if (controller.game.pens1 == 0 || controller.game.pens2 == 0) {
-            println(
-              s"${controller.game.names(stat - 1)} hat das Spiel gewonnen!"
-            )
-            break
-          }
 
-          if (stat == 1) { stat = 2 }
-          else { stat = 1 }
-
-          gameLoop()
-        }
+        isFinish()
 
       }
+
+    def isFinish(): Boolean = {
+      breakable {
+        if (controller.game.pens1 == 0 || controller.game.pens2 == 0) {
+          println(
+            s"${controller.game.names(stat - 1)} hat das Spiel gewonnen!"
+          )
+          break
+        }
+
+        if (stat == 1) { stat = 2 }
+        else { stat = 1 }
+
+        gameLoop()
+      }
+
+      true
+    }
+
   }
