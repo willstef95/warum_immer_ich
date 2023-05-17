@@ -12,7 +12,8 @@ case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
   var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
-  override def toString(): String = field.toString
+  override def toString = field.toString
+
   def putX(pos: Int): Unit =
     field = field.putX(pos)
     notifyObservers()

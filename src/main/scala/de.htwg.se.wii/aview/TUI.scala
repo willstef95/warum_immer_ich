@@ -9,12 +9,12 @@ import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
 
-class TUI(controller: Controller, size: Int) extends Observer:
+class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
 
   val eol = sys.props("line.separator")
 
-  def run: Unit = {
+  override def run(): Unit = {
     println("Los geht das Spiel")
     controller.init(init())
     gameLoop()
@@ -28,7 +28,7 @@ class TUI(controller: Controller, size: Int) extends Observer:
     (Player1, Player2)
   }
 
-  override def update = println(controller.toString())
+  override def update = println(controller.field.toString())
 
   var stat = 1
 
@@ -65,7 +65,7 @@ class TUI(controller: Controller, size: Int) extends Observer:
   }
 
   def rollNot0(gewurfelt: Int): Boolean = {
-    println(s"Es wurde ${gewurfelt} gewurfelt das spielfeld bleibt gleich")
+    println(s"Es wurde ${gewurfelt} gewurfel")
 
     controller.get(gewurfelt) == Hole(HoleX) match
       case true => {

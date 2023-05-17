@@ -9,12 +9,14 @@ case class Field(matrix: Matrix[Hole] = new Matrix(3, Hole(HoleO))):
   val eol = sys.props("line.separator")
   def bar(cellWidth: Int = 3, cellNum: Int = 3): String =
     (("+" + "-" * cellWidth) * cellNum) + "+" + eol
+
   def cells(row: Int, cellWidth: Int = 3): String =
     matrix
       .row(row)
       .map(_.toString)
       .map(" " * ((cellWidth - 1) / 2) + _ + " " * ((cellWidth - 1) / 2))
       .mkString("|", "|", "|") + eol
+
   def mesh(cellWidth: Int = 3): String =
     (0 until size)
       .map(cells(_, cellWidth))
@@ -23,6 +25,7 @@ case class Field(matrix: Matrix[Hole] = new Matrix(3, Hole(HoleO))):
         bar(cellWidth, size),
         bar(cellWidth, size)
       )
+
   override def toString = mesh()
 
   def putX(pos: Int) = {
