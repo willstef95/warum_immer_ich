@@ -77,7 +77,7 @@ class TUI(controller: Controller, size: Int) extends Observer:
   }
 
   def oSetzen(gewurfelt: Int): Boolean = {
-    controller.put(Hole.O, gewurfelt)
+    controller.putO(gewurfelt)
     println(
       s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensup(stat)} Stifte"
     )
@@ -85,7 +85,7 @@ class TUI(controller: Controller, size: Int) extends Observer:
   }
 
   def xSetzen(gewurfelt: Int): Boolean = {
-    controller.put(Hole.X, gewurfelt)
+    controller.putX(gewurfelt)
     println(
       s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensdown(stat)} Stifte"
     )

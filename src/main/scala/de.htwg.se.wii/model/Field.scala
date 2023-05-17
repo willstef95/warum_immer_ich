@@ -22,9 +22,13 @@ case class Field(matrix: Matrix[Hole]):
       )
   override def toString = mesh()
 
-  def put(hole: Hole, pos: Int) = {
+  def putX(pos: Int) = {
     val (x, y) = translateW(pos)
-    copy(matrix.replaceCell(x, y, hole))
+    copy(matrix.replaceCell(x, y, Hole.X))
+  }
+  def putO(pos: Int) = {
+    val (x, y) = translateW(pos)
+    copy(matrix.replaceCell(x, y, Hole.O))
   }
 
   def get(pos: Int): Hole = {

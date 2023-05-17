@@ -79,8 +79,20 @@ class FieldSpec extends AnyWordSpec {
           #+---+---+---+
           #""").stripMargin('#'))
       }
+      "have an O" in {
+        field.putO(4).toString should be(
+          ("""#+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #""").stripMargin('#')
+        )
+      }
       "have an X after two put" in {
-        field.put(Hole.X, 4).toString should be(
+        field.putX(4).toString should be(
           ("""#+---+---+---+
           #| O | O | O |
           #+---+---+---+
@@ -98,6 +110,7 @@ class FieldSpec extends AnyWordSpec {
         }
       }
     }
+
     "roll is 6" should {
       val field = new Field(3, Hole.O)
       "translate return (2,0)" in {

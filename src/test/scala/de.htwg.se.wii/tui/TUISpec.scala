@@ -13,7 +13,8 @@ class TUISpec extends AnyWordSpec {
   var field = new Field(3, Hole.O)
   val controller = Controller(field, 3)
   val tui = new TUI(controller, 3)
-  controller.put(Hole.X, 2)
+  controller.putX(2)
+  controller.putO(3)
 
   "the tui" should {
     "get Hole.x back" in {

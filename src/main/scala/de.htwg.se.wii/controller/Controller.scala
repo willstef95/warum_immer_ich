@@ -13,9 +13,13 @@ case class Controller(var field: Field, size: Int) extends Observable:
   var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
   override def toString(): String = field.toString
-  def put(hole: Hole, pos: Int): Unit =
-    field = field.put(hole, pos)
+  def putX(pos: Int): Unit =
+    field = field.putX(pos)
     notifyObservers()
+  def putO(pos: Int): Unit =
+    field = field.putO(pos)
+    notifyObservers()
+
   def get(pos: Int): Hole =
     val hole = field.get(pos)
     hole
