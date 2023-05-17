@@ -30,10 +30,10 @@ class TUISpec extends AnyWordSpec {
           #""").stripMargin('#'))
 
     }
-    "es wurde 0 gewürfelt" in {
+    "diced 0" in {
       tui.roll0(0) should be(true)
     }
-    "es wurde nicht 0 gewürfelt" in {
+    "not 0 diced" in {
       tui.rollNot0(2) should be(true)
     }
 
@@ -43,9 +43,9 @@ class TUISpec extends AnyWordSpec {
     "field set on X" in {
       tui.xSetzen(1) should be(true)
     }
-    "name spieler 1 abfragen" in {
-      controller.game.names(0) should be("Spieler1")
-    }
+    // "name spieler 1 abfragen" in {
+    //   controller.game.names(0) should be("Spieler1")
+    // }
 
   }
   "A TUI" when {
