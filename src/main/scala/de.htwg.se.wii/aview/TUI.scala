@@ -2,7 +2,7 @@ package de.htwg.se.wii
 package aview
 
 import controller.Controller
-import model.Hole
+import holes.*
 import util.Observer
 import scala.util.Random
 import scala.annotation.switch
@@ -65,8 +65,9 @@ class TUI(controller: Controller, size: Int) extends Observer:
   }
 
   def rollNot0(gewurfelt: Int): Boolean = {
+    println(s"Es wurde ${gewurfelt} gewurfelt das spielfeld bleibt gleich")
 
-    controller.get(gewurfelt) == Hole.X match
+    controller.get(gewurfelt) == Hole(HoleX) match
       case true => {
         oSetzen(gewurfelt)
       }

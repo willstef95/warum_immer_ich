@@ -2,8 +2,9 @@ package de.htwg.se.wii.model
 
 import de.htwg.se.wii.holes.*
 
-case class Field(matrix: Matrix[Hole]):
-  def this(size: Int, filling: Hole) = this(new Matrix(size, filling))
+case class Field(matrix: Matrix[Hole] = new Matrix(3, Hole(HoleO))):
+  // def this(size: Int, filling: Hole(HoleState)) = this(new Matrix(size, filling))
+
   val size = matrix.size
   val eol = sys.props("line.separator")
   def bar(cellWidth: Int = 3, cellNum: Int = 3): String =
