@@ -2,7 +2,7 @@ package de.htwg.se.wii
 package aview
 
 import controller.Controller
-import holes.*
+import model.holes.*
 import util.Observer
 import scala.util.Random
 import scala.annotation.switch

@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.aview.TUI
 import de.htwg.se.wii.model.Field
-import de.htwg.se.wii.holes.*
+import de.htwg.se.wii.model.holes.*
 import de.htwg.se.wii.controller.Controller
 
 class TUISpec extends AnyWordSpec {

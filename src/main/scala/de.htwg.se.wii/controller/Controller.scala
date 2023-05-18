@@ -2,7 +2,7 @@ package de.htwg.se.wii
 package controller
 
 import model.Field
-import holes.*
+import model.holes.*
 import util.Observable
 import model.Dice
 import model.Game

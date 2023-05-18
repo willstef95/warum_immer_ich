@@ -1,5 +1,5 @@
 package de.htwg.se.wii.model
-import de.htwg.se.wii.holes.*
+import de.htwg.se.wii.model.holes.*
 
 case class Field(matrix: Matrix[HoleState] = new Matrix(3, HoleO)) {
 

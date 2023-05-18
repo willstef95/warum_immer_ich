@@ -4,7 +4,7 @@ import aview.TUI
 import controller.Controller
 import model.Field
 import model.Matrix
-import holes.*
+import model.holes.*
 import scala.util.Random
 import scala.annotation.switch
 import scala.io.StdIn.readLine
@@ -17,7 +17,6 @@ import de.htwg.se.wii.aview.{GameUI, TUI}
   // )
   // val size = readLine().toInt
   val size = 3
-
   val field = new Field()
   val controller = Controller(field, size)
   val game: GameUI = TUI(controller, size)

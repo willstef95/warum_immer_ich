@@ -1,4 +1,4 @@
-package de.htwg.se.wii.holes
+package de.htwg.se.wii.model.holes
 
 object HoleX extends HoleState {
   override def renderText(): String = "X"
