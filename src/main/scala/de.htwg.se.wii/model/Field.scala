@@ -1,20 +1,20 @@
 package de.htwg.se.wii.model
-
 import de.htwg.se.wii.holes.*
 
-case class Field(matrix: Matrix[Hole] = new Matrix(3, Hole(HoleO))):
-  // def this(size: Int, filling: Hole(HoleState)) = this(new Matrix(size, filling))
+case class Field(matrix: Matrix[HoleState] = new Matrix(3, HoleO)) {
 
   val size = matrix.size
   val eol = sys.props("line.separator")
-  def bar(cellWidth: Int = 3, cellNum: Int = 3): String =
+  def bar(cellWidth: Int = 10, cellNum: Int = 3): String =
     (("+" + "-" * cellWidth) * cellNum) + "+" + eol
 
-  def cells(row: Int, cellWidth: Int = 3): String =
+  def cells(row: Int, cellWidth: Int = 10): String =
     matrix
       .row(row)
       .map(_.toString)
-      .map(" " * ((cellWidth - 1) / 2) + _ + " " * ((cellWidth - 1) / 2))
+      .map(
+        " " * ((cellWidth - 1) / 2) + _.toString + " " * ((cellWidth - 1) / 2)
+      )
       .mkString("|", "|", "|") + eol
 
   def mesh(cellWidth: Int = 3): String =
@@ -30,14 +30,14 @@ case class Field(matrix: Matrix[Hole] = new Matrix(3, Hole(HoleO))):
 
   def putX(pos: Int) = {
     val (x, y) = translateW(pos)
-    copy(matrix.replaceCell(x, y, Hole(HoleX)))
+    copy(matrix.replaceCell(x, y, HoleX))
   }
   def putO(pos: Int) = {
     val (x, y) = translateW(pos)
-    copy(matrix.replaceCell(x, y, Hole(HoleO)))
+    copy(matrix.replaceCell(x, y, HoleO))
   }
 
-  def get(pos: Int): Hole = {
+  def get(pos: Int): HoleState = {
     val (x, y) = translateW(pos)
     matrix.cell(x, y)
   }
@@ -48,3 +48,6 @@ case class Field(matrix: Matrix[Hole] = new Matrix(3, Hole(HoleO))):
       else roll / size
     (x, y)
   }
+
+}
+// def this(size: Int, filling: Hole(HoleState)) = this(new Matrix(size, filling))

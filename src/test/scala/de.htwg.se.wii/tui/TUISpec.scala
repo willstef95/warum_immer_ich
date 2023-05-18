@@ -5,12 +5,12 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.aview.TUI
 import de.htwg.se.wii.model.Field
-import de.htwg.se.wii.model.Hole
+import de.htwg.se.wii.holes.*
 import de.htwg.se.wii.controller.Controller
 
 class TUISpec extends AnyWordSpec {
 
-  var field = new Field(3, Hole.O)
+  var field = new Field()
   val controller = Controller(field, 3)
   val tui = new TUI(controller, 3)
   controller.putX(2)
@@ -18,7 +18,7 @@ class TUISpec extends AnyWordSpec {
 
   "the tui" should {
     "get Hole.x back" in {
-      controller.get(2) should be(Hole.X)
+      controller.get(2) should be(HoleX)
     }
     "gameloop runs and 2 is a X " in {
       controller.toString should be(("""#+---+---+---+

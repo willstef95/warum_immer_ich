@@ -17,13 +17,16 @@ case class Controller(var field: Field, size: Int) extends Observable:
   def putX(pos: Int): Unit =
     field = field.putX(pos)
     notifyObservers()
-  def putO(pos: Int): Unit =
+  def putO(pos: Int): Unit = {
     field = field.putO(pos)
     notifyObservers()
+  }
 
-  def get(pos: Int): Hole =
+  def get(pos: Int): HoleState = {
     val hole = field.get(pos)
     hole
+  }
+
   def roll(): Int =
     val roll = dice.roll()
     roll

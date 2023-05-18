@@ -2,7 +2,7 @@ package de.htwg.se.wii
 package controller
 
 import model.Field
-import model.Hole
+import holes.*
 import util.Observable
 
 import org.scalatest.wordspec.AnyWordSpec
@@ -14,7 +14,7 @@ import de.htwg.se.wii.model.Dice
 class ControllerSpec extends AnyWordSpec {
   "A wii controller" when {}
   "filled with Empty" should {
-    val field = new Field(3, Hole.O)
+    val field = new Field()
     val controller = Controller(field, 3)
     // var game = new Game(("Spieler1", "Spieler2"), 5, 5)
 
@@ -31,7 +31,7 @@ class ControllerSpec extends AnyWordSpec {
 
     "Number 4 is O" should {
       "get return Hole O" in {
-        controller.get(4) should be(Hole.O)
+        controller.get(4) should be(HoleO)
       }
     }
     "pens down" should {
