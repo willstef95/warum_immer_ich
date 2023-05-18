@@ -9,12 +9,12 @@ import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
 
-class TUI(controller: Controller, size: Int) extends Observer:
+class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
 
   val eol = sys.props("line.separator")
 
-  def run: Unit = {
+  override def run(): Unit = {
     println("Los geht das Spiel")
     controller.init(init())
     gameLoop()

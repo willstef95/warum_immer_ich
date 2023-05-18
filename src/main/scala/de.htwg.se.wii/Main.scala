@@ -8,6 +8,7 @@ import model.Hole
 import scala.util.Random
 import scala.annotation.switch
 import scala.io.StdIn.readLine
+import de.htwg.se.wii.aview.{GameUI, TUI}
 
 @main def run(): Unit =
   println("Hallo wii")
@@ -17,5 +18,5 @@ import scala.io.StdIn.readLine
   val size = readLine().toInt
   val field = new Field(size, Hole.O)
   val controller = Controller(field, size)
-  val tui = TUI(controller, size)
-  tui.run
+  val game: GameUI = TUI(controller, size)
+  game.run()
