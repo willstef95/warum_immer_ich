@@ -1,3 +1,3 @@
 package de.htwg.se.wii.model
 
-case class Game(names: (String, String), pens1: Int, pens2: Int)
+case class Game(names: (String, String), pens1: Int, pens2: Int, showpin: Int)

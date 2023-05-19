@@ -8,6 +8,7 @@ import scala.util.Random
 import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
+import de.htwg.se.wii.controller.Controller._
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
@@ -57,6 +58,36 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
       }
   }
 
+  object ShowPins {
+
+    var strategy = if (controller.game.showpin == 1) show else dontshow
+
+    def executeShowPins(up: Int): Boolean = {
+      println(strategy(up))
+      true
+    }
+
+    def show(up: Int) = {
+      if (up == 1) {
+        val pins = controller.pensup(stat)
+        s"Spieler ${controller.game.names(stat + 1)} hat: ${pins} Stifte"
+
+      } else {
+        val pins = controller.pensdown(stat)
+        s"Spieler ${controller.game.names(stat - 1)} hat: ${pins} Stifte"
+      }
+    }
+
+    def dontshow(up: Int) = {
+      if (up == 1) {
+        val pins = controller.pensup(stat)
+      } else {
+        val pins = controller.pensdown(stat)
+      }
+      " "
+    }
+  }
+
   def roll0(n: Int): Boolean = {
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
     println(controller.pensdown(stat))
@@ -79,17 +110,13 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def oSetzen(gewurfelt: Int): Boolean = {
     controller.putO(gewurfelt)
-    println(
-      s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensup(stat)} Stifte"
-    )
+    ShowPins.executeShowPins(1)
     true
   }
 
   def xSetzen(gewurfelt: Int): Boolean = {
     controller.putX(gewurfelt)
-    println(
-      s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensdown(stat)} Stifte"
-    )
+    ShowPins.executeShowPins(0)
     true
   }
 
