@@ -49,11 +49,6 @@ class ControllerSpec extends AnyWordSpec {
       }
     }
     "not set to any value " should {
-<<<<<<< HEAD
-=======
- 
-
->>>>>>> master
       val num = controller.roll()
       "have value between 0-8" in {
         num should (be >= 0 and be <= 8)
