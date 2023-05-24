@@ -59,7 +59,9 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def roll0(n: Int): Boolean = {
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
-    println(controller.pensdown(stat))
+    println(
+      s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensdown(stat)} Stifte"
+    )
     update
     true
   }
@@ -67,7 +69,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   def rollNot0(gewurfelt: Int): Boolean = {
     println(s"Es wurde ${gewurfelt} gewurfel")
 
-    controller.get(gewurfelt) == Hole(HoleX) match
+    controller.get(gewurfelt) == HoleX match
       case true => {
         oSetzen(gewurfelt)
       }

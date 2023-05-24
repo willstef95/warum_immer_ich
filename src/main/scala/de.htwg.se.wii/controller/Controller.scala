@@ -32,24 +32,20 @@ case class Controller(var field: Field, size: Int) extends Observable:
     roll
   def pensdown(spieler: Int): Int =
     if (spieler == 1) {
-      val x = game.pens1 - 1
-      game = game.copy(pens1 = x)
-      x
+      game = game.copy(pens1 = game.pens1 - 1)
+      game.pens1
     } else {
-      val x = game.pens2 - 1
-      game = game.copy(pens2 = x)
-      x
+      game = game.copy(pens2 = game.pens2 - 1)
+      game.pens2
     }
 
   def pensup(spieler: Int): Int =
     if (spieler == 1) {
-      val x = game.pens1 + 1
-      game = game.copy(pens1 = x)
-      x
+      game = game.copy(pens1 = game.pens1 + 1)
+      game.pens1
     } else {
-      val x = game.pens2 + 1
-      game = game.copy(pens2 = x)
-      x
+      game = game.copy(pens2 = game.pens2 + 1)
+      game.pens2
     }
   def init(names: (String, String)) = {
     game = game.copy(names = names)

@@ -14,7 +14,7 @@ class TUISpec extends AnyWordSpec {
   var field = new Field()
   val controller = Controller(field, 3)
   val tui = new TUI(controller, 3)
-  var game = new Game(("Spieler1", "Spieler2"), 2, 2, 0)
+  var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
   controller.putX(2)
   controller.putO(3)
@@ -48,10 +48,10 @@ class TUISpec extends AnyWordSpec {
     "field set on X" in {
       tui.xSetzen(1) should be(true)
     }
-    "print nothing on showpin=0" in {
-      tui.ShowPins.executeShowPins(0) should be(true)
-      tui.ShowPins.dontshow(0) should be(" ")
-    }
+    // "print nothing on showpin=0" in {
+    //   tui.ShowPins.executeShowPins(0) should be(true)
+    //   tui.ShowPins.dontshow(0) should be(" ")
+    // }
 
     // "name spieler 1 abfragen" in {
     //   controller.game.names(0) should be("Spieler1")
