@@ -30,6 +30,7 @@ case class Controller(var field: Field, size: Int) extends Observable:
   def roll(): Int =
     val roll = dice.roll()
     roll
+
   def pensdown(spieler: Int): Int =
     if (spieler == 1) {
       val x = game.pens1 - 1

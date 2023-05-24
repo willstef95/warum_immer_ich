@@ -16,7 +16,7 @@ import de.htwg.se.wii.aview.{GameUI, TUI}
   //   "Wie gross soll das Spielfeld sein? 2x2,3x3,4x4,5x5... Bitte geben Sie eine Zahl ein"
   // )
   // val size = readLine().toInt
-  val size = 3
+  val size = 2
   val field = new Field()
   val controller = Controller(field, size)
   val game: GameUI = TUI(controller, size)
