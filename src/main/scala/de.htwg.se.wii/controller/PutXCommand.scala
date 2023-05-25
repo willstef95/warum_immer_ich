@@ -11,7 +11,7 @@ class PutXCommand(controller: Controller, hole: Hole) extends Command[Field] {
   override def noStep(field: Field): Field = field
 
   override def doStep(field: Field): Field =
-    controller.pensup(Stat.stat)
+    controller.pensdown(Stat.stat)
     field.putX(hole.pos)
 
   override def undoStep(field: Field): Field =
@@ -19,7 +19,7 @@ class PutXCommand(controller: Controller, hole: Hole) extends Command[Field] {
     field.putO(hole.pos)
 
   override def redoStep(field: Field): Field =
-    controller.pensup(Stat.stat)
+    controller.pensdown(Stat.stat)
     field.putX(hole.pos)
 
 }
