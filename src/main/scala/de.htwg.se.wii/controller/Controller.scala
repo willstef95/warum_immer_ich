@@ -30,11 +30,11 @@ case class Controller(var field: Field, size: Int) extends Observable:
   def undo: Field = undoManager.undoStep(field)
   def redo: Field = undoManager.redoStep(field)
 
-  def putX(hole: Hole, player: Int): Field =
-    undoManager.doStep(field, PutXCommand(hole))
+  def putX(hole: Hole): Field =
+    undoManager.doStep(field, PutXCommand(this, hole))
 
-  def putO(hole: Hole, player: Int): Field =
-    undoManager.doStep(field, PutOCommand(hole))
+  def putO(hole: Hole): Field =
+    undoManager.doStep(field, PutOCommand(this, hole))
 
   def get(pos: Int): HoleState = {
     val hole = field.get(pos)
@@ -62,6 +62,7 @@ case class Controller(var field: Field, size: Int) extends Observable:
       game = game.copy(pens2 = game.pens2 + 1)
       game.pens2
     }
+
   def init(names: (String, String)) = {
     game = game.copy(names = names)
   }
