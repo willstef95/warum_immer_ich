@@ -3,16 +3,16 @@ package controller
 
 import model.Field
 import util.Command
-import util.Observable
+import model.holes.Hole
 
-class PutXCommand(pos: Int) extends Command[Field] {
+class PutXCommand(hole: Hole) extends Command[Field] {
 
   override def noStep(field: Field): Field = field
 
-  override def doStep(field: Field): Field = field.putX(pos)
+  override def doStep(field: Field): Field = field.putX(hole.pos)
 
-  override def undoStep(field: Field): Field = field.putO(pos)
+  override def undoStep(field: Field): Field = field.putO(hole.pos)
 
-  override def redoStep(field: Field): Field = field.putX(pos)
+  override def redoStep(field: Field): Field = field.putX(hole.pos)
 
 }

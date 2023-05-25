@@ -10,28 +10,29 @@ import scala.runtime.LazyVals.Names
 import util.Command
 import java.util.Observer
 import util.UndoManager
+import model.Move
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+  var game = new Game(("Spieler1", "Spieler2"), 5, 5)
   val undoManager = new UndoManager[Field]
 
   override def toString = field.toString
 
-  // def doAndPublish(doThis: Move => Field, move: Move) =
-  //   field = doThis(move)
-  //   notifyObservers
+  def doAndPublish(doThis: Hole => Field, move: Hole) =
+    field = doThis(move)
+    notifyObservers()
 
   def doAndPublish(doThis: => Field) =
     field = doThis
-    notifyObservers
+    notifyObservers()
 
   def undo: Field = undoManager.undoStep(field)
   def redo: Field = undoManager.redoStep(field)
 
-  def putX(pos: Int): Field = undoManager.doStep(field, PutXCommand(pos))
+  def putX(hole: Hole): Field = undoManager.doStep(field, PutXCommand(hole))
 
-  def putO(pos: Int): Field = undoManager.doStep(field, PutOCommand(pos))
+  def putO(hole: Hole): Field = undoManager.doStep(field, PutOCommand(hole))
 
   def get(pos: Int): HoleState = {
     val hole = field.get(pos)
