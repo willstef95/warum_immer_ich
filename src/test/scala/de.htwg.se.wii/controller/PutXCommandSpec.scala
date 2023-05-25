@@ -21,9 +21,8 @@ class PutXCommandSpec extends AnyWordSpec {
     val command = new PutXCommand(controller, Hole(HoleX, 3))
 
     "when doStep" in {
-      command.doStep(field)
-      controller.game.pens1 should be(1)
-      controller.toString should be(("""#+---+---+---+
+      command.doStep(field) should be(("""
+          #+---+---+---+
           #| O | O | O |
           #+---+---+---+
           #| X | O | O |
@@ -31,9 +30,12 @@ class PutXCommandSpec extends AnyWordSpec {
           #| O | O | O |
           #+---+---+---+
           #""").stripMargin('#'))
+      controller.game.pens1 should be(1)
     }
     "when noStep" in {
-      controller.toString should be(("""#+---+---+---+
+      command.doStep(field)
+      command.noStep(field) should be(("""
+          #+---+---+---+
           #| O | O | O |
           #+---+---+---+
           #| X | O | O |
@@ -43,9 +45,8 @@ class PutXCommandSpec extends AnyWordSpec {
           #""").stripMargin('#'))
     }
     "when undoStep" in {
-      command.undoStep(field)
-      controller.game.pens1 should be(2)
-      controller.toString should be(("""#+---+---+---+
+      command.undoStep(field) should be(("""
+          #+---+---+---+
           #| O | O | O |
           #+---+---+---+
           #| O | O | O |
@@ -53,11 +54,11 @@ class PutXCommandSpec extends AnyWordSpec {
           #| O | O | O |
           #+---+---+---+
           #""").stripMargin('#'))
+      controller.game.pens1 should be(2)
     }
     "when redoStep" in {
-      command.redoStep(field)
-      controller.game.pens1 should be(1)
-      controller.toString should be(("""#+---+---+---+
+      command.redoStep(field) should be(("""
+          #+---+---+---+
           #| O | O | O |
           #+---+---+---+
           #| X | O | O |
@@ -65,6 +66,7 @@ class PutXCommandSpec extends AnyWordSpec {
           #| O | O | O |
           #+---+---+---+
           #""").stripMargin('#'))
+      controller.game.pens1 should be(1)
     }
   }
 }

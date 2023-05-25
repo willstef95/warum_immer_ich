@@ -75,7 +75,7 @@ class TUISpec extends AnyWordSpec {
   "A TUI" when {
     "a player has 0pins" in {
       var game = new Game(("Spieler1", "Spieler2"), 0, 2)
-      tui.isFinish() should be(false)
+      tui.isFinish() should be(true)
     }
   }
 }

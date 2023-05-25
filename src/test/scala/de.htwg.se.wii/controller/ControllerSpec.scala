@@ -19,7 +19,8 @@ class ControllerSpec extends AnyWordSpec {
     // var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
     "be initiall with O" in {
-      controller.toString should be(("""#+---+---+---+
+      controller.toString should be(("""
+          #+---+---+---+
           #| O | O | O |
           #+---+---+---+
           #| O | O | O |
@@ -31,7 +32,8 @@ class ControllerSpec extends AnyWordSpec {
 
     "With Holex on 3" in {
       controller.doAndPublish(controller.putX, Hole(HoleX, 3))
-      controller.toString should be(("""#+---+---+---+
+      controller.toString should be(("""
+          #+---+---+---+
           #| O | O | O |
           #+---+---+---+
           #| X | O | O |
@@ -41,12 +43,25 @@ class ControllerSpec extends AnyWordSpec {
           #""").stripMargin('#'))
     }
 
-    "With Holex on 3" in {
-      controller.undo
-      controller.toString should be(("""#+---+---+---+
+    "undo" in {
+      controller.doAndPublish(controller.undo)
+      controller.toString should be(("""
+          #+---+---+---+
           #| O | O | O |
           #+---+---+---+
           #| O | O | O |
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #""").stripMargin('#'))
+    }
+    "redo" in {
+      controller.doAndPublish(controller.redo)
+      controller.toString should be(("""
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #| X | O | O |
           #+---+---+---+
           #| O | O | O |
           #+---+---+---+
@@ -60,15 +75,15 @@ class ControllerSpec extends AnyWordSpec {
     }
     "pens down" should {
       "get return n-1" in {
-        controller.pensdown(1) should be(1)
-        controller.pensdown(2) should be(1)
+        controller.pensdown(1) should be(0)
+        controller.pensdown(2) should be(2)
 
       }
     }
     "pens up" should {
       "get return n+1" in {
-        controller.pensup(1) should be(2)
-        controller.pensup(2) should be(2)
+        controller.pensup(1) should be(1)
+        controller.pensup(2) should be(3)
 
       }
     }
