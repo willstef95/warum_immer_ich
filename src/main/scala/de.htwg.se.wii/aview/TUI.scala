@@ -34,19 +34,30 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   override def update = println(controller.field.toString())
 
   def gameLoop(): Unit = {
-    println(s"Es ist ${controller.game.names(Stat.stat - 1)}")
+
+    println(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
+    if (Stat.stat == 1) {
+      println(s"Er hat: ${controller.game.pens1} Stifte")
+    } else {
+      println(s"Er hat: ${controller.game.pens2} Stifte")
+    }
     println("Enter fuer Wuerfeln")
+
     val input = scala.io.StdIn.readLine
-    processInput(input)
+    if (processInput(input) == true) {
+      isFinish()
+      gameLoop()
+    } else {
+      println("Auf Wiedersehen")
+    }
 
   }
   def processInput(input: String): Boolean = {
-    var r = true
     input match
-      case "y" => controller.doAndPublish(controller.redo); r = true
-      case "z" => controller.doAndPublish(controller.undo); r = true
+      case "y" => controller.doAndPublish(controller.redo); true
+      case "z" => controller.doAndPublish(controller.undo); true
       case "q" =>
-        r = false
+        false
       case _ => {
         val gewurfelt = controller.roll()
         gewurfelt match
@@ -56,9 +67,8 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
           case _ => {
             rollNot0(gewurfelt)
           }
-        r = true
+        true
       }
-    return r
   }
 
   def roll0(n: Int): Boolean = {
@@ -89,7 +99,6 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     println(
       s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller.pensup(Stat.stat)} Stifte"
     )
-    isFinish()
     true
   }
 
@@ -99,7 +108,6 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
       s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
           .pensdown(Stat.stat)} Stifte"
     )
-    isFinish()
     true
   }
 
@@ -113,12 +121,10 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
       Stat.stat match
         case 1 => {
           Stat.stat = 2
-          gameLoop()
           true
         }
         case 2 => {
           Stat.stat = 1
-          gameLoop()
           true
         }
       true
