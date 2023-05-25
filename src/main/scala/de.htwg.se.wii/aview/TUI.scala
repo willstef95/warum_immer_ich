@@ -71,14 +71,20 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
       case "w" => {
         val gewurfelt = controller.roll()
         println(s"Es wurde ${gewurfelt} gewuerfelt")
-        gewurfelt match
-          case 0 => {
-            roll0(0)
-          }
-          case _ => {
-            rollNot0(gewurfelt)
-          }
+        wurf(gewurfelt) match
+          case None         => roll0(0)
+          case Some(erfolg) => rollNot0(erfolg)
+
         true
+      }
+  }
+  def wurf(input: Int): Option[Int] = {
+    input match
+      case 0 => {
+        None
+      }
+      case _ => {
+        Some(input)
       }
   }
 
@@ -86,7 +92,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
     controller.doAndPublish(controller.putX, Hole(HoleO, n))
 
-    update
+    // update
     true
   }
 
