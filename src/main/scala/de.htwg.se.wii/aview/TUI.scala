@@ -10,7 +10,7 @@ import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
 import util.Stat
 import controller.Controller
-import de.htwg.se.wii.model.Move
+import de.htwg.se.wii.model.SavePoint
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
@@ -58,7 +58,6 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
           }
         r = true
       }
-    isFinish()
     return r
   }
 
@@ -90,6 +89,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     println(
       s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller.pensup(Stat.stat)} Stifte"
     )
+    isFinish()
     true
   }
 
@@ -99,6 +99,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
       s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
           .pensdown(Stat.stat)} Stifte"
     )
+    isFinish()
     true
   }
 
