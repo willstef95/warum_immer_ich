@@ -10,27 +10,19 @@ import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.controller.Controller
 import de.htwg.se.wii.model.Game
 import de.htwg.se.wii.model.Dice
+import de.htwg.se.wii.util.Stat
 
-class ControllerSpec extends AnyWordSpec {
-  "A wii controller" when {}
+class PutXCommandSpec extends AnyWordSpec {
+  "A PutXCommandSpec" when {}
   "filled with Empty" should {
     val field = new Field()
     val controller = Controller(field, 3)
-    // var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+    var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+    val command = new PutXCommand(controller, Hole(HoleX, 3))
 
-    "be initiall with O" in {
-      controller.toString should be(("""#+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #""").stripMargin('#'))
-    }
-
-    "With Holex on 3" in {
-      controller.doAndPublish(controller.putX, Hole(HoleX, 3))
+    "when doStep" in {
+      command.doStep(field)
+      controller.game.pens1 should be(1)
       controller.toString should be(("""#+---+---+---+
           #| O | O | O |
           #+---+---+---+
@@ -40,9 +32,19 @@ class ControllerSpec extends AnyWordSpec {
           #+---+---+---+
           #""").stripMargin('#'))
     }
-
-    "With Holex on 3" in {
-      controller.undo
+    "when noStep" in {
+      controller.toString should be(("""#+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #| X | O | O |
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #""").stripMargin('#'))
+    }
+    "when undoStep" in {
+      command.undoStep(field)
+      controller.game.pens1 should be(2)
       controller.toString should be(("""#+---+---+---+
           #| O | O | O |
           #+---+---+---+
@@ -52,37 +54,17 @@ class ControllerSpec extends AnyWordSpec {
           #+---+---+---+
           #""").stripMargin('#'))
     }
-
-    "Number 4 is O" should {
-      "get return Hole O" in {
-        controller.get(4) should be(HoleO)
-      }
-    }
-    "pens down" should {
-      "get return n-1" in {
-        controller.pensdown(1) should be(1)
-        controller.pensdown(2) should be(1)
-
-      }
-    }
-    "pens up" should {
-      "get return n+1" in {
-        controller.pensup(1) should be(2)
-        controller.pensup(2) should be(2)
-
-      }
-    }
-    "not set to any value " should {
-      val num = controller.roll()
-      "have value between 0-8" in {
-        num should (be >= 0 and be <= 8)
-      }
-    }
-    "init is set to Stefan and Hannes" should {
-      controller.init("Stefan", "Hannes")
-      "game has those names" in {
-        controller.game.names should be("Stefan", "Hannes")
-      }
+    "when redoStep" in {
+      command.redoStep(field)
+      controller.game.pens1 should be(1)
+      controller.toString should be(("""#+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #| X | O | O |
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #""").stripMargin('#'))
     }
   }
 }
