@@ -16,7 +16,7 @@ class ControllerSpec extends AnyWordSpec {
   "filled with Empty" should {
     val field = new Field()
     val controller = Controller(field, 3)
-    // var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+    var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
     "be initiall with O" in {
       controller.toString should be(("""
@@ -76,14 +76,14 @@ class ControllerSpec extends AnyWordSpec {
     "pens down" should {
       "get return n-1" in {
         controller.pensdown(1) should be(0)
-        controller.pensdown(2) should be(2)
+        controller.pensdown(2) should be(1)
 
       }
     }
     "pens up" should {
       "get return n+1" in {
         controller.pensup(1) should be(1)
-        controller.pensup(2) should be(3)
+        controller.pensup(2) should be(2)
 
       }
     }

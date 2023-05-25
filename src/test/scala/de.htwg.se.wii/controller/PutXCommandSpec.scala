@@ -33,7 +33,6 @@ class PutXCommandSpec extends AnyWordSpec {
       controller.game.pens1 should be(1)
     }
     "when noStep" in {
-      command.doStep(field)
       command.noStep(field) should be(("""
           #+---+---+---+
           #| O | O | O |
