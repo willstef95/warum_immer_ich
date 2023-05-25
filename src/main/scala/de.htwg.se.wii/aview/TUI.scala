@@ -41,11 +41,12 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   }
   def processInput(input: String): Boolean = {
+    var r = true
     input match
-      case "y" => controller.doAndPublish(controller.redo); val r = true
-      case "z" => controller.doAndPublish(controller.undo); val r = true
+      case "y" => controller.doAndPublish(controller.redo); r = true
+      case "z" => controller.doAndPublish(controller.undo); r = true
       case "q" =>
-        val r = false
+        r = false
       case _ => {
         val gewurfelt = controller.roll()
         gewurfelt match
@@ -55,10 +56,10 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
           case _ => {
             rollNot0(gewurfelt)
           }
-        val r = true
+        r = true
       }
     isFinish()
-    r
+    return r
   }
 
   def roll0(n: Int): Boolean = {
