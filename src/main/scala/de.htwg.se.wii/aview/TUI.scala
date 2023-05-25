@@ -41,7 +41,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     println("Enter fuer Wuerfeln")
 
     val input = scala.io.StdIn.readLine
-    if (processInput(input) == true || isFinish() == true) {
+    if (processInput(input) == true && isFinish() == true) {
       gameLoop()
     } else {
       println("Auf Wiedersehen")
@@ -71,6 +71,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   def roll0(n: Int): Boolean = {
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
     controller.doAndPublish(controller.putX, Hole(HoleO, n))
+
     update
     true
   }
@@ -106,7 +107,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def isFinish(): Boolean = {
     var r = true
-    if (controller.game.pens1 == 0 || controller.game.pens2 == 0) {
+    if (controller.game.pens1 == 0 | controller.game.pens2 == 0) {
       println(
         s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
       )

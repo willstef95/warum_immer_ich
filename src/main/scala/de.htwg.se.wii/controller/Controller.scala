@@ -14,7 +14,7 @@ import model.SavePoint
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 5, 5)
+  var game = new Game(("Spieler1", "Spieler2"), 2, 2)
   val undoManager = new UndoManager[Field]
 
   override def toString = field.toString

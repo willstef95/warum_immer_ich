@@ -16,7 +16,7 @@ class ControllerSpec extends AnyWordSpec {
   "filled with Empty" should {
     val field = new Field()
     val controller = Controller(field, 3)
-    // var game = new Game(("Spieler1", "Spieler2"), 5, 5)
+    // var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
     "be initiall with O" in {
       controller.toString should be(("""#+---+---+---+

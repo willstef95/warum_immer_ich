@@ -17,11 +17,19 @@ class PutOCommand(controller: Controller, hole: Hole) extends Command[Field] {
     field.putO(hole.pos)
 
   override def undoStep(field: Field): Field =
-    controller.pensdown(Stat.stat)
+    if (Stat.stat == 1) {
+      controller.pensdown(0)
+    } else {
+      controller.pensdown(1)
+    }
     field.putX(hole.pos)
 
   override def redoStep(field: Field): Field =
-    controller.pensup(Stat.stat)
+    if (Stat.stat == 1) {
+      controller.pensup(0)
+    } else {
+      controller.pensup(1)
+    }
     field.putO(hole.pos)
 
 }
