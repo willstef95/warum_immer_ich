@@ -36,12 +36,14 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   def gameLoop(): Unit = {
 
     println(s"${controller.game.names(0)} hat: ${controller.game.pens1} Stifte")
-    println(s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte")
+    println(
+      s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte" + eol
+    )
     println(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
     println("Enter fuer Wuerfeln")
 
     val input = scala.io.StdIn.readLine
-    if (processInput(input) == true && isFinish() == true) {
+    if (processInput(input) == true & isFinish() == true) {
       gameLoop()
     } else {
       println("Auf Wiedersehen")
