@@ -18,9 +18,9 @@ case class Controller(var field: Field, size: Int) extends Observable:
 
   override def toString = field.toString
 
-  def doAndPublish(doThis: Move => Field, move: Move) =
-    field = doThis(move)
-    notifyObservers
+  // def doAndPublish(doThis: Move => Field, move: Move) =
+  //   field = doThis(move)
+  //   notifyObservers
 
   def doAndPublish(doThis: => Field) =
     field = doThis
