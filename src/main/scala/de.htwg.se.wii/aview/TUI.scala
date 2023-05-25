@@ -8,6 +8,7 @@ import scala.util.Random
 import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
+import scala.util.{Try, Success, Failure}
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
@@ -34,16 +35,23 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def gameLoop(): Unit = {
     println(s"Es ist ${controller.game.names(stat - 1)}")
-    println("Enter fuer Wuerfeln")
+    println("'w' fuer Wuerfeln eingeben")
     val input = scala.io.StdIn.readLine
-    processInput(input)
-
+    val xx = Try(
+      processInput(input)
+    )
+    xx match
+      case Failure(i) =>
+        println("Falsche eingabe")
+        gameLoop()
+      case Success(i) =>
+      // println("Erfoolg")
   }
   def processInput(input: String): Boolean = {
     input match
       case "q" =>
         false
-      case _ => {
+      case "w" => {
         val gewurfelt = controller.roll()
         gewurfelt match
           case 0 => {
@@ -52,10 +60,15 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
           case _ => {
             rollNot0(gewurfelt)
           }
-        isFinish()
         true
       }
+
+    // gameLoop()
+
   }
+  // def fail(s: String): Boolean = {
+  //   Try(println("Fehler, falsche Eingabe"))
+  // }
 
   def roll0(n: Int): Boolean = {
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
@@ -85,6 +98,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     println(
       s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensup(stat)} Stifte"
     )
+    isFinish()
     true
   }
 
@@ -93,6 +107,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     println(
       s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensdown(stat)} Stifte"
     )
+    isFinish()
     true
   }
 
