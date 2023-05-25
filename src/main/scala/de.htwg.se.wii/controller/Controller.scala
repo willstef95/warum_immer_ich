@@ -7,20 +7,26 @@ import util.Observable
 import model.Dice
 import model.Game
 import scala.runtime.LazyVals.Names
+import util.Command
+import java.util.Observer
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
   var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+  val undoManager = new UndoManager[Field]
 
   override def toString = field.toString
 
-  def putX(pos: Int): Unit =
-    field = field.putX(pos)
-    notifyObservers()
-  def putO(pos: Int): Unit = {
-    field = field.putO(pos)
-    notifyObservers()
-  }
+  def doAndPublish(hole: Hole, pos: Int) =
+    hole match {
+      case Hole(HoleO) => putO(pos)
+      case Hole(HoleX) => putX(pos)
+    }
+    notifyObservers
+
+  def putX(pos: Int): Field = undoManager.doStep(field, PutXCommand(pos))
+
+  def putO(pos: Int): Field = undoManager.doStep(field, PutOCommand(pos))
 
   def get(pos: Int): HoleState = {
     val hole = field.get(pos)
@@ -30,6 +36,7 @@ case class Controller(var field: Field, size: Int) extends Observable:
   def roll(): Int =
     val roll = dice.roll()
     roll
+
   def pensdown(spieler: Int): Int =
     if (spieler == 1) {
       game = game.copy(pens1 = game.pens1 - 1)
