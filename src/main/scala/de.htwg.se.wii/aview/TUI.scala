@@ -8,6 +8,7 @@ import scala.util.Random
 import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
+import util.Stat
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
@@ -30,10 +31,8 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   override def update = println(controller.field.toString())
 
-  var stat = 1
-
   def gameLoop(): Unit = {
-    println(s"Es ist ${controller.game.names(stat - 1)}")
+    println(s"Es ist ${controller.game.names(Stat.stat - 1)}")
     println("Enter fuer Wuerfeln")
     val input = scala.io.StdIn.readLine
     processInput(input)
@@ -60,7 +59,8 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   def roll0(n: Int): Boolean = {
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
     println(
-      s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensdown(stat)} Stifte"
+      s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
+          .pensdown(Stat.stat)} Stifte"
     )
     update
     true
@@ -82,7 +82,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   def oSetzen(gewurfelt: Int): Boolean = {
     controller.putO(gewurfelt)
     println(
-      s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensup(stat)} Stifte"
+      s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller.pensup(Stat.stat)} Stifte"
     )
     true
   }
@@ -90,7 +90,8 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   def xSetzen(gewurfelt: Int): Boolean = {
     controller.putX(gewurfelt)
     println(
-      s"Spieler ${controller.game.names(stat - 1)} hat: ${controller.pensdown(stat)} Stifte"
+      s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
+          .pensdown(Stat.stat)} Stifte"
     )
     true
   }
@@ -99,17 +100,17 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
     if (controller.game.pens1 == 0 || controller.game.pens2 == 0) {
       println(
-        s"${controller.game.names(stat - 1)} hat das Spiel gewonnen!"
+        s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
       )
     } else {
-      stat match
+      Stat.stat match
         case 1 => {
-          stat = 2
+          Stat.stat = 2
           gameLoop()
           true
         }
         case 2 => {
-          stat = 1
+          Stat.stat = 1
           gameLoop()
           true
         }
