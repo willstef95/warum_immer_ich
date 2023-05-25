@@ -8,6 +8,7 @@ import de.htwg.se.wii.model.Field
 import de.htwg.se.wii.model.holes.*
 import de.htwg.se.wii.controller.Controller
 import de.htwg.se.wii.model.Game
+import java.util.Observer
 
 class TUISpec extends AnyWordSpec {
 
@@ -16,9 +17,8 @@ class TUISpec extends AnyWordSpec {
   val tui = new TUI(controller, 3)
   var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
-  controller.putX(2)
-  controller.putO(3)
-
+  controller.doAndPublish(controller.putX, Hole(HoleX, 2))
+  controller.doAndPublish(controller.putO, Hole(HoleO, 3))
   "the tui" should {
 
     "get Hole.x back" in {
@@ -64,6 +64,18 @@ class TUISpec extends AnyWordSpec {
     }
     "tui runs" in {
       tui.processInput(" ") should be(true)
+    }
+    "tui z" in {
+      tui.processInput("z") should be(true)
+    }
+    "tui y" in {
+      tui.processInput("y") should be(true)
+    }
+  }
+  "A TUI" when {
+    "a player has 0pins" in {
+      var game = new Game(("Spieler1", "Spieler2"), 0, 2)
+      tui.isFinish() should be(false)
     }
   }
 }
