@@ -35,12 +35,9 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def gameLoop(): Unit = {
 
+    println(s"${controller.game.names(0)} hat: ${controller.game.pens1} Stifte")
+    println(s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte")
     println(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
-    if (Stat.stat == 1) {
-      println(s"Er hat: ${controller.game.pens1} Stifte")
-    } else {
-      println(s"Er hat: ${controller.game.pens2} Stifte")
-    }
     println("Enter fuer Wuerfeln")
 
     val input = scala.io.StdIn.readLine
@@ -73,16 +70,12 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def roll0(n: Int): Boolean = {
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
-    println(
-      s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
-          .pensdown(Stat.stat)} Stifte"
-    )
+    controller.doAndPublish(controller.putO, Hole(HoleX, n))
     update
     true
   }
 
   def rollNot0(gewurfelt: Int): Boolean = {
-    println(s"Es wurde ${gewurfelt} gewurfel")
 
     controller.get(gewurfelt) == HoleX match
       case true => {
@@ -96,18 +89,18 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def oSetzen(gewurfelt: Int): Boolean = {
     controller.doAndPublish(controller.putO, Hole(HoleO, gewurfelt))
-    println(
-      s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller.pensup(Stat.stat)} Stifte"
-    )
+    // println(
+    //   s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller.pensup(Stat.stat)} Stifte"
+    // )
     true
   }
 
   def xSetzen(gewurfelt: Int): Boolean = {
     controller.doAndPublish(controller.putX, Hole(HoleO, gewurfelt))
-    println(
-      s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
-          .pensdown(Stat.stat)} Stifte"
-    )
+    // println(
+    //   s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
+    //       .pensdown(Stat.stat)} Stifte"
+    // )
     true
   }
 
