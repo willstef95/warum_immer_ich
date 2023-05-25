@@ -10,12 +10,14 @@ import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
 import util.Stat
 import controller.Controller
+import scala.util.{Try, Success, Failure}
 import de.htwg.se.wii.model.SavePoint
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
 
   val eol = sys.props("line.separator")
+  var processInputReturn = true
 
   override def run(): Unit = {
     println("Los geht das Spiel")
@@ -40,14 +42,23 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
       s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte" + eol
     )
     println(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
-    println("Enter fuer Wuerfeln")
+    println("'w' fuer Wuerfeln eingeben")
 
     val input = scala.io.StdIn.readLine
-    if (processInput(input) == true & isFinish() == true) {
-      gameLoop()
-    } else {
-      println("Auf Wiedersehen")
-    }
+    val xx = Try(
+      processInput(input)
+    )
+    xx match
+      case Failure(i) =>
+        println("Falsche eingabe")
+        gameLoop()
+      case Success(i) => {
+        if (processInputReturn == true & isFinish() == true) {
+          gameLoop()
+        } else {
+          println("Auf Wiedersehen")
+        }
+      }
 
   }
   def processInput(input: String): Boolean = {
@@ -55,8 +66,9 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
       case "y" => controller.doAndPublish(controller.redo); true
       case "z" => controller.doAndPublish(controller.undo); true
       case "q" =>
+        processInputReturn = false;
         false
-      case _ => {
+      case "w" => {
         val gewurfelt = controller.roll()
         println(s"Es wurde ${gewurfelt} gewuerfelt")
         gewurfelt match
