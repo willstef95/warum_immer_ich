@@ -40,6 +40,8 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   }
   def processInput(input: String): Boolean = {
     input match
+      case "z" => controller.doAndPublish(controller.redo); false
+      case "y" => controller.doAndPublish(controller.undo); false
       case "q" =>
         false
       case _ => {

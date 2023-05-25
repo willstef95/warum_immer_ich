@@ -9,6 +9,7 @@ import model.Game
 import scala.runtime.LazyVals.Names
 import util.Command
 import java.util.Observer
+import util.UndoManager
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
@@ -17,12 +18,16 @@ case class Controller(var field: Field, size: Int) extends Observable:
 
   override def toString = field.toString
 
-  def doAndPublish(hole: Hole, pos: Int) =
-    hole match {
-      case Hole(HoleO) => putO(pos)
-      case Hole(HoleX) => putX(pos)
-    }
+  def doAndPublish(doThis: Move => Field, move: Move) =
+    field = doThis(move)
     notifyObservers
+
+  def doAndPublish(doThis: => Field) =
+    field = doThis
+    notifyObservers
+
+  def undo: Field = undoManager.undoStep(field)
+  def redo: Field = undoManager.redoStep(field)
 
   def putX(pos: Int): Field = undoManager.doStep(field, PutXCommand(pos))
 
