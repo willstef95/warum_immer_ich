@@ -42,6 +42,7 @@
 //           #| O | O | O |
 //           #+---+---+---+
 //           #""").stripMargin('#'))
+
 //     }
 //     "when undoStep" in {
 //       command.undoStep(field) should be(("""
