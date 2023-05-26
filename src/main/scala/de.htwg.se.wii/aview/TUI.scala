@@ -1,7 +1,6 @@
 package de.htwg.se.wii
 package aview
 
-import controller.Controller
 import model.holes.*
 import util.Observer
 import scala.util.Random
@@ -11,7 +10,6 @@ import scala.io.StdIn.readLine
 import util.Stat
 import controller.Controller
 import scala.util.{Try, Success, Failure}
-import de.htwg.se.wii.model.SavePoint
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
@@ -36,17 +34,9 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   override def update = println(controller.field.toString())
 
   def gameLoop(): Unit = {
-
-    println(s"${controller.game.names(0)} hat: ${controller.game.pens1} Stifte")
-    println(
-      s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte" + eol
-    )
-    println(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
-    println("'w' fuer Wuerfeln eingeben")
-
-    val input = scala.io.StdIn.readLine
+    printt()
     val xx = Try(
-      processInput(input)
+      processInput(scala.io.StdIn.readLine)
     )
     xx match
       case Failure(i) =>
@@ -59,7 +49,16 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
           println("Auf Wiedersehen")
         }
       }
+  }
 
+  def printt(): Boolean = {
+    println(s"${controller.game.names(0)} hat: ${controller.game.pens1} Stifte")
+    println(
+      s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte" + eol
+    )
+    println(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
+    println("'w' fuer Wuerfeln eingeben")
+    true
   }
   def processInput(input: String): Boolean = {
     input match
@@ -88,15 +87,13 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
         Some(input)
       }
   }
-
   def roll0(n: Int): Boolean = {
     println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
-    controller.doAndPublish(controller.putX, Hole(HoleO, n))
+    controller.doAndPublish(controller.putX, Hole(HoleO, n), Stat.stat)
 
     // update
     true
   }
-
   def rollNot0(gewurfelt: Int): Boolean = {
 
     controller.get(gewurfelt) == HoleX match
@@ -110,18 +107,18 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
   }
 
   def oSetzen(gewurfelt: Int): Boolean = {
-    controller.doAndPublish(controller.putO, Hole(HoleO, gewurfelt))
+    controller.doAndPublish(controller.putO, Hole(HoleO, gewurfelt), Stat.stat)
     true
   }
 
   def xSetzen(gewurfelt: Int): Boolean = {
-    controller.doAndPublish(controller.putX, Hole(HoleO, gewurfelt))
+    controller.doAndPublish(controller.putX, Hole(HoleO, gewurfelt), Stat.stat)
     true
   }
 
   def isFinish(): Boolean = {
     var r = true
-    if (controller.game.pens1 == 0 | controller.game.pens2 == 0) {
+    if (controller.game.pens1 == 0 || controller.game.pens2 == 0) {
       println(
         s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
       )

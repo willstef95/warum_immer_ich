@@ -6,12 +6,13 @@ import util.Command
 import model.holes.Hole
 import util.Stat
 
-class PutXCommand(controller: Controller, hole: Hole) extends Command[Field] {
+class PutXCommand(controller: Controller, hole: Hole, stat: Int)
+    extends Command[Field] {
 
   override def noStep(field: Field): Field = field
 
   override def doStep(field: Field): Field =
-    controller.pensdown(Stat.stat)
+    controller.pensdown(stat)
     if (hole.pos == 0) {
       field.putO(0)
     } else {
@@ -19,7 +20,7 @@ class PutXCommand(controller: Controller, hole: Hole) extends Command[Field] {
     }
 
   override def undoStep(field: Field): Field =
-    if (Stat.stat == 1) {
+    if (stat == 1) {
       controller.pensup(0)
     } else {
       controller.pensup(1)
@@ -27,7 +28,7 @@ class PutXCommand(controller: Controller, hole: Hole) extends Command[Field] {
     field.putO(hole.pos)
 
   override def redoStep(field: Field): Field =
-    if (Stat.stat == 1) {
+    if (stat == 1) {
       controller.pensdown(0)
     } else {
       controller.pensdown(1)

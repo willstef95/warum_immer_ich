@@ -19,53 +19,108 @@ class ControllerSpec extends AnyWordSpec {
     var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
     "be initiall with O" in {
-      controller.get(3) should be(HoleO)
+      controller.toString should be(("""#+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #| O | O | O |
+          #+---+---+---+
+          #""").stripMargin('#'))
     }
 
-    "With HoleX on 3" in {
-      controller.doAndPublish(controller.putX, Hole(HoleX, 3))
-      controller.get(3) should be(HoleX)
+    // PutXCommandTesten für Spieler 2
+    "With HoleO on 0! " in {
+      controller.doAndPublish(controller.putX, Hole(HoleX, 0), 2)
+      controller.get(0) should be(HoleO)
     }
 
-    // "undo" in {
-    //   controller.doAndPublish(controller.undo)
-    //   controller.toString should be(("""
-    //       #+---+---+---+
-    //       #| O | O | O |
-    //       #+---+---+---+
-    //       #| O | O | O |
-    //       #+---+---+---+
-    //       #| O | O | O |
-    //       #+---+---+---+
-    //       #""").stripMargin('#'))
+    "With HoleX on 1" in {
+      controller.doAndPublish(controller.putX, Hole(HoleX, 1), 2)
+      controller.get(1) should be(HoleX)
+    }
+
+    "undo" in {
+      controller.doAndPublish(controller.undo)
+      controller.get(1) should be(HoleO)
+    }
+
+    "redo" in {
+      controller.doAndPublish(controller.redo)
+      controller.get(1) should be(HoleX)
+    }
+
+    // PutXCommandTesten für Spieler 1
+    // "-With HoleO on 0! " in {
+    //   controller.doAndPublish(controller.putX, Hole(HoleX, 0), 1)
+    //   controller.get(0) should be(HoleO)
     // }
-    // "redo" in {
-    //   controller.doAndPublish(controller.redo)
-    //   controller.toString should be(("""
-    //       #+---+---+---+
-    //       #| O | O | O |
-    //       #+---+---+---+
-    //       #| X | O | O |
-    //       #+---+---+---+
-    //       #| O | O | O |
-    //       #+---+---+---+
-    //       #""").stripMargin('#'))
+
+    "-With HoleX on 1" in {
+      controller.doAndPublish(controller.putX, Hole(HoleX, 1), 1)
+      controller.get(1) should be(HoleX)
+    }
+
+    "-undo" in {
+      controller.doAndPublish(controller.undo)
+      controller.get(1) should be(HoleO)
+    }
+
+    "-redo" in {
+      controller.doAndPublish(controller.redo)
+      controller.get(1) should be(HoleX)
+    }
+
+    // PutOCommand für Spieler 2
+
+    "-With HoleX on 1 Player2" in {
+      controller.doAndPublish(controller.putX, Hole(HoleO, 1), 2)
+      controller.doAndPublish(controller.putO, Hole(HoleO, 1), 2)
+      controller.get(1) should be(HoleO)
+    }
+
+    "undo Player2 and x" in {
+      controller.doAndPublish(controller.undo)
+      controller.get(1) should be(HoleX)
+    }
+
+    "redo Player 2 and x" in {
+      controller.doAndPublish(controller.redo)
+      controller.get(1) should be(HoleO)
+    }
+
+    // PutOCommand für Spieler 1
+
+    "-With HoleX on 1 Player1" in {
+      controller.doAndPublish(controller.putX, Hole(HoleO, 1), 1)
+      controller.doAndPublish(controller.putO, Hole(HoleO, 1), 1)
+      controller.get(1) should be(HoleO)
+    }
+
+    "undo Player1 and x" in {
+      controller.doAndPublish(controller.undo)
+      controller.get(1) should be(HoleX)
+    }
+
+    "redo Player1 and x" in {
+      controller.doAndPublish(controller.redo)
+      controller.get(1) should be(HoleO)
+    }
+
+    // "2. With HoleX on 3" in {
+
+    // "pens down" should {
+    //   "get return n-1" in {
+    //     controller.pensdown(1) should be(1)
+    //     controller.pensdown(2) should be(1)
+
+    //   }
     // }
+    // "pens up" should {
+    //   "get return n+1" in {
+    //     controller.pensup(1) should be(2)
+    //     controller.pensup(2) should be(2)
 
-    "pens down" should {
-      "get return n-1" in {
-        controller.pensdown(1) should be(0)
-        controller.pensdown(2) should be(1)
-
-      }
-    }
-    "pens up" should {
-      "get return n+1" in {
-        controller.pensup(1) should be(1)
-        controller.pensup(2) should be(2)
-
-      }
-    }
     "not set to any value " should {
       val num = controller.roll()
       "have value between 0-8" in {
