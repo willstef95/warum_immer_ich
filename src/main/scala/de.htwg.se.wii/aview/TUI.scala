@@ -72,10 +72,11 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
         val gewurfelt = controller.roll()
         println(s"Es wurde ${gewurfelt} gewuerfelt")
         wurf(gewurfelt) match
-          case None         => roll0(0)
-          case Some(erfolg) => rollNot0(erfolg)
+          case None => roll0(0)
+          case Some(erfolg) =>
+            rollNot0(erfolg)
 
-        true
+            true
       }
   }
   def wurf(input: Int): Option[Int] = {
@@ -110,18 +111,11 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   def oSetzen(gewurfelt: Int): Boolean = {
     controller.doAndPublish(controller.putO, Hole(HoleO, gewurfelt))
-    // println(
-    //   s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller.pensup(Stat.stat)} Stifte"
-    // )
     true
   }
 
   def xSetzen(gewurfelt: Int): Boolean = {
     controller.doAndPublish(controller.putX, Hole(HoleO, gewurfelt))
-    // println(
-    //   s"Spieler ${controller.game.names(Stat.stat - 1)} hat: ${controller
-    //       .pensdown(Stat.stat)} Stifte"
-    // )
     true
   }
 
