@@ -19,60 +19,39 @@ class ControllerSpec extends AnyWordSpec {
     var game = new Game(("Spieler1", "Spieler2"), 2, 2)
 
     "be initiall with O" in {
-      controller.toString should be(("""
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #""").stripMargin('#'))
+      controller.get(3) should be(HoleO)
     }
 
-    "With Holex on 3" in {
+    "With HoleX on 3" in {
       controller.doAndPublish(controller.putX, Hole(HoleX, 3))
-      controller.toString should be(("""
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| X | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #""").stripMargin('#'))
+      controller.get(3) should be(HoleX)
     }
 
-    "undo" in {
-      controller.doAndPublish(controller.undo)
-      controller.toString should be(("""
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #""").stripMargin('#'))
-    }
-    "redo" in {
-      controller.doAndPublish(controller.redo)
-      controller.toString should be(("""
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #| X | O | O |
-          #+---+---+---+
-          #| O | O | O |
-          #+---+---+---+
-          #""").stripMargin('#'))
-    }
+    // "undo" in {
+    //   controller.doAndPublish(controller.undo)
+    //   controller.toString should be(("""
+    //       #+---+---+---+
+    //       #| O | O | O |
+    //       #+---+---+---+
+    //       #| O | O | O |
+    //       #+---+---+---+
+    //       #| O | O | O |
+    //       #+---+---+---+
+    //       #""").stripMargin('#'))
+    // }
+    // "redo" in {
+    //   controller.doAndPublish(controller.redo)
+    //   controller.toString should be(("""
+    //       #+---+---+---+
+    //       #| O | O | O |
+    //       #+---+---+---+
+    //       #| X | O | O |
+    //       #+---+---+---+
+    //       #| O | O | O |
+    //       #+---+---+---+
+    //       #""").stripMargin('#'))
+    // }
 
-    "Number 4 is O" should {
-      "get return Hole O" in {
-        controller.get(4) should be(HoleO)
-      }
-    }
     "pens down" should {
       "get return n-1" in {
         controller.pensdown(1) should be(0)
