@@ -6,10 +6,14 @@ lazy val root = project
     name := "warum_immer_ich",
     version := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
+    libraryDependencies ++= Seq(
+      "org.openjfx" % "javafx-controls" % "21-ea+17" classifier "mac-aarch64"
+    ),
     libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test,
     libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.14",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % "test",
     libraryDependencies += "org.scalafx" %% "scalafx" % "20.0.0-R31",
+    libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
     libraryDependencies ++= {
       // Determine OS version of JavaFX binaries
       lazy val osName = System.getProperty("os.name") match {

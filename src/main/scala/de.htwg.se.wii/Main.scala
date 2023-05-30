@@ -1,6 +1,7 @@
 package de.htwg.se.wii
 
 import aview.TUI
+import aview.GUI
 import controller.*
 import model.Field
 import model.Matrix
@@ -16,10 +17,10 @@ import de.htwg.se.wii.aview.{GameUI, TUI, GUI}
   //   "Wie gross soll das Spielfeld sein? 2x2,3x3,4x4,5x5... Bitte geben Sie eine Zahl ein"
   // )
   // val size = readLine().toInt
-  val GUI = new ScalaFXHelloWorld()
-  GUI.start()
+
   val size = 3
   val field = new Field()
   val controller = Controller(field, size)
-  val game: GameUI = TUI(controller, size)
+  val game: GameUI = GUI(controller, size)
+  // val game: GameUI = TUI(controller, size)
   game.run()
