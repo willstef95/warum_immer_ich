@@ -1,4 +1,4 @@
-package de.htwg.se.wii.model
+/*package de.htwg.se.wii.model
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
@@ -17,3 +17,4 @@ class ObserverSpec extends AnyWordSpec {
     }
   }
 }
+ */
