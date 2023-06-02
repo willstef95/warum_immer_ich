@@ -74,7 +74,6 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
           case None => roll0(0)
           case Some(erfolg) =>
             rollNot0(erfolg)
-
             true
       }
   }

@@ -1,6 +1,7 @@
 package de.htwg.se.wii
 package aview
 
+import model.holes.*
 import swing._
 import event._
 import java.awt.BorderLayout
@@ -15,6 +16,7 @@ import util.Observer
 import scala.io.StdIn.readLine
 import de.htwg.se.wii.model.holes.HoleState
 import scala.swing.Reactions.Reaction
+import de.htwg.se.wii.util.Stat
 
 class GUI(controller: Controller) extends Frame with Observer:
 
@@ -32,6 +34,27 @@ class GUI(controller: Controller) extends Frame with Observer:
   pack()
   centerOnScreen()
   open()
+  // controller.init(init())
+
+  /*
+def init() = {
+  new BorderPanel {
+    add(
+      new TextField("Name 1: "),
+      BorderPanel.Position.North)
+      listenTo(Publisher)
+        reactions += {
+          case (src, pt, mod, clicks, props) => {
+            controller.doAndPublish(
+              controller.put,
+              Move(controller.PlayerState.stone, x, y)
+            )
+          }
+        }
+    )
+  }
+}
+   */
 
   def updateContents = {
     new BorderPanel {
@@ -40,8 +63,21 @@ class GUI(controller: Controller) extends Frame with Observer:
         BorderPanel.Position.North
       )
       add(cells, BorderPanel.Position.Center)
+      add(new dice(), BorderPanel.Position.South)
     }
   }
+
+  class dice() extends Button("Würfeln"):
+    listenTo(mouse.clicks)
+    reactions += {
+      case MouseClicked(src, pt, mod, clicks, props) => {
+        controller.doAndPublish(
+          controller.putX,
+          Hole(HoleO, controller.roll()),
+          Stat.stat
+        )
+      }
+    }
 
   override def update: Unit =
     contents = updateContents
