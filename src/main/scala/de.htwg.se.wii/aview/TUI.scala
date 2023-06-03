@@ -44,7 +44,13 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
         println("Falsche eingabe")
         gameLoop()
       case Success(i) => {
-        if (processInputReturn == true & controller.isFinish() == true) {
+        val finish = controller.isFinish()
+        if (finish == true) {
+          println(
+            s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
+          )
+        }
+        if (processInputReturn == true & finish == false) {
           gameLoop()
         } else {
           println("Auf Wiedersehen")
@@ -61,6 +67,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     println("'w' fuer Wuerfeln eingeben")
     true
   }
+
   def processInput(input: String): Boolean = {
     input match
       case "y" => controller.doAndPublish(controller.redo); true
@@ -76,8 +83,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
             println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
             true
           case _ =>
-            println(s"Es wurde ${result.get()} gewuerfelt")
+            println(s"Es wurde ${result.get()} gewuerfelt" + eol)
             true
-
       }
   }

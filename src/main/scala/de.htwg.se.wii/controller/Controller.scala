@@ -14,7 +14,7 @@ import util.UndoManager
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+  var game = new Game(("Spieler1", "Spieler2"), 5, 5)
   val undoManager = new UndoManager[Field]
 
   override def toString = field.toString
@@ -113,24 +113,20 @@ case class Controller(var field: Field, size: Int) extends Observable:
   }
 
   def isFinish(): Boolean = {
-    var r = true
+    var r = false
     if (game.pens1 == 0 || game.pens2 == 0) {
-      println(
-        s"${game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
-      )
-      r = false
-
+      r = true
     } else {
       Stat.stat match
         case 1 => {
           Stat.stat = 2
-          true
+          false
         }
         case 2 => {
           Stat.stat = 1
-          true
+          false
         }
-      true
+      false
     }
     r
   }
