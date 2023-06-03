@@ -8,6 +8,7 @@ import model.Dice
 import model.Game
 import scala.runtime.LazyVals.Names
 import util.Command
+import util.Stat
 import java.util.Observer
 import util.UndoManager
 
@@ -40,6 +41,15 @@ case class Controller(var field: Field, size: Int) extends Observable:
     hole
   }
 
+  def round(): NextStep = {
+    val number = roll()
+    wurf(number) match
+      case None => roll0(0)
+      case Some(roll) =>
+        rollNot0(roll)
+    NextStep(number)
+  }
+
   def roll(): Int =
     val roll = dice.roll()
     roll
@@ -65,3 +75,65 @@ case class Controller(var field: Field, size: Int) extends Observable:
   def init(names: (String, String)) = {
     game = game.copy(names = names)
   }
+
+  def wurf(roll: Int): Option[Int] = {
+    roll match
+      case 0 => {
+        None
+      }
+      case _ => {
+        Some(roll)
+      }
+  }
+
+  def roll0(roll: Int): Boolean = {
+    doAndPublish(putX, Hole(HoleO, roll), Stat.stat)
+    true
+  }
+  def rollNot0(roll: Int): Boolean = {
+
+    get(roll) == HoleX match
+      case true => {
+        oSetzen(roll)
+      }
+      case false => {
+        xSetzen(roll)
+      }
+    true
+  }
+
+  def oSetzen(gewurfelt: Int): Boolean = {
+    doAndPublish(putO, Hole(HoleO, gewurfelt), Stat.stat)
+    true
+  }
+
+  def xSetzen(gewurfelt: Int): Boolean = {
+    doAndPublish(putX, Hole(HoleO, gewurfelt), Stat.stat)
+    true
+  }
+
+  def isFinish(): Boolean = {
+    var r = true
+    if (game.pens1 == 0 || game.pens2 == 0) {
+      println(
+        s"${game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
+      )
+      r = false
+
+    } else {
+      Stat.stat match
+        case 1 => {
+          Stat.stat = 2
+          true
+        }
+        case 2 => {
+          Stat.stat = 1
+          true
+        }
+      true
+    }
+    r
+  }
+
+case class NextStep(roll: Int):
+  def get() = roll

@@ -9,6 +9,7 @@ import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
 import util.Stat
 import controller.Controller
+import controller.NextStep
 import scala.util.{Try, Success, Failure}
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
@@ -43,7 +44,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
         println("Falsche eingabe")
         gameLoop()
       case Success(i) => {
-        if (processInputReturn == true & isFinish() == true) {
+        if (processInputReturn == true & controller.isFinish() == true) {
           gameLoop()
         } else {
           println("Auf Wiedersehen")
@@ -68,72 +69,15 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
         processInputReturn = false;
         false
       case "w" => {
-        val gewurfelt = controller.roll()
-        println(s"Es wurde ${gewurfelt} gewuerfelt")
-        wurf(gewurfelt) match
-          case None => roll0(0)
-          case Some(erfolg) =>
-            rollNot0(erfolg)
+        val result = controller.round()
+        val l = result.get()
+        l match
+          case 0 =>
+            println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
             true
+          case _ =>
+            println(s"Es wurde ${result.get()} gewuerfelt")
+            true
+
       }
-  }
-  def wurf(input: Int): Option[Int] = {
-    input match
-      case 0 => {
-        None
-      }
-      case _ => {
-        Some(input)
-      }
-  }
-  def roll0(n: Int): Boolean = {
-    println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
-    controller.doAndPublish(controller.putX, Hole(HoleO, n), Stat.stat)
-
-    // update
-    true
-  }
-  def rollNot0(gewurfelt: Int): Boolean = {
-
-    controller.get(gewurfelt) == HoleX match
-      case true => {
-        oSetzen(gewurfelt)
-      }
-      case false => {
-        xSetzen(gewurfelt)
-      }
-    true
-  }
-
-  def oSetzen(gewurfelt: Int): Boolean = {
-    controller.doAndPublish(controller.putO, Hole(HoleO, gewurfelt), Stat.stat)
-    true
-  }
-
-  def xSetzen(gewurfelt: Int): Boolean = {
-    controller.doAndPublish(controller.putX, Hole(HoleO, gewurfelt), Stat.stat)
-    true
-  }
-
-  def isFinish(): Boolean = {
-    var r = true
-    if (controller.game.pens1 == 0 || controller.game.pens2 == 0) {
-      println(
-        s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
-      )
-      r = false
-
-    } else {
-      Stat.stat match
-        case 1 => {
-          Stat.stat = 2
-          true
-        }
-        case 2 => {
-          Stat.stat = 1
-          true
-        }
-      true
-    }
-    r
   }
