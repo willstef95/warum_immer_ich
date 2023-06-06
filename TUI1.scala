@@ -14,7 +14,7 @@ import controller.Controller
 import controller.NextStep
 import scala.util.{Try, Success, Failure}
 
-class TUI(controller: Controller, size: Int) extends GameUI, Observer:
+class TUI1(controller: Controller, size: Int) extends GameUI, Observer:
   controller.add(this)
 
   val eol = sys.props("line.separator")
@@ -38,10 +38,6 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     e match
       case Event(roll, EventCases.Quit) => processInputReturn = false;
       case Event(roll, EventCases.Roll) => {
-        println(s"Es wurde $roll gewuerfelt" + eol)
-        println(controller.field.toString())
-      }
-      case Event(roll, EventCases.Undo) => {
         println(s"Es wurde $roll gewuerfelt" + eol)
         println(controller.field.toString())
       }

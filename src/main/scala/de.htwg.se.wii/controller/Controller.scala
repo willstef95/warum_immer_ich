@@ -4,6 +4,8 @@ package controller
 import model.Field
 import model.holes.*
 import util.Observable
+import util.Event
+import util.EventCases
 import model.Dice
 import model.Game
 import scala.runtime.LazyVals.Names
@@ -19,13 +21,26 @@ case class Controller(var field: Field, size: Int) extends Observable:
 
   override def toString = field.toString
 
-  def doAndPublish(doThis: (Hole, Int) => Field, hole: Hole, stat: Int) =
+  def doAndPublish(
+      doThis: (Hole, Int) => Field,
+      hole: Hole,
+      stat: Int,
+      roll: Int
+  ) =
     field = doThis(hole, stat)
-    notifyObservers()
+    notifyObservers(Event(roll, EventCases.Roll))
 
   def doAndPublish(doThis: => Field) =
     field = doThis
-    notifyObservers()
+    notifyObservers(Event(0, EventCases.Undo))
+
+  def zeroAndPublish(
+      doThis: (Hole, Int) => Field,
+      hole: Hole,
+      stat: Int
+  ) =
+    field = doThis(hole, stat)
+    notifyObservers(Event(0, EventCases.Zero))
 
   def undo: Field = undoManager.undoStep(field)
   def redo: Field = undoManager.redoStep(field)
@@ -41,13 +56,12 @@ case class Controller(var field: Field, size: Int) extends Observable:
     hole
   }
 
-  def round(): NextStep = {
+  def round = {
     val number = roll()
     wurf(number) match
       case None => roll0(0)
       case Some(roll) =>
         rollNot0(roll)
-    NextStep(number)
   }
 
   def roll(): Int =
@@ -87,7 +101,7 @@ case class Controller(var field: Field, size: Int) extends Observable:
   }
 
   def roll0(roll: Int): Boolean = {
-    doAndPublish(putX, Hole(HoleO, roll), Stat.stat)
+    zeroAndPublish(putX, Hole(HoleO, roll), Stat.stat)
     true
   }
   def rollNot0(roll: Int): Boolean = {
@@ -102,13 +116,13 @@ case class Controller(var field: Field, size: Int) extends Observable:
     true
   }
 
-  def oSetzen(gewurfelt: Int): Boolean = {
-    doAndPublish(putO, Hole(HoleO, gewurfelt), Stat.stat)
+  def oSetzen(roll: Int): Boolean = {
+    doAndPublish(putO, Hole(HoleO, roll), Stat.stat, roll)
     true
   }
 
-  def xSetzen(gewurfelt: Int): Boolean = {
-    doAndPublish(putX, Hole(HoleO, gewurfelt), Stat.stat)
+  def xSetzen(roll: Int): Boolean = {
+    doAndPublish(putX, Hole(HoleO, roll), Stat.stat, roll)
     true
   }
 

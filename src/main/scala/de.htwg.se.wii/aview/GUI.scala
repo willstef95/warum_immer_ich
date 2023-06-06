@@ -13,10 +13,13 @@ import javax.swing.JTextArea
 import de.htwg.se.wii.aview.GameUI
 import controller.Controller
 import util.Observer
+import util.Event
+import util.EventCases
 import scala.io.StdIn.readLine
 import de.htwg.se.wii.model.holes.HoleState
 import scala.swing.Reactions.Reaction
 import de.htwg.se.wii.util.Stat
+import java.awt.peer.FramePeer
 
 class GUI(controller: Controller) extends Frame with Observer:
 
@@ -30,33 +33,12 @@ class GUI(controller: Controller) extends Frame with Observer:
       })
     }
   }
-  contents = updateContents
+  contents = updateContents(0)
   pack()
   centerOnScreen()
   open()
-  // controller.init(init())
 
-  /*
-def init() = {
-  new BorderPanel {
-    add(
-      new TextField("Name 1: "),
-      BorderPanel.Position.North)
-      listenTo(Publisher)
-        reactions += {
-          case (src, pt, mod, clicks, props) => {
-            controller.doAndPublish(
-              controller.put,
-              Move(controller.PlayerState.stone, x, y)
-            )
-          }
-        }
-    )
-  }
-}
-   */
-
-  def updateContents = {
+  def updateContents(stat: Int) = {
     new BorderPanel {
       add(
         new Label("Player: " + controller.game.names),
@@ -71,16 +53,15 @@ def init() = {
     listenTo(mouse.clicks)
     reactions += {
       case MouseClicked(src, pt, mod, clicks, props) => {
-        controller.doAndPublish(
-          controller.putX,
-          Hole(HoleO, controller.roll()),
-          Stat.stat
-        )
+        controller.round
       }
     }
 
-  override def update: Unit =
-    contents = updateContents
+  def update(e: Event): Unit = e match
+    case Event(roll, EventCases.Quit) =>
+    case Event(roll, EventCases.Roll) => contents = updateContents(0)
+    case Event(roll, EventCases.Zero) =>
+    case Event(roll, EventCases.Undo) =>
 
   class CellPanel(x: Int, y: Int) extends GridPanel(x, y):
     (for (
