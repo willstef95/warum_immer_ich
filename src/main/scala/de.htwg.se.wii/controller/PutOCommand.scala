@@ -18,16 +18,12 @@ class PutOCommand(controller: Controller, hole: Hole, stat: Int)
     field.putO(hole.pos)
 
   override def undoStep(field: Field): Field =
-    if (stat == 1) {
-      controller.pensdown(0)
-    } else {
-      controller.pensdown(1)
-    }
+    controller.pensdown(stat)
     field.putX(hole.pos)
 
   override def redoStep(field: Field): Field =
-    if (stat == 1) {
-      controller.pensup(0)
+    if (stat == 2) {
+      controller.pensup(2)
     } else {
       controller.pensup(1)
     }
