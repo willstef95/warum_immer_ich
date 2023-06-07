@@ -52,28 +52,38 @@ class GUI(controller: Controller) extends Frame with Observer:
       border = Swing.EmptyBorder(10)
       val c = new Constraints
 
-      c.gridx = 0
+      c.gridx = 1
       c.gridy = 0
+      c.insets = new Insets(5, 5, 5, 5)
+      layout(new Label("Willkommen zu Wii")) = c
+
+      c.gridx = 0
+      c.gridy = 1
+      c.insets = new Insets(5, 5, 5, 5)
+      layout(new Label("Name 1:")) = c
+
+      c.gridx = 0
+      c.gridy = 1
       c.insets = new Insets(5, 5, 5, 5)
       layout(new Label("Name 1:")) = c
 
       c.gridx = 1
-      c.gridy = 0
+      c.gridy = 1
       c.fill = GridBagPanel.Fill.Horizontal
       layout(namefield1) = c
 
       c.gridx = 0
-      c.gridy = 1
+      c.gridy = 2
       c.fill = GridBagPanel.Fill.None
       layout(new Label("Name 2:")) = c
 
       c.gridx = 1
-      c.gridy = 1
+      c.gridy = 2
       c.fill = GridBagPanel.Fill.Horizontal
       layout(namefield2) = c
 
       c.gridx = 2
-      c.gridy = 1
+      c.gridy = 2
       layout(button2) = c
     }
 
@@ -83,26 +93,92 @@ class GUI(controller: Controller) extends Frame with Observer:
     panel
   }
 
-  def updateContents(zero: Int): GridPanel = {
-    val gridpanel = new GridPanel(3, 1)
+  def updateContents(zero: Int): GridBagPanel = {
+    val gridbag = new GridBagPanel {
+      border = Swing.EmptyBorder(10)
 
-    if (zero == 0) {
-      gridpanel.contents += new Label(
-        "Es wurde 0 gewurfelt, das Spielfeld bleibt gleich"
-      )
-    } else if (zero == 2) {
-      gridpanel.contents += new Label("Willkommen")
-      gridpanel.contents += new Label("Es spielen: " + controller.game.names._1)
-      gridpanel.contents += new Label("Und: " + controller.game.names._2)
-    } else {
-      gridpanel.contents += new Label(
-        s"Es wurde ${controller.game.roll} gewuerfelt"
-      )
+      val c = new Constraints
+
+      if (zero == 0) {
+        c.gridx = 1
+        c.gridy = 0
+        layout(new Label("Es wurde 0 gewurfelt, das Spielfeld bleibt gleich")) =
+          c
+
+        c.gridx = 1
+        c.gridy = 2
+        layout(new Label(s"Es ist ${controller.game.names(Stat.stat - 1)} ")) =
+          c
+
+        c.gridx = 1
+        c.gridy = 1
+        layout(cells) = c
+
+      } else if (zero == 2) {
+        c.gridx = 1
+        c.gridy = 0
+        layout(new Label("Willkommen")) = c
+
+        c.gridx = 1
+        c.gridy = 1
+        layout(
+          new Label(
+            "Es spielen: " + controller.game.names._1 + " und " + controller.game.names._2
+          )
+        ) = c
+
+      } else {
+        c.gridx = 1
+        c.gridy = 0
+        layout(new Label(s"Es wurde ${controller.game.roll} gewuerfelt")) = c
+
+        c.gridx = 1
+        c.gridy = 2
+        layout(new Label(s"Es ist ${controller.game.names(Stat.stat - 1)} ")) =
+          c
+
+        c.gridx = 1
+        c.gridy = 1
+        layout(cells) = c
+      }
+
+      c.gridx = 1
+      c.gridy = 3
+      layout(new dice()) = c
+
+      c.gridx = 0
+      c.gridy = 4
+      layout(
+        new Label(
+          s"${controller.game.names(0)}"
+        )
+      ) = c
+
+      c.gridx = 0
+      c.gridy = 5
+      layout(
+        new Label(
+          ("| ") * controller.game.pens1
+        )
+      ) = c
+
+      c.gridx = 2
+      c.gridy = 4
+      layout(
+        new Label(
+          s"${controller.game.names(1)}"
+        )
+      ) = c
+
+      c.gridx = 2
+      c.gridy = 5
+      layout(
+        new Label(
+          ("| ") * controller.game.pens2
+        )
+      ) = c
     }
-    gridpanel.contents += cells
-    gridpanel.contents += new dice()
-
-    gridpanel
+    gridbag
   }
 
   class dice() extends Button("Würfeln"):

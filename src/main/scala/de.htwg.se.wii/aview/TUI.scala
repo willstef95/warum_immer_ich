@@ -38,9 +38,11 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
         if (controller.game.roll == 0) {
           println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
           println(controller.field.toString())
+          printt()
         } else {
           println(s"Es wurde ${controller.game.roll} gewuerfelt" + eol)
           println(controller.field.toString())
+          printt()
         }
       }
       case Event.Quit  =>
