@@ -25,7 +25,7 @@ class TUISpec extends AnyWordSpec {
 
   "the tui" should {
     "0 gewurfelt" in {
-      tui.wurf(0) should be(None)
+      controller.wurf(0) should be(None)
     }
 
     "Text ausgegeben" in {
@@ -46,28 +46,28 @@ class TUISpec extends AnyWordSpec {
           #""").stripMargin('#'))
     }
     "diced 0" in {
-      tui.roll0(0) should be(true)
+      controller.roll0(0) should be(true)
     }
     "not 0 diced" in {
-      tui.rollNot0(2) should be(true)
+      controller.rollNot0(2) should be(true)
     }
 
     "field set on O" in {
-      tui.oSetzen(2) should be(true)
+      controller.oSetzen(2) should be(true)
     }
     "field set on X" in {
-      tui.xSetzen(1) should be(true)
+      controller.xSetzen(1) should be(true)
     }
     "name spieler 1 abfragen" in {
       controller.game.names(0) should be("Spieler1")
     }
 
     "One players has 0pins" in {
-      tui.isFinish() should be(false)
+      controller.isFinish() should be(false)
     }
   }
-  "A TUI" when {
-    "tui exit" in {
+  "A controller" when {
+    "controller exit" in {
       tui.processInput("q") should be(false)
     }
     "tui runs" in {

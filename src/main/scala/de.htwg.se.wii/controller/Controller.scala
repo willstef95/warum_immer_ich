@@ -5,6 +5,7 @@ import model.Field
 import model.holes.*
 import util.Observable
 import model.Dice
+import util.Event
 import model.Game
 import scala.runtime.LazyVals.Names
 import util.Command
@@ -14,18 +15,18 @@ import util.UndoManager
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 5, 5)
+  var game = new Game(("Spieler1", "Spieler2"), 5, 5, 0)
   val undoManager = new UndoManager[Field]
 
   override def toString = field.toString
 
   def doAndPublish(doThis: (Hole, Int) => Field, hole: Hole, stat: Int) =
     field = doThis(hole, stat)
-    notifyObservers()
+    notifyObservers(Event.Roll)
 
   def doAndPublish(doThis: => Field) =
     field = doThis
-    notifyObservers()
+    notifyObservers(Event.Roll)
 
   def undo: Field = undoManager.undoStep(field)
   def redo: Field = undoManager.redoStep(field)
@@ -41,17 +42,17 @@ case class Controller(var field: Field, size: Int) extends Observable:
     hole
   }
 
-  def round(): NextStep = {
+  def round() = {
     val number = roll()
     wurf(number) match
       case None => roll0(0)
       case Some(roll) =>
         rollNot0(roll)
-    NextStep(number)
   }
 
   def roll(): Int =
     val roll = dice.roll()
+    game = game.copy(roll = roll)
     roll
 
   def pensdown(spieler: Int): Int =
@@ -74,6 +75,7 @@ case class Controller(var field: Field, size: Int) extends Observable:
 
   def init(names: (String, String)) = {
     game = game.copy(names = names)
+    notifyObservers(Event.Start)
   }
 
   def wurf(roll: Int): Option[Int] = {
@@ -130,6 +132,3 @@ case class Controller(var field: Field, size: Int) extends Observable:
     }
     r
   }
-
-case class NextStep(roll: Int):
-  def get() = roll

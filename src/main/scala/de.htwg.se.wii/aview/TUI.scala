@@ -3,13 +3,13 @@ package aview
 
 import model.holes.*
 import util.Observer
+import util.Event
 import scala.util.Random
 import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
 import util.Stat
 import controller.Controller
-import controller.NextStep
 import scala.util.{Try, Success, Failure}
 
 class TUI(controller: Controller, size: Int) extends GameUI, Observer:
@@ -32,7 +32,20 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
     (Player1, Player2)
   }
 
-  override def update = println(controller.field.toString())
+  def update(e: Event): Unit = {
+    e match
+      case Event.Roll => {
+        if (controller.game.roll == 0) {
+          println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
+          println(controller.field.toString())
+        } else {
+          println(s"Es wurde ${controller.game.roll} gewuerfelt" + eol)
+          println(controller.field.toString())
+        }
+      }
+      case Event.Quit  =>
+      case Event.Start => printt()
+  }
 
   def gameLoop(): Unit = {
     printt()
@@ -76,14 +89,7 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
         processInputReturn = false;
         false
       case "w" => {
-        val result = controller.round()
-        val l = result.get()
-        l match
-          case 0 =>
-            println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
-            true
-          case _ =>
-            println(s"Es wurde ${result.get()} gewuerfelt" + eol)
-            true
+        controller.round()
+        true
       }
   }

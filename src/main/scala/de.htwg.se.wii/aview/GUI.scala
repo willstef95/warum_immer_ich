@@ -13,13 +13,14 @@ import javax.swing.JTextArea
 import de.htwg.se.wii.aview.GameUI
 import controller.Controller
 import util.Observer
+import util.Event
 import scala.io.StdIn.readLine
 import de.htwg.se.wii.model.holes.HoleState
 import scala.swing.Reactions.Reaction
 import de.htwg.se.wii.util.Stat
 
 class GUI(controller: Controller) extends Frame with Observer:
-
+  minimumSize = new Dimension(400, 300)
   def cells = new CellPanel(3, 3)
   controller.add(this)
   title = "Wii"
@@ -28,43 +29,80 @@ class GUI(controller: Controller) extends Frame with Observer:
       contents += new MenuItem(Action("Exit") {
         sys.exit(0)
       })
+      contents += new MenuItem(Action("Redo") {
+        controller.doAndPublish(controller.redo)
+      })
+      contents += new MenuItem(Action("Undo") {
+        controller.doAndPublish(controller.undo)
+      })
     }
   }
-  contents = updateContents
+  contents = init()
   pack()
   centerOnScreen()
   open()
-  // controller.init(init())
 
-  /*
-def init() = {
-  new BorderPanel {
-    add(
-      new TextField("Name 1: "),
-      BorderPanel.Position.North)
-      listenTo(Publisher)
-        reactions += {
-          case (src, pt, mod, clicks, props) => {
-            controller.doAndPublish(
-              controller.put,
-              Move(controller.PlayerState.stone, x, y)
-            )
-          }
-        }
-    )
-  }
-}
-   */
+  def init(): GridBagPanel = {
+    val namefield1 = new TextField { columns = 5 }
+    val namefield2 = new TextField { columns = 5 }
 
-  def updateContents = {
-    new BorderPanel {
-      add(
-        new Label("Player: " + controller.game.names),
-        BorderPanel.Position.North
-      )
-      add(cells, BorderPanel.Position.Center)
-      add(new dice(), BorderPanel.Position.South)
+    val button2 = new Button("Update")
+
+    val panel = new GridBagPanel {
+      border = Swing.EmptyBorder(10)
+      val c = new Constraints
+
+      c.gridx = 0
+      c.gridy = 0
+      c.insets = new Insets(5, 5, 5, 5)
+      layout(new Label("Name 1:")) = c
+
+      c.gridx = 1
+      c.gridy = 0
+      c.fill = GridBagPanel.Fill.Horizontal
+      layout(namefield1) = c
+
+      c.gridx = 0
+      c.gridy = 1
+      c.fill = GridBagPanel.Fill.None
+      layout(new Label("Name 2:")) = c
+
+      c.gridx = 1
+      c.gridy = 1
+      c.fill = GridBagPanel.Fill.Horizontal
+      layout(namefield2) = c
+
+      c.gridx = 2
+      c.gridy = 1
+      layout(button2) = c
     }
+
+    button2.reactions += { case ButtonClicked(_) =>
+      controller.init(namefield1.text, namefield2.text)
+    }
+    panel
+  }
+
+  def updateContents(zero: Int): GridPanel = {
+    val gridpanel = new GridPanel(3, 1)
+
+    if (zero == 0) {
+      gridpanel.contents += new Label(
+        "Es wurde 0 gewurfelt, das Spielfeld bleibt gleich"
+      )
+    } else if (zero == 2) {
+      gridpanel.contents += new Label("Willkommen")
+      gridpanel.contents += new Label("Es spielen: " + controller.game.names._1)
+      gridpanel.contents += new Label("Und: " + controller.game.names._2)
+    } else {
+      gridpanel.contents += new Label(
+        s"Es wurde ${controller.game.roll} gewuerfelt"
+      )
+    }
+    gridpanel.contents += cells
+    gridpanel.contents += new dice()
+
+    gridpanel
   }
 
   class dice() extends Button("Würfeln"):
@@ -79,8 +117,16 @@ def init() = {
       }
     }
 
-  override def update: Unit =
-    contents = updateContents
+  override def update(e: Event): Unit = e match
+    case Event.Quit  =>
+    case Event.Start => contents = updateContents(2)
+    case Event.Roll => {
+      if (controller.game.roll == 0) {
+        contents = updateContents(0)
+      } else {
+        contents = updateContents(1)
+      }
+    }
 
   class CellPanel(x: Int, y: Int) extends GridPanel(x, y):
     (for (
