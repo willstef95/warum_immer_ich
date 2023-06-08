@@ -20,16 +20,8 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
 
   override def run(): Unit = {
     println("Los geht das Spiel")
-    controller.init(init())
-    gameLoop()
-  }
-
-  def init(): (String, String) = {
     println("Name Spieler 1:")
-    val Player1 = readLine
-    println("Name Spieler 2:")
-    val Player2 = readLine
-    (Player1, Player2)
+    gameLoop()
   }
 
   def update(e: Event): Unit = {
@@ -45,32 +37,42 @@ class TUI(controller: Controller, size: Int) extends GameUI, Observer:
           printt()
         }
       }
-      case Event.Quit  =>
+      case Event.Quit => print("quit")
+      case Event.Finish => {
+        println(s"Es wurde ${controller.game.roll} gewuerfelt" + eol)
+        println(controller.field.toString())
+        println(
+          s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
+        )
+        println("Auf Wiedersehen")
+        processInputReturn = false
+      }
       case Event.Start => printt()
   }
 
   def gameLoop(): Unit = {
-    printt()
-    val xx = Try(
-      processInput(scala.io.StdIn.readLine)
-    )
-    xx match
-      case Failure(i) =>
-        println("Falsche eingabe")
-        gameLoop()
-      case Success(i) => {
-        val finish = controller.isFinish()
-        if (finish == true) {
-          println(
-            s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
-          )
-        }
-        if (processInputReturn == true & finish == false) {
-          gameLoop()
-        } else {
-          println("Auf Wiedersehen")
-        }
+    if (processInputReturn == true) {
+      var input = readLine
+      if (controller.game.names(0) == "Spieler1") {
+        println("Name Spieler 2:")
+        val player1 = input
+        val player2 = readLine
+        controller.init(player1, player2)
+        input = readLine
       }
+
+      printt()
+      val xx = Try(
+        processInput(input)
+      )
+      xx match
+        case Failure(i) =>
+          println("Falsche eingabe")
+          gameLoop()
+        case Success(i) => {
+          gameLoop()
+        }
+    }
   }
 
   def printt(): Boolean = {

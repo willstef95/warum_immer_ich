@@ -15,18 +15,26 @@ import util.UndoManager
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 5, 5, 0)
+  var game = new Game(("Spieler1", "Spieler2"), 2, 5, 0)
   val undoManager = new UndoManager[Field]
 
   override def toString = field.toString
 
   def doAndPublish(doThis: (Hole, Int) => Field, hole: Hole, stat: Int) =
     field = doThis(hole, stat)
-    notifyObservers(Event.Roll)
+    if (isFinish() == true) {
+      notifyObservers(Event.Finish)
+    } else {
+      notifyObservers(Event.Roll)
+    }
 
   def doAndPublish(doThis: => Field) =
     field = doThis
-    notifyObservers(Event.Roll)
+    if (isFinish() == true) {
+      notifyObservers(Event.Finish)
+    } else {
+      notifyObservers(Event.Roll)
+    }
 
   def undo: Field = undoManager.undoStep(field)
   def redo: Field = undoManager.redoStep(field)

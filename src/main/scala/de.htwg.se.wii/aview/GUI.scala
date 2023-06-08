@@ -93,13 +93,13 @@ class GUI(controller: Controller) extends Frame with Observer:
     panel
   }
 
-  def updateContents(zero: Int): GridBagPanel = {
+  def updateContents(update: Update): GridBagPanel = {
     val gridbag = new GridBagPanel {
       border = Swing.EmptyBorder(10)
 
       val c = new Constraints
 
-      if (zero == 0) {
+      if (update == Update.Zero) {
         c.gridx = 1
         c.gridy = 0
         layout(new Label("Es wurde 0 gewurfelt, das Spielfeld bleibt gleich")) =
@@ -114,7 +114,7 @@ class GUI(controller: Controller) extends Frame with Observer:
         c.gridy = 1
         layout(cells) = c
 
-      } else if (zero == 2) {
+      } else if (update == Update.Start) {
         c.gridx = 1
         c.gridy = 0
         layout(new Label("Willkommen")) = c
@@ -126,6 +126,23 @@ class GUI(controller: Controller) extends Frame with Observer:
             "Es spielen: " + controller.game.names._1 + " und " + controller.game.names._2
           )
         ) = c
+
+      } else if (update == Update.Finish) {
+        c.gridx = 1
+        c.gridy = 0
+        layout(new Label("Juhhuuuuuu")) = c
+
+        c.gridx = 1
+        c.gridy = 1
+        layout(
+          new Label(
+            s"${controller.game.names(Stat.stat - 1)} hat das Spiel gewonnen!"
+          )
+        ) = c
+
+        c.gridx = 1
+        c.gridy = 3
+        layout(new finishButton()) = c
 
       } else {
         c.gridx = 1
@@ -142,9 +159,15 @@ class GUI(controller: Controller) extends Frame with Observer:
         layout(cells) = c
       }
 
-      c.gridx = 1
-      c.gridy = 3
-      layout(new dice()) = c
+      if (update == Update.Finish) {
+        c.gridx = 1
+        c.gridy = 3
+        layout(new finishButton()) = c
+      } else {
+        c.gridx = 1
+        c.gridy = 3
+        layout(new dice()) = c
+      }
 
       c.gridx = 0
       c.gridy = 4
@@ -185,22 +208,33 @@ class GUI(controller: Controller) extends Frame with Observer:
     listenTo(mouse.clicks)
     reactions += {
       case MouseClicked(src, pt, mod, clicks, props) => {
-        controller.doAndPublish(
-          controller.putX,
-          Hole(HoleO, controller.roll()),
-          Stat.stat
-        )
+        controller.round()
       }
     }
 
+  class finishButton() extends Button("Tschüs"):
+    listenTo(mouse.clicks)
+    reactions += {
+      case MouseClicked(src, pt, mod, clicks, props) => {
+        sys.exit(0)
+      }
+    }
+
+  enum Update:
+    case Finish
+    case Start
+    case Zero
+    case NotZero
+
   override def update(e: Event): Unit = e match
-    case Event.Quit  =>
-    case Event.Start => contents = updateContents(2)
+    case Event.Quit   => sys.exit(0)
+    case Event.Finish => contents = updateContents(Update.Finish)
+    case Event.Start  => contents = updateContents(Update.Start)
     case Event.Roll => {
       if (controller.game.roll == 0) {
-        contents = updateContents(0)
+        contents = updateContents(Update.Zero)
       } else {
-        contents = updateContents(1)
+        contents = updateContents(Update.NotZero)
       }
     }
 
