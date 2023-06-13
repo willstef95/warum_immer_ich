@@ -1,7 +1,8 @@
-package de.htwg.se.wii.model.fieldComponent
+package de.htwg.se.wii.model.FieldComponent
 
 import de.htwg.se.wii.model.holes.*
 import de.htwg.se.wii.model.*
+import de.htwg.se.wii.model.MatrixComponent.*
 
 case class Field(matrix: Matrix[HoleState] = new Matrix(3, HoleO))
     extends FieldInterface {

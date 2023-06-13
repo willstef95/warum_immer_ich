@@ -1,10 +1,9 @@
 package de.htwg.se.wii
 package controller
 
-import model.Field
+import model.FieldComponent.*
 import model.holes.*
 import util.Observable
-
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.controller.Controller
@@ -16,7 +15,7 @@ class ControllerSpec extends AnyWordSpec {
   "filled with Empty" should {
     val field = new Field()
     val controller = Controller(field, 3)
-    var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+    var game = new Game(("Spieler1", "Spieler2"), 2, 2, 0)
 
     "be initiall with O" in {
       controller.toString should be(("""#+---+---+---+

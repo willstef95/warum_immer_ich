@@ -1,5 +1,6 @@
-package de.htwg.se.wii.model.fieldComponent
+package de.htwg.se.wii.model.FieldComponent
 
+import de.htwg.se.wii.model.MatrixComponent.*
 import _root_.de.htwg.se.wii.model.holes.HoleState
 
 trait FieldInterface {

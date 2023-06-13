@@ -1,8 +1,8 @@
 package de.htwg.se.wii
 package controller
 
-import model.fieldComponent.*
-
+import model.FieldComponent.*
+import model.MatrixComponent.*
 import model.holes.*
 import util.Observable
 import model.Dice

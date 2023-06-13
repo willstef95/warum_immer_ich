@@ -3,6 +3,7 @@ package de.htwg.se.wii.model
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.model.holes.*
+import FieldComponent.*
 
 class FieldSpec extends AnyWordSpec {
   "A TicTacToe Field" when {

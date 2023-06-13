@@ -1,5 +1,6 @@
 package de.htwg.se.wii.model
 
+import MatrixComponent.*
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 

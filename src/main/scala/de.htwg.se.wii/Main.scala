@@ -3,8 +3,8 @@ package de.htwg.se.wii
 import aview.TUI
 import aview.GUI
 import controller.*
-import model.fieldComponent.*
-import model.Matrix
+import model.FieldComponent.*
+import model.MatrixComponent.*
 import model.holes.*
 import scala.util.Random
 import scala.annotation.switch

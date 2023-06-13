@@ -1,7 +1,8 @@
-package de.htwg.se.wii.model
-import de.htwg.se.wii.model.Matrix.makeFill
+package de.htwg.se.wii.model.MatrixComponent
+import de.htwg.se.wii.model.MatrixComponent.Matrix.makeFill
 
-case class Matrix[T](rows: Vector[Vector[T]]) {
+case class Matrix[T](rows: Vector[Vector[T]]) extends MatrixInterface[T] {
+
   def this(size: Int, filling: T) = this(makeFill(size, filling))
 
   def size: Int = rows.size
