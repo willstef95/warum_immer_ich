@@ -1,11 +1,9 @@
-package de.htwg.se.wii.model.fieldComponent.fieldBaseImpl
+package de.htwg.se.wii.model.fieldComponent
+
 import de.htwg.se.wii.model.holes.*
+import de.htwg.se.wii.model.*
 
-import de.htwg.se.wii.model.fieldComponent.FieldInterface
-import de.htwg.se.wii.model.fieldComponent.MatrixInterface
-import de.htwg.se.wii.model.Matrix
-
-case class Field(matrix: MatrixInterface[HoleState] = new Matrix(3, HoleO))
+case class Field(matrix: Matrix[HoleState] = new Matrix(3, HoleO))
     extends FieldInterface {
 
   val size = matrix.size

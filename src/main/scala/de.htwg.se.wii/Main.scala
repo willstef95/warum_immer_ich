@@ -3,7 +3,7 @@ package de.htwg.se.wii
 import aview.TUI
 import aview.GUI
 import controller.*
-import model.Field
+import model.fieldComponent.*
 import model.Matrix
 import model.holes.*
 import scala.util.Random

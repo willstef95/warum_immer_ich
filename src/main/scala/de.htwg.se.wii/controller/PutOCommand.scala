@@ -1,12 +1,10 @@
 package de.htwg.se.wii
 package controller
 
-import model.Field
+import model.fieldComponent.*
 import util.Command
 import model.holes.Hole
-import controller.Controller
 import util.Stat
-import de.htwg.se.wii.model.Game
 
 class PutOCommand(controller: Controller, hole: Hole, stat: Int)
     extends Command[Field] {
