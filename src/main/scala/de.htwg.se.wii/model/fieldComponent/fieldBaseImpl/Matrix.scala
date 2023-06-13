@@ -1,4 +1,4 @@
-package de.htwg.se.wii.model
+package de.htwg.se.wii.model.fieldComponent.fieldBaseImpl
 import de.htwg.se.wii.model.Matrix.makeFill
 
 case class Matrix[T](rows: Vector[Vector[T]]) {

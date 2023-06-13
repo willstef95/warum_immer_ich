@@ -1,7 +1,12 @@
-package de.htwg.se.wii.model
+package de.htwg.se.wii.model.fieldComponent.fieldBaseImpl
 import de.htwg.se.wii.model.holes.*
 
-case class Field(matrix: Matrix[HoleState] = new Matrix(3, HoleO)) {
+import de.htwg.se.wii.model.fieldComponent.FieldInterface
+import de.htwg.se.wii.model.fieldComponent.MatrixInterface
+import de.htwg.se.wii.model.Matrix
+
+case class Field(matrix: MatrixInterface[HoleState] = new Matrix(3, HoleO))
+    extends FieldInterface {
 
   val size = matrix.size
   val eol = sys.props("line.separator")
