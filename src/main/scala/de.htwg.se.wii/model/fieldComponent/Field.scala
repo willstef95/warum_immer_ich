@@ -4,11 +4,22 @@ import de.htwg.se.wii.model.holes.*
 import de.htwg.se.wii.model.*
 import de.htwg.se.wii.model.MatrixComponent.*
 
-case class Field(matrix: Matrix[HoleState] = new Matrix(3, HoleO))
-    extends FieldInterface {
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.wii.wii.WiiModule
+
+case class Field @Inject() (
+    var matrix: MatrixInterface[HoleState] = new Matrix(3, HoleO)
+) extends FieldInterface {
+
+  val eol = sys.props("line.separator")
+
+  val injector = Guice.createInjector(new WiiModule)
+
+  matrix = injector.instance[MatrixInterface[HoleState]](Names.named("tiny"))
 
   val size = matrix.size
-  val eol = sys.props("line.separator")
   def bar(cellWidth: Int = 10, cellNum: Int = 3): String =
     (("+" + "-" * cellWidth) * cellNum) + "+" + eol
 
