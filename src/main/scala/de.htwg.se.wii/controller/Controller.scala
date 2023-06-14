@@ -13,6 +13,12 @@ import util.Command
 import util.Stat
 import java.util.Observer
 import util.UndoManager
+import de.htwg.se.wii.model.FieldComponent.FieldInterface
+import de.htwg.se.wii.WiiModule
+
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
 
 case class Controller(var field: Field, size: Int) extends Observable:
   val dice = Dice((size * size))
