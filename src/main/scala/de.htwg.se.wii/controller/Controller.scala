@@ -19,10 +19,12 @@ import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 
-case class Controller(var field: Field, size: Int) extends Observable:
-  val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 2, 5, 0)
+case class Controller(var field: Field) extends Observable:
+  val dice = Dice((field.size * field.size))
+  var game = new Game(("Spieler1", "Spieler2"), 10, 10, 0)
   val undoManager = new UndoManager[Field]
+
+  val size = field.size
 
   override def toString = field.toString
 

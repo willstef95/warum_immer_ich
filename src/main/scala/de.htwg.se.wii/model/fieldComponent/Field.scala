@@ -17,9 +17,10 @@ case class Field @Inject() (
 
   val injector = Guice.createInjector(new WiiModule)
 
-  matrix = injector.instance[MatrixInterface[HoleState]](Names.named("tiny"))
+  matrix = injector.instance[MatrixInterface[HoleState]]
 
   val size = matrix.size
+  // print("Size  " + size)
   def bar(cellWidth: Int = 10, cellNum: Int = 3): String =
     (("+" + "-" * cellWidth) * cellNum) + "+" + eol
 

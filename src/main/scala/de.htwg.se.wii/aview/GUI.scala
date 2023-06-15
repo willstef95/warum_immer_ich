@@ -21,7 +21,7 @@ import de.htwg.se.wii.util.Stat
 
 class GUI(controller: Controller) extends Frame with Observer:
   minimumSize = new Dimension(400, 300)
-  def cells = new CellPanel(3, 3)
+  def cells = new CellPanel(controller.field.size, controller.field.size)
   controller.add(this)
   title = "Wii"
   menuBar = new MenuBar {

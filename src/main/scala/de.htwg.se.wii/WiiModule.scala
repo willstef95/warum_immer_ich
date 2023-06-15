@@ -17,9 +17,7 @@ class WiiModule extends AbstractModule with ScalaModule {
 
   override def configure(): Unit = {
     // bind[MatrixInterface].to[Matrix]
-    bind[MatrixInterface[HoleState]]
-      .annotatedWithName("smal")
-      .toInstance(new Matrix(3, HoleO))
+    bind[MatrixInterface[HoleState]].toInstance(new Matrix(5, HoleO))
     bind[FieldInterface].to[Field]
   }
 }

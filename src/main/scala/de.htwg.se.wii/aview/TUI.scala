@@ -12,7 +12,7 @@ import util.Stat
 import controller.Controller
 import scala.util.{Try, Success, Failure}
 
-class TUI(controller: Controller, size: Int) extends GameUI, Observer:
+class TUI(controller: Controller) extends GameUI, Observer:
   controller.add(this)
 
   val eol = sys.props("line.separator")

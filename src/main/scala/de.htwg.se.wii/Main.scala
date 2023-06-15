@@ -18,9 +18,8 @@ import de.htwg.se.wii.aview.{GameUI, TUI, GUI}
   // )
   // val size = readLine().toInt
 
-  val size = 3
   val field = new Field()
-  val controller = Controller(field, size)
+  val controller = Controller(field)
   val gui = new GUI(controller)
-  val tui: GameUI = TUI(controller, size)
+  val tui: GameUI = TUI(controller)
   tui.run()
