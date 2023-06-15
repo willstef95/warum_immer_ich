@@ -12,14 +12,17 @@ import de.htwg.se.wii.model.MatrixComponent.{Matrix, MatrixInterface}
 import de.htwg.se.wii.model.holes.HoleO
 
 class WiiModule extends AbstractModule {
-  val defaultSize: Int = 3
+
+  val defaultSize: Int = 10
+  val penscount: Int = 20
+
   val defaultHole: Hole = Hole(HoleO, 0)
 
   override def configure() = {
 
     val field = new Field(defaultSize, defaultHole)
     bind(classOf[ControllerInterface]).toInstance(
-      new Controller(field, defaultSize)
+      new Controller(field, penscount)
     )
     bind(classOf[FieldInterface]).toInstance(
       new Field(defaultSize, defaultHole)

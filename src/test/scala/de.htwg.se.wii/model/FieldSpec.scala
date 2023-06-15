@@ -4,6 +4,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.model.holes.*
 import FieldComponent.*
+import de.htwg.se.wii.model.MatrixComponent.Matrix
 
 class FieldSpec extends AnyWordSpec {
   "A TicTacToe Field" when {
@@ -70,7 +71,7 @@ class FieldSpec extends AnyWordSpec {
     //     }
     // }
     "filled with Empty" should {
-      var field = new Field()
+      var field = new Field(new Matrix(3, HoleO))
       "be initiall with O" in {
         field.toString should be(("""#+---+---+---+
           #| O | O | O |
@@ -112,7 +113,7 @@ class FieldSpec extends AnyWordSpec {
       }
     }
     "roll is 6" should {
-      val field = new Field()
+      val field = new Field(new Matrix(3, HoleO))
       "translate return (2,0)" in {
         field.translateW(6) should be(2, 0)
       }

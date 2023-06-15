@@ -15,14 +15,15 @@ import java.util.Observer
 import util.UndoManager
 import controller.controllerComponent.ControllerInterface
 
-case class Controller(var fieldr: FieldInterface, sizer: Int)
+case class Controller(var fieldr: FieldInterface, penscount: Int)
     extends ControllerInterface()
     with Observable {
 
-  val size = sizer
   var field = fieldr
+
+  val size = field.size
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), 2, 5, 0)
+  var game = new Game(("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
 
   override def toString = field.toString

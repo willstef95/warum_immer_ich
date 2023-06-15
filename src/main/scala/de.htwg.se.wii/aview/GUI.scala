@@ -22,7 +22,7 @@ import controller.controllerComponent.ControllerInterface
 
 class GUI(controller: ControllerInterface) extends Frame with Observer:
   minimumSize = new Dimension(400, 300)
-  def cells = new CellPanel(3, 3)
+  def cells = new CellPanel(controller.size, controller.size)
   controller.add(this)
   title = "Wii"
   menuBar = new MenuBar {
@@ -242,8 +242,8 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
 
   class CellPanel(x: Int, y: Int) extends GridPanel(x, y):
     (for (
-      x <- 0 to 2;
-      y <- 0 to 2
+      x <- 0 to x - 1;
+      y <- 0 to y - 1
     ) yield (x, y, controller.field.matrix.cell(x, y))).foreach(t =>
       contents += new CellButton(t._1, t._2, t._3)
     )

@@ -9,12 +9,13 @@ import de.htwg.se.wii.model.holes.*
 import de.htwg.se.wii.controller.*
 import de.htwg.se.wii.model.Game
 import java.util.Observer
+import de.htwg.se.wii.model.MatrixComponent.Matrix
 
 class TUISpec extends AnyWordSpec {
 
-  var field = new Field()
+  var field = new Field(new Matrix(3, HoleO))
   val controller = Controller(field, 3)
-  val tui = new TUI(controller, 3)
+  val tui = new TUI(controller)
   var game = new Game(("Spieler1", "Spieler2"), 1, 0, 0)
 
 //   "init is set to Stefan and Hannes" in {

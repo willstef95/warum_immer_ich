@@ -9,11 +9,12 @@ import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.controller.Controller
 import de.htwg.se.wii.model.Game
 import de.htwg.se.wii.model.Dice
+import de.htwg.se.wii.model.MatrixComponent.Matrix
 
 class ControllerSpec extends AnyWordSpec {
   "A wii controller" when {}
   "filled with Empty" should {
-    val field = new Field()
+    val field = new Field(new Matrix(3, HoleO))
     val controller = Controller(field, 3)
     var game = new Game(("Spieler1", "Spieler2"), 2, 2, 0)
 
