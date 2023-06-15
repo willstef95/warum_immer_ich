@@ -25,6 +25,6 @@ object Wii {
     val controller = injector.getInstance(classOf[ControllerInterface])
 
     val gui = new GUI(controller)
-    val tui: GameUI = TUI(controller, size)
+    val tui: GameUI = TUI(controller)
     tui.run()
 }

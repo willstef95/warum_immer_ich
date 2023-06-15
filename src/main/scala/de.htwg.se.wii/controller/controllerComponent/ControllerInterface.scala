@@ -12,7 +12,17 @@ import de.htwg.se.wii.model.Game
 
 trait ControllerInterface extends Observable {
 
-  def doAndPublish(doThis: (Hole, Int) => FieldInterface, hole: Hole): Unit
+  var game: Game
+  val dice: Dice
+  val undoManager: UndoManager[FieldInterface]
+  val size: Int
+  var field: FieldInterface
+
+  def doAndPublish(
+      doThis: (Hole, Int) => FieldInterface,
+      hole: Hole,
+      stat: Int
+  ): Unit
   def doAndPublish(doThis: => FieldInterface): Unit
   def putX(hole: Hole, stat: Int): FieldInterface
   def putO(hole: Hole, stat: Int): FieldInterface

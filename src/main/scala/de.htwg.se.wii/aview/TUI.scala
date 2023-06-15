@@ -11,12 +11,14 @@ import scala.io.StdIn.readLine
 import util.Stat
 import controller.Controller
 import scala.util.{Try, Success, Failure}
+import controller.controllerComponent.ControllerInterface
 
-class TUI(controller: Controller, size: Int) extends GameUI, Observer:
+class TUI(controller: ControllerInterface) extends GameUI, Observer:
   controller.add(this)
 
   val eol = sys.props("line.separator")
   var processInputReturn = true
+  val size = controller.field.size
 
   override def run(): Unit = {
     println("Los geht das Spiel")

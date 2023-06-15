@@ -15,17 +15,23 @@ import java.util.Observer
 import util.UndoManager
 import controller.controllerComponent.ControllerInterface
 
-case class Controller(var field: Field, size: Int)
+case class Controller(var fieldr: FieldInterface, sizer: Int)
     extends ControllerInterface()
     with Observable {
 
+  val size = sizer
+  var field = fieldr
   val dice = Dice((size * size))
   var game = new Game(("Spieler1", "Spieler2"), 2, 5, 0)
-  val undoManager = new UndoManager[Field]
+  val undoManager = new UndoManager[FieldInterface]
 
   override def toString = field.toString
 
-  def doAndPublish(doThis: (Hole, Int) => Field, hole: Hole, stat: Int) =
+  def doAndPublish(
+      doThis: (Hole, Int) => FieldInterface,
+      hole: Hole,
+      stat: Int
+  ) =
     field = doThis(hole, stat)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
@@ -33,7 +39,7 @@ case class Controller(var field: Field, size: Int)
       notifyObservers(Event.Roll)
     }
 
-  def doAndPublish(doThis: => Field) =
+  def doAndPublish(doThis: => FieldInterface) =
     field = doThis
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
@@ -44,10 +50,10 @@ case class Controller(var field: Field, size: Int)
   def undo: FieldInterface = undoManager.undoStep(field)
   def redo: FieldInterface = undoManager.redoStep(field)
 
-  def putX(hole: Hole, stat: Int): Field =
+  def putX(hole: Hole, stat: Int): FieldInterface =
     undoManager.doStep(field, PutXCommand(this, hole, stat))
 
-  def putO(hole: Hole, stat: Int): Field =
+  def putO(hole: Hole, stat: Int): FieldInterface =
     undoManager.doStep(field, PutOCommand(this, hole, stat))
 
   def get(pos: Int): HoleState = {

@@ -18,8 +18,9 @@ import scala.io.StdIn.readLine
 import de.htwg.se.wii.model.holes.HoleState
 import scala.swing.Reactions.Reaction
 import de.htwg.se.wii.util.Stat
+import controller.controllerComponent.ControllerInterface
 
-class GUI(controller: Controller) extends Frame with Observer:
+class GUI(controller: ControllerInterface) extends Frame with Observer:
   minimumSize = new Dimension(400, 300)
   def cells = new CellPanel(3, 3)
   controller.add(this)
@@ -107,8 +108,9 @@ class GUI(controller: Controller) extends Frame with Observer:
 
         c.gridx = 1
         c.gridy = 2
-        layout(new Label(s"Es ist ${controller.game.names(Stat.stat - 1)} ")) =
-          c
+        layout(
+          new Label(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
+        ) = c
 
         c.gridx = 1
         c.gridy = 1
