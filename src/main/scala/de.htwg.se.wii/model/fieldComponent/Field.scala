@@ -6,12 +6,12 @@ import de.htwg.se.wii.model.MatrixComponent.*
 
 import com.google.inject.Inject
 
-case class Field @Inject() (matrixr: Matrix[HoleState]) extends FieldInterface {
+case class Field @Inject() (matrix: Matrix[HoleState]) extends FieldInterface {
 
   def this(size: Int, filling: Hole) = this(new Matrix(size, filling.state))
 
   val size = matrix.size
-  val matrix = matrixr
+
   val eol = sys.props("line.separator")
   def bar(cellWidth: Int = 10, cellNum: Int = 3): String =
     (("+" + "-" * cellWidth) * cellNum) + "+" + eol

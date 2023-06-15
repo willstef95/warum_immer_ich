@@ -12,6 +12,7 @@ import scala.io.StdIn.readLine
 import de.htwg.se.wii.aview.{GameUI, TUI, GUI}
 import com.google.inject.Guice
 import controller.controllerComponent.ControllerInterface
+import de.htwg.se.wii.WiiModule
 
 object Wii {
   @main def run(): Unit =
