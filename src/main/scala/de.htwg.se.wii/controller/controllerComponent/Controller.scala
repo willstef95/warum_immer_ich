@@ -13,8 +13,12 @@ import util.Command
 import util.Stat
 import java.util.Observer
 import util.UndoManager
+import controller.controllerComponent.ControllerInterface
 
-case class Controller(var field: Field, size: Int) extends Observable:
+case class Controller(var field: Field, size: Int)
+    extends ControllerInterface()
+    with Observable {
+
   val dice = Dice((size * size))
   var game = new Game(("Spieler1", "Spieler2"), 2, 5, 0)
   val undoManager = new UndoManager[Field]
@@ -37,8 +41,8 @@ case class Controller(var field: Field, size: Int) extends Observable:
       notifyObservers(Event.Roll)
     }
 
-  def undo: Field = undoManager.undoStep(field)
-  def redo: Field = undoManager.redoStep(field)
+  def undo: FieldInterface = undoManager.undoStep(field)
+  def redo: FieldInterface = undoManager.redoStep(field)
 
   def putX(hole: Hole, stat: Int): Field =
     undoManager.doStep(field, PutXCommand(this, hole, stat))
@@ -141,3 +145,4 @@ case class Controller(var field: Field, size: Int) extends Observable:
     }
     r
   }
+}

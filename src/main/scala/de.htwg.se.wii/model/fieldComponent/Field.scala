@@ -4,8 +4,11 @@ import de.htwg.se.wii.model.holes.*
 import de.htwg.se.wii.model.*
 import de.htwg.se.wii.model.MatrixComponent.*
 
-case class Field(matrix: Matrix[HoleState] = new Matrix(3, HoleO))
-    extends FieldInterface {
+import com.google.inject.Inject
+
+case class Field @Inject() (matrix: Matrix[HoleState]) extends FieldInterface {
+
+  def this(size: Int, filling: Hole) = this(new Matrix(size, filling.state))
 
   val size = matrix.size
   val eol = sys.props("line.separator")

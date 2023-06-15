@@ -8,8 +8,8 @@ trait FieldInterface {
   def cells(row: Int, cellWidth: Int): String
   def mesh(cellWidth: Int): String
   override def toString: String
-  def putX(pos: Int): Field
-  def putO(pos: Int): Field
+  def putX(pos: Int): FieldInterface
+  def putO(pos: Int): FieldInterface
   def get(pos: Int): HoleState
   def translateW(roll: Int): (Int, Int)
 

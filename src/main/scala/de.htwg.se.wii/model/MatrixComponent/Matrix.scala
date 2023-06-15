@@ -1,7 +1,10 @@
 package de.htwg.se.wii.model.MatrixComponent
 import de.htwg.se.wii.model.MatrixComponent.Matrix.makeFill
 
-case class Matrix[T](rows: Vector[Vector[T]]) extends MatrixInterface[T] {
+import com.google.inject.{Guice, Inject}
+
+case class Matrix[T] @Inject() (rows: Vector[Vector[T]])
+    extends MatrixInterface[T] {
 
   def this(size: Int, filling: T) = this(makeFill(size, filling))
 
