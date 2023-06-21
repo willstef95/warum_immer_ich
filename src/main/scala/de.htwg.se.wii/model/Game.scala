@@ -8,7 +8,7 @@ case class Game(
     pens1: Int,
     pens2: Int,
     roll: Int
-):
-  def toXml() = <game><field>{field}</field><names>{names}</names><pens1>{
-    pens1
-  }</pens1><pens2>{pens2}</pens2><roll>{roll}</roll></game>
+)
+// def toXml() = <game><field>{field}</field><names>{names}</names><pens1>{
+//   pens1
+// }</pens1><pens2>{pens2}</pens2><roll>{roll}</roll></game>

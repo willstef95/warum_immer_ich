@@ -13,8 +13,8 @@ import de.htwg.se.wii.model.holes.HoleO
 
 class WiiModule extends AbstractModule {
 
-  val defaultSize: Int = 10
-  val penscount: Int = 20
+  val defaultSize: Int = 3
+  val penscount: Int = 5
 
   val defaultHole: Hole = Hole(HoleO, 0)
 

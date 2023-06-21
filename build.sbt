@@ -9,6 +9,7 @@ lazy val root = project
     libraryDependencies ++= Seq(
       "org.openjfx" % "javafx-controls" % "21-ea+17" classifier "mac-aarch64"
     ),
+    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC5",
     libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test,
     libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.14",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % "test",

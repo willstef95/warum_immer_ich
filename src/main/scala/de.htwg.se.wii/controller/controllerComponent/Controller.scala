@@ -14,9 +14,14 @@ import util.Stat
 import java.util.Observer
 import util.UndoManager
 import controller.controllerComponent.ControllerInterface
+import com.google.inject.Inject
+import com.google.inject.Guice
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
-case class Controller(var fieldr: FieldInterface, penscount: Int)
-    extends ControllerInterface()
+case class Controller(
+    var fieldr: FieldInterface,
+    penscount: Int
+) extends ControllerInterface()
     with Observable {
 
   var field = fieldr
@@ -134,6 +139,14 @@ case class Controller(var fieldr: FieldInterface, penscount: Int)
     true
   }
 
+  def save = {
+    print("sacve save")
+    val injector = Guice.createInjector(new WiiModule)
+    val fileIo = injector.getInstance(classOf[FileIOInterface])
+    fileIo.save(game)
+    // gameStatus = SAVED
+    // publish(new CellChanged)
+  }
   def isFinish(): Boolean = {
     var r = false
     if (game.pens1 == 0 || game.pens2 == 0) {
