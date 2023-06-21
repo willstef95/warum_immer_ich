@@ -2,7 +2,6 @@ package de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl
 
 import de.htwg.se.wii.model.Game
 import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
-import de.htwg.se.wii.model.Game.field
 import de.htwg.se.wii.model.FieldComponent.FieldInterface
 import de.htwg.se.wii.model.FieldComponent.Field
 import de.htwg.se.wii.model.MatrixComponent.Matrix
@@ -14,8 +13,8 @@ class FileIO extends FileIOInterface:
   override def load: Game = {
     val file = scala.xml.XML.loadFile("game.xml")
     // val field = (file \ "field")
-    val names0 = (file \ "names(0)").text
-    val names1 = (file \ "names(1)").text
+    val names0 = (file \ "names0").text
+    val names1 = (file \ "names1").text
     val pens1 = (file \ "pens1").text.toInt
     val pens2 = (file \ "pens2").text.toInt
     val roll = (file \ "roll").text.toInt
@@ -56,8 +55,8 @@ class FileIO extends FileIOInterface:
   def fieldToXml(field: FieldInterface, names: (String, String)) = {
     <field size={field.size.toString}>
       {
-        <names(0)>{names[0]}</names(0)>
-        <names(1)>{names[1]}</names(1)>
+      <names0>{names(0)}</names0>
+        <names1>{names(1)}</names1>
       for {
         pos <- 0 until field.size
       } yield cellToXml(field, pos)
@@ -70,4 +69,3 @@ class FileIO extends FileIOInterface:
     {field.get(pos).toString}
     </cell>
   }
-           

@@ -42,4 +42,7 @@ trait ControllerInterface extends Observable {
   def undo: FieldInterface
   def redo: FieldInterface
   override def toString: String
+
+  def save: Unit
+  def load: Unit
 }

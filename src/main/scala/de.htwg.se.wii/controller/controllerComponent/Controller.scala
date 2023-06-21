@@ -14,8 +14,11 @@ import util.Stat
 import java.util.Observer
 import util.UndoManager
 import controller.controllerComponent.ControllerInterface
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
+import com.google.inject.Inject
+import com.google.inject.Guice
 
-case class Controller(var fieldr: FieldInterface, penscount: Int)
+case class Controller @Inject() (var fieldr: FieldInterface, penscount: Int)
     extends ControllerInterface()
     with Observable {
 
@@ -25,6 +28,9 @@ case class Controller(var fieldr: FieldInterface, penscount: Int)
   val dice = Dice((size * size))
   var game = new Game(field, ("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
+
+  val injector = Guice.createInjector(new WiiModule)
+  val fileIo = injector.getInstance(classOf[FileIOInterface])
 
   override def toString = game.field.toString
 
@@ -132,6 +138,18 @@ case class Controller(var fieldr: FieldInterface, penscount: Int)
   def xSetzen(gewurfelt: Int): Boolean = {
     doAndPublish(putX, Hole(HoleO, gewurfelt), Stat.stat)
     true
+  }
+
+  def save: Unit = {
+    fileIo.save(game)
+    // gameStatus = SAVED
+    // publish(new CellChanged)
+  }
+
+  def load: Unit = {
+    game = fileIo.load
+    // gameStatus = LOADED
+    // publish(new CellChanged)
   }
 
   def isFinish(): Boolean = {
