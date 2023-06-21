@@ -16,7 +16,7 @@ class TUISpec extends AnyWordSpec {
   var field = new Field(new Matrix(3, HoleO))
   val controller = Controller(field, 3)
   val tui = new TUI(controller)
-  var game = new Game(("Spieler1", "Spieler2"), 1, 0, 0)
+  var game = new Game(field, ("Spieler1", "Spieler2"), 1, 0, 0)
 
 //   "init is set to Stefan and Hannes" in {
 //     tui.init() should be("Stefan", "Hannes")
