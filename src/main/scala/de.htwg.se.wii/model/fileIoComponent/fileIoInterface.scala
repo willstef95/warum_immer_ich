@@ -6,6 +6,6 @@ import de.htwg.se.wii.model.Game
 trait FileIOInterface {
 
   def load: Game
-  def save(field: Game): Unit
+  def save(game: Game): Unit
 
 }
