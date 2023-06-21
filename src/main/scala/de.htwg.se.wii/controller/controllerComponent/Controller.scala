@@ -23,17 +23,17 @@ case class Controller(var fieldr: FieldInterface, penscount: Int)
 
   val size = field.size
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), penscount, penscount, 0)
+  var game = new Game(field, ("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
 
-  override def toString = field.toString
+  override def toString = game.field.toString
 
   def doAndPublish(
       doThis: (Hole, Int) => FieldInterface,
       hole: Hole,
       stat: Int
   ) =
-    field = doThis(hole, stat)
+    game = game.copy(field = doThis(hole, stat))
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
@@ -41,24 +41,24 @@ case class Controller(var fieldr: FieldInterface, penscount: Int)
     }
 
   def doAndPublish(doThis: => FieldInterface) =
-    field = doThis
+    game = game.copy(field = doThis)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
       notifyObservers(Event.Roll)
     }
 
-  def undo: FieldInterface = undoManager.undoStep(field)
-  def redo: FieldInterface = undoManager.redoStep(field)
+  def undo: FieldInterface = undoManager.undoStep(game.field)
+  def redo: FieldInterface = undoManager.redoStep(game.field)
 
   def putX(hole: Hole, stat: Int): FieldInterface =
-    undoManager.doStep(field, PutXCommand(this, hole, stat))
+    undoManager.doStep(game.field, PutXCommand(this, hole, stat))
 
   def putO(hole: Hole, stat: Int): FieldInterface =
-    undoManager.doStep(field, PutOCommand(this, hole, stat))
+    undoManager.doStep(game.field, PutOCommand(this, hole, stat))
 
   def get(pos: Int): HoleState = {
-    val hole = field.get(pos)
+    val hole = game.field.get(pos)
     hole
   }
 
