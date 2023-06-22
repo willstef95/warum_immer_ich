@@ -13,14 +13,13 @@ class FileIO @Inject() extends FileIOInterface {
 
   override def loadGame: Game = {
     val file = scala.xml.XML.loadFile("game.xml")
-    val names0 = (file \\ "name1").text
-    val names1 = (file \\ "name2").text
+    val names0 = (file \\ "name1" \ "@name1").text
+    val names1 = (file \\ "name2" \ "@name2").text
     val pens1 = (file \\ "pens1" \ "@pens1").text
     val pens2 = (file \\ "pens2" \ "@pens2").text
     val roll = (file \\ "roll" \ "@roll").text
     val size = (file \\ "size" \ "@size").text
-    println("flflflflflflflflf" + pens1 + pens2 + roll + size)
-    var field: FieldInterface = new Field(new Matrix(size.toInt, HoleO))
+    var field: FieldInterface = new Field(new Matrix(3, HoleO))
 
     val holeNodes = (file \\ "cell")
     for (cell <- holeNodes) {
@@ -39,7 +38,7 @@ class FileIO @Inject() extends FileIOInterface {
 
   def loadStat: Int = {
     val file = scala.xml.XML.loadFile("game.xml")
-    val stat = (file \ "state").text
+    val stat = (file \\ "state" \ "@state").text
     stat.toInt
   }
 
@@ -53,7 +52,7 @@ class FileIO @Inject() extends FileIOInterface {
   }
 
   def fieldToXml(game: Game, stat: Int) = {
-    <entry> {game.toXml()} <state> {stat.toString} </state>
+    <entry> {game.toXml()} <state state={stat.toString}></state>
     <field> {
       for {
         pos <- 0 until game.field.size * game.field.size

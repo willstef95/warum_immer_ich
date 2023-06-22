@@ -154,13 +154,11 @@ case class Controller @Inject() (
   }
 
   def load = {
-
+    println("load controller")
     Stat.stat = fileIo.loadStat
-
+    println("load Game")
     game = fileIo.loadGame
-
     println(game.field.toString())
-
   }
 
   def isFinish(): Boolean = {
