@@ -14,7 +14,6 @@ import scala.util.control.Breaks
 class FileIO extends FileIOInterface:
 
   override def save(game: Game, stat: Int): Unit = {
-    print("json save")
     import java.io._
     val pw = new PrintWriter(new File("field.json"))
     pw.write(ToJson(game, stat))
@@ -22,7 +21,6 @@ class FileIO extends FileIOInterface:
   }
 
   def ToJson(game: Game, stat: Int) = {
-    print("   tojson       ")
     import play.api.libs.json._
 
     var str = game.field.get(0).toString
