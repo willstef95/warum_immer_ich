@@ -10,27 +10,27 @@ import com.google.inject.name.Names
 import de.htwg.se.wii.controller.Controller
 import de.htwg.se.wii.model.MatrixComponent.{Matrix, MatrixInterface}
 import de.htwg.se.wii.model.holes.HoleO
-import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.FileIO
-import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
+import de.htwg.se.wii.model.fileIoComponent.fileIoJsonImpl.{
+  FileIO => JsonFileIo
+}
+// import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.{FileIO => XmlFileIo}
 
 class WiiModule extends AbstractModule {
 
-  val defaultSize: Int = 10
-  val penscount: Int = 20
+  val defaultSize: Int = 3
+  val penscount: Int = 5
 
   val defaultHole: Hole = Hole(HoleO, 0)
 
   override def configure() = {
 
     val field = new Field(defaultSize, defaultHole)
+    val fileIo = new JsonFileIo
     bind(classOf[ControllerInterface]).toInstance(
-      new Controller(field, penscount)
+      new Controller(field, fileIo, penscount)
     )
     bind(classOf[FieldInterface]).toInstance(
       new Field(defaultSize, defaultHole)
-    )
-    bind(classOf[FileIOInterface]).toInstance(
-      new FileIO()
     )
     bind(classOf[MatrixInterface[Hole]])
       .toInstance(new Matrix(defaultSize, defaultHole))

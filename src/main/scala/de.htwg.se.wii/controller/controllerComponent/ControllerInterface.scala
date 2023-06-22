@@ -38,11 +38,9 @@ trait ControllerInterface extends Observable {
   def oSetzen(gewurfelt: Int): Boolean
   def xSetzen(gewurfelt: Int): Boolean
   def isFinish(): Boolean
+  def save: Unit
 
   def undo: FieldInterface
   def redo: FieldInterface
   override def toString: String
-
-  def save: Unit
-  def load: Unit
 }

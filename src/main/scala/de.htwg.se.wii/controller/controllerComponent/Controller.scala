@@ -14,12 +14,15 @@ import util.Stat
 import java.util.Observer
 import util.UndoManager
 import controller.controllerComponent.ControllerInterface
-import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 import com.google.inject.Inject
 import com.google.inject.Guice
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
-case class Controller @Inject() (var fieldr: FieldInterface, penscount: Int)
-    extends ControllerInterface()
+case class Controller @Inject() (
+    var fieldr: FieldInterface,
+    val fileIo: FileIOInterface,
+    penscount: Int
+) extends ControllerInterface()
     with Observable {
 
   var field = fieldr
@@ -29,17 +32,17 @@ case class Controller @Inject() (var fieldr: FieldInterface, penscount: Int)
   var game = new Game(field, ("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
 
-  val injector = Guice.createInjector(new WiiModule)
-  val fileIo = injector.getInstance(classOf[FileIOInterface])
+  // val injector = Guice.createInjector(new WiiModule)
+  // val fileIo = injector.getInstance(classOf[FileIOInterface])
 
-  override def toString = game.field.toString
+  override def toString = field.toString
 
   def doAndPublish(
       doThis: (Hole, Int) => FieldInterface,
       hole: Hole,
       stat: Int
   ) =
-    game = game.copy(field = doThis(hole, stat))
+    field = doThis(hole, stat)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
@@ -47,7 +50,7 @@ case class Controller @Inject() (var fieldr: FieldInterface, penscount: Int)
     }
 
   def doAndPublish(doThis: => FieldInterface) =
-    game = game.copy(field = doThis)
+    field = doThis
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
@@ -140,18 +143,14 @@ case class Controller @Inject() (var fieldr: FieldInterface, penscount: Int)
     true
   }
 
-  def save: Unit = {
+  def save = {
+    print("sacve save")
     fileIo.save(game)
+    print("save save")
+
     // gameStatus = SAVED
     // publish(new CellChanged)
   }
-
-  def load: Unit = {
-    game = fileIo.load
-    // gameStatus = LOADED
-    // publish(new CellChanged)
-  }
-
   def isFinish(): Boolean = {
     var r = false
     if (game.pens1 == 0 || game.pens2 == 0) {

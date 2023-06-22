@@ -5,7 +5,7 @@ import de.htwg.se.wii.model.Game
 
 trait FileIOInterface {
 
-  def load: Game
+  // def load: Game
   def save(game: Game): Unit
 
 }
