@@ -10,7 +10,7 @@ import com.google.inject.name.Names
 import de.htwg.se.wii.controller.Controller
 import de.htwg.se.wii.model.MatrixComponent.{Matrix, MatrixInterface}
 import de.htwg.se.wii.model.holes.HoleO
-import de.htwg.se.wii.model.fileIoComponent.fileIoJsonImpl.FileIO as JsonFileIo
+// import de.htwg.se.wii.model.fileIoComponent.fileIoJsonImpl.FileIO as JsonFileIo
 import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.FileIO as XmlFileIo
 
 class WiiModule extends AbstractModule {

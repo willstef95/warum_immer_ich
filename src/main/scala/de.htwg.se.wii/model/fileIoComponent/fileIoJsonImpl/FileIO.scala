@@ -2,7 +2,6 @@ package de.htwg.se.wii.model.fileIoComponent.fileIoJsonImpl
 
 import de.htwg.se.wii.model.Game
 import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
-// import de.htwg.se.wii.model.Game.field
 import de.htwg.se.wii.model.FieldComponent.FieldInterface
 import de.htwg.se.wii.model.FieldComponent.Field
 import de.htwg.se.wii.model.MatrixComponent.Matrix
