@@ -35,7 +35,7 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
       })
       contents += new MenuItem(Action("load") {
         val l = controller.load
-        update(Event.Roll)
+        update(Event.Load)
       })
       contents += new MenuItem(Action("Redo") {
         controller.doAndPublish(controller.redo)
@@ -239,6 +239,7 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
     case Event.Quit   => sys.exit(0)
     case Event.Finish => contents = updateContents(Update.Finish)
     case Event.Start  => contents = updateContents(Update.Start)
+    case Event.Load  => contents = updateContents(Update.Load)
     case Event.Roll => {
       if (controller.game.roll == 0) {
         contents = updateContents(Update.Zero)

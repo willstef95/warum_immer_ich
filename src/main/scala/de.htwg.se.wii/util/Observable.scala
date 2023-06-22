@@ -17,3 +17,4 @@ enum Event:
   case Roll
   case Start
   case Finish
+  case Load
