@@ -11,14 +11,15 @@ import scala.xml.PrettyPrinter
 
 class FileIO @Inject() extends FileIOInterface {
 
-  override def load: Game = {
+  override def loadGame: Game = {
     val file = scala.xml.XML.loadFile("game.xml")
-    val names0 = (file \ "name1").text
-    val names1 = (file \ "name2").text
-    val pens1 = (file \ "pens1" \ "@pens1").text
-    val pens2 = (file \ "pens2" \ "@pens2").text
-    val roll = (file \ "roll" \ "@roll").text
-    val size = (file \\ "field" \ "@field").text
+    val names0 = (file \\ "name1").text
+    val names1 = (file \\ "name2").text
+    val pens1 = (file \\ "pens1" \ "@pens1").text
+    val pens2 = (file \\ "pens2" \ "@pens2").text
+    val roll = (file \\ "roll" \ "@roll").text
+    val size = (file \\ "size" \ "@size").text
+    println("flflflflflflflflf" + pens1 + pens2 + roll + size)
     var field: FieldInterface = new Field(new Matrix(size.toInt, HoleO))
 
     val holeNodes = (file \\ "cell")
@@ -33,6 +34,12 @@ class FileIO @Inject() extends FileIOInterface {
     }
     val game = new Game(field, (names0, names1), pens1.toInt, pens2.toInt, roll.toInt)
     game
+  }
+
+  def loadStat: Int = {
+    val file = scala.xml.XML.loadFile("game.xml")
+    val stat = (file \ "state").text
+    stat.toInt
   }
 
   def save(game: Game, stat: Int): Unit = {
