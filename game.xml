@@ -3,20 +3,20 @@
         <field size="3"> </field>
         <name1 name1="hahahahahha"> </name1>
         <name2 name2="huhuhuhhuhu"> </name2>
-        <pens1 pens1="3"> </pens1>
-        <pens2 pens2="2"> </pens2>
-        <roll roll="2"> </roll>
+        <pens1 pens1="5"> </pens1>
+        <pens2 pens2="5"> </pens2>
+        <roll roll="5"> </roll>
     </game>
     <state state="2"></state>
     <field>
         <cell pos="0"> O </cell>
         <cell pos="1"> O </cell>
-        <cell pos="2"> X </cell>
+        <cell pos="2"> O </cell>
         <cell pos="3"> O </cell>
-        <cell pos="4"> O </cell>
+        <cell pos="4"> X </cell>
         <cell pos="5"> X </cell>
-        <cell pos="6"> X </cell>
+        <cell pos="6"> O </cell>
         <cell pos="7"> O </cell>
-        <cell pos="8"> O </cell>
+        <cell pos="8"> X </cell>
     </field>
 </entry>

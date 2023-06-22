@@ -136,6 +136,19 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
           )
         ) = c
 
+      } else if (update == Update.Load) {
+        c.gridx = 1
+        c.gridy = 0
+        layout(new Label("Willkommen zurück")) = c
+
+        c.gridx = 1
+        c.gridy = 1
+        layout(
+          new Label(
+            "Es spielen: " + controller.game.names._1 + " und " + controller.game.names._2
+          )
+        ) = c
+
       } else if (update == Update.Finish) {
         c.gridx = 1
         c.gridy = 0
@@ -234,6 +247,7 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
     case Start
     case Zero
     case NotZero
+    case Load
 
   override def update(e: Event): Unit = e match
     case Event.Quit   => sys.exit(0)
