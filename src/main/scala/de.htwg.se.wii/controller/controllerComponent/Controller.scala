@@ -143,6 +143,16 @@ case class Controller @Inject() (
     true
   }
 
+  def oRSetzen(gewurfelt: Int): Boolean = {
+    doAndPublish(putO, Hole(HoleO, gewurfelt), Stat.stat)
+    true
+  }
+
+  def xRSetzen(gewurfelt: Int): Boolean = {
+    doAndPublish(putX, Hole(HoleO, gewurfelt), Stat.stat)
+    true
+  }
+
   def save = {
     print("sacve save")
     fileIo.save(game, field, Stat.stat)
@@ -150,7 +160,6 @@ case class Controller @Inject() (
   }
 
   def load = {
-    print("loaasd")
     // field fileIo.loadField
     // game = game.copy(fileIo.loadGame())
 
@@ -158,8 +167,18 @@ case class Controller @Inject() (
 
     game = fileIo.loadGame
 
-    notifyObservers(Event.Start)
+    val str = fileIo.loadField
+    var xxx = 0
+    for (char <- str) {
+      if (char == 'O') {
+        field.putO(xxx)
+      } else {
+        field.putX(xxx)
+      }
+      xxx = xxx + 1;
+    }
 
+    notifyObservers(Event.Start)
   }
   def isFinish(): Boolean = {
     var r = false

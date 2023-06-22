@@ -8,4 +8,5 @@ trait FileIOInterface {
   def save(game: Game, field: FieldInterface, stat: Int): Unit
   def loadStat: Int
   def loadGame: Game
+  def loadField: String
 }

@@ -63,9 +63,15 @@ class FileIO extends FileIOInterface:
     val pens2 = (json \ "pens2").get.toString.toInt
     val name1 = (json \ "name1").get.toString
     val name2 = (json \ "name2").get.toString
-
     val game = new Game((name1, name2), pens1, pens2, 0)
     game
+  }
+
+  def loadField: String = {
+    val source: String = Source.fromFile("field.json").getLines.mkString
+    val json: JsValue = Json.parse(source)
+    val statfield = (json \ "statfield").get.toString
+    statfield
   }
 
   // override def load: Game = {
