@@ -10,6 +10,8 @@ import com.google.inject.name.Names
 import de.htwg.se.wii.controller.Controller
 import de.htwg.se.wii.model.MatrixComponent.{Matrix, MatrixInterface}
 import de.htwg.se.wii.model.holes.HoleO
+import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.FileIO
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
 class WiiModule extends AbstractModule {
 
@@ -26,6 +28,9 @@ class WiiModule extends AbstractModule {
     )
     bind(classOf[FieldInterface]).toInstance(
       new Field(defaultSize, defaultHole)
+    )
+    bind(classOf[FileIOInterface]).toInstance(
+      new FileIO()
     )
     bind(classOf[MatrixInterface[Hole]])
       .toInstance(new Matrix(defaultSize, defaultHole))
