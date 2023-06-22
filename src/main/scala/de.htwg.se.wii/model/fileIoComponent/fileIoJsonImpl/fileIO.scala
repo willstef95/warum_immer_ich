@@ -14,6 +14,7 @@ import play.api.libs.json.*
 class FileIO extends FileIOInterface:
 
   override def save(game: Game): Unit = {
+    print("json save")
     import java.io._
     val pw = new PrintWriter(new File("field.json"))
     pw.write(ToJson(game))
@@ -21,15 +22,17 @@ class FileIO extends FileIOInterface:
   }
 
   def ToJson(game: Game) = {
+    print("   tojson       ")
     import play.api.libs.json._
     Json.prettyPrint(
       Json.obj(
         "size" -> game.field.size,
         "pens1" -> game.pens1,
-        "pens2" -> game.pens2
+        "pens2" -> game.pens2,
+        "name1" -> game.names(0),
+        "name2" -> game.names(1)
       )
     )
-
   }
 
   // override def load: Game = {

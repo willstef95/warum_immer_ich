@@ -18,8 +18,9 @@ import com.google.inject.Inject
 import com.google.inject.Guice
 import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
-case class Controller(
+case class Controller @Inject() (
     var fieldr: FieldInterface,
+    val fileIo: FileIOInterface,
     penscount: Int
 ) extends ControllerInterface()
     with Observable {
@@ -31,14 +32,17 @@ case class Controller(
   var game = new Game(field, ("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
 
-  override def toString = game.field.toString
+  // val injector = Guice.createInjector(new WiiModule)
+  // val fileIo = injector.getInstance(classOf[FileIOInterface])
+
+  override def toString = field.toString
 
   def doAndPublish(
       doThis: (Hole, Int) => FieldInterface,
       hole: Hole,
       stat: Int
   ) =
-    game = game.copy(field = doThis(hole, stat))
+    field = doThis(hole, stat)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
@@ -46,7 +50,7 @@ case class Controller(
     }
 
   def doAndPublish(doThis: => FieldInterface) =
-    game = game.copy(field = doThis)
+    field = doThis
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
@@ -141,9 +145,9 @@ case class Controller(
 
   def save = {
     print("sacve save")
-    val injector = Guice.createInjector(new WiiModule)
-    val fileIo = injector.getInstance(classOf[FileIOInterface])
     fileIo.save(game)
+    print("save save")
+
     // gameStatus = SAVED
     // publish(new CellChanged)
   }
