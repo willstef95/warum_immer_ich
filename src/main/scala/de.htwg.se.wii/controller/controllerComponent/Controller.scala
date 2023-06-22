@@ -43,6 +43,7 @@ case class Controller @Inject() (
       stat: Int
   ) =
     field = doThis(hole, stat)
+    game = game.copy(field = field)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
@@ -145,12 +146,16 @@ case class Controller @Inject() (
 
   def save = {
     print("sacve save")
-    fileIo.save(game)
+    fileIo.save(game, Stat.stat)
     print("save save")
-
-    // gameStatus = SAVED
-    // publish(new CellChanged)
   }
+
+  def load = {
+    print("sacve save")
+    val game = fileIo.load
+    game
+  }
+
   def isFinish(): Boolean = {
     var r = false
     if (game.pens1 == 0 || game.pens2 == 0) {

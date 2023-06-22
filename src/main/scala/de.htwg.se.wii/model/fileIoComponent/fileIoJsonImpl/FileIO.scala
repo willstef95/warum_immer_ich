@@ -13,7 +13,7 @@ import play.api.libs.json.*
 
 class FileIO extends FileIOInterface:
 
-  override def save(game: Game): Unit = {
+  override def save(game: Game, stat: Int): Unit = {
     print("json save")
     import java.io._
     val pw = new PrintWriter(new File("field.json"))
@@ -35,7 +35,11 @@ class FileIO extends FileIOInterface:
     )
   }
 
-//   override def load: Game = {
+   override def load: Game = {
+     var field: FieldInterface = new Field(new Matrix(3, HoleO))
+     val game = new Game(field, ("names0", "names1"), 3, 3, 1)
+     game
+   }
 // val source: String = Source.fromFile("field.json").getLines.mkString
 // val json: JsValue = Json.parse(source)
 // val size = (json \ "field" \ "size").get.toString.toInt

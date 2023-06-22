@@ -30,6 +30,12 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
       contents += new MenuItem(Action("Exit") {
         sys.exit(0)
       })
+      contents += new MenuItem(Action("save") {
+        controller.save
+      })
+      contents += new MenuItem(Action("load") {
+        controller.load
+      })
       contents += new MenuItem(Action("Redo") {
         controller.doAndPublish(controller.redo)
       })
