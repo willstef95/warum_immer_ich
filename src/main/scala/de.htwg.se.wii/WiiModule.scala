@@ -23,7 +23,9 @@ class WiiModule extends AbstractModule {
 
     val field = new Field(defaultSize, defaultHole)
     val fileIo = new JsonFileIo
+    val fileIo = new JsonFileIo
     bind(classOf[ControllerInterface]).toInstance(
+      new Controller(field, fileIo, penscount)
       new Controller(field, fileIo, penscount)
     )
     bind(classOf[FieldInterface]).toInstance(

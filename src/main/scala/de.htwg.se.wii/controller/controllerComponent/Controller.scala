@@ -17,7 +17,15 @@ import controller.controllerComponent.ControllerInterface
 import com.google.inject.Inject
 import com.google.inject.Guice
 import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
+import com.google.inject.Inject
+import com.google.inject.Guice
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
+case class Controller @Inject() (
+    var fieldr: FieldInterface,
+    val fileIo: FileIOInterface,
+    penscount: Int
+) extends ControllerInterface()
 case class Controller @Inject() (
     var fieldr: FieldInterface,
     val fileIo: FileIOInterface,
@@ -36,6 +44,10 @@ case class Controller @Inject() (
   // val fileIo = injector.getInstance(classOf[FileIOInterface])
 
   override def toString = field.toString
+  // val injector = Guice.createInjector(new WiiModule)
+  // val fileIo = injector.getInstance(classOf[FileIOInterface])
+
+  override def toString = field.toString
 
   def doAndPublish(
       doThis: (Hole, Int) => FieldInterface,
@@ -44,13 +56,19 @@ case class Controller @Inject() (
   ) =
     field = doThis(hole, stat)
     game = game.copy(field = field)
+    field = doThis(hole, stat)
+    game = game.copy(field = field)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
       notifyObservers(Event.Roll)
     }
 
+  // def doAndPublish()
+
   def doAndPublish(doThis: => FieldInterface) =
+    field = doThis
+    game = game.copy(field = field)
     field = doThis
     game = game.copy(field = field)
     if (isFinish() == true) {

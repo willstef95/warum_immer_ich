@@ -12,6 +12,7 @@ import util.Stat
 import controller.Controller
 import scala.util.{Try, Success, Failure}
 import controller.controllerComponent.ControllerInterface
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
 class TUI(controller: ControllerInterface) extends GameUI, Observer:
   controller.add(this)
@@ -70,6 +71,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
       xx match
         case Failure(i) =>
           println("Falsche eingabe")
+          printt()
           gameLoop()
         case Success(i) => {
           gameLoop()
@@ -91,8 +93,12 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
     input match
       case "y" => controller.doAndPublish(controller.redo); true
       case "z" => controller.doAndPublish(controller.undo); true
-      case "l" => controller.load; true
       case "s" => controller.save; true
+      case "l" => {
+        controller.load;
+        printt()
+        true
+      }
       case "q" =>
         processInputReturn = false;
         false
@@ -100,4 +106,5 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
         controller.round()
         true
       }
+
   }

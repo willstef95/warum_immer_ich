@@ -1,4 +1,4 @@
-package de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl
+// package de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl
 
 import com.google.inject.Inject
 import de.htwg.se.wii.model.FieldComponent.{Field, FieldInterface}
@@ -29,10 +29,11 @@ class FileIO @Inject() extends FileIOInterface {
       holestate match {
         case "O" => field = field.putO(pos)
         case "X" => field = field.putX(pos)
-        case _ =>
+        case _   =>
       }
     }
-    val game = new Game(field, (names0, names1), pens1.toInt, pens2.toInt, roll.toInt)
+    val game =
+      new Game(field, (names0, names1), pens1.toInt, pens2.toInt, roll.toInt)
     game
   }
 
@@ -52,13 +53,15 @@ class FileIO @Inject() extends FileIOInterface {
   }
 
   def fieldToXml(game: Game, stat: Int) = {
-    <entry> { game.toXml() } <state> { stat.toString } </state>
+    <entry> {game.toXml()} <state> {stat.toString} </state>
     <field> {
-    for {
-      pos <- 0 until game.field.size * game.field.size
-    } yield cellToXml(game.field, pos)}
+      for {
+        pos <- 0 until game.field.size * game.field.size
+      } yield cellToXml(game.field, pos)
+    }
     </field>
-    </entry>}
+    </entry>
+  }
 
   def cellToXml(field: FieldInterface, pos: Int) = {
     <cell pos={pos.toString}>
