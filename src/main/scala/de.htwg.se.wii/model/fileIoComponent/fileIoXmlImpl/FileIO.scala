@@ -1,72 +1,71 @@
 // package de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl
 
-// import de.htwg.se.wii.model.Game
-// import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
-// import de.htwg.se.wii.model.Game.field
-// import de.htwg.se.wii.model.FieldComponent.FieldInterface
-// import de.htwg.se.wii.model.FieldComponent.Field
-// import de.htwg.se.wii.model.MatrixComponent.Matrix
-// import de.htwg.se.wii.model.holes.HoleO
-// import scala.xml.PrettyPrinter
+import com.google.inject.Inject
+import de.htwg.se.wii.model.FieldComponent.{Field, FieldInterface}
+import de.htwg.se.wii.model.Game
+import de.htwg.se.wii.model.MatrixComponent.Matrix
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
+import de.htwg.se.wii.model.holes.HoleO
 
-// class FileIO extends FileIOInterface:
+import scala.xml.PrettyPrinter
 
-//   override def load: Game = {
-//     val file = scala.xml.XML.loadFile("game.xml")
-//     // val field = (file \ "field")
-//     val names0 = (file \ "names(0)").text
-//     val names1 = (file \ "names(1)").text
-//     val pens1 = (file \ "pens1").text.toInt
-//     val pens2 = (file \ "pens2").text.toInt
-//     val roll = (file \ "roll").text.toInt
-//     val sizeAttr = (file \\ "field" \ "@size")
-//     val size = sizeAttr.text.toInt
-//     var field: FieldInterface = new Field(new Matrix(size, HoleO))
+class FileIO @Inject() extends FileIOInterface {
 
-//     val holeNodes = (file \\ "cell")
-//     for (cell <- holeNodes) {
-//       val pos: Int = (cell \ "@pos").text.toInt
-//       val value: String = cell.text.trim.toString
-//       value match {
-//         case "O" => field = field.putO(pos)
-//         case "X" => field = field.putX(pos)
-//         case _   =>
-//       }
-//     }
+  override def loadGame: Game = {
+    val file = scala.xml.XML.loadFile("game.xml")
+    val names0 = (file \\ "name1").text
+    val names1 = (file \\ "name2").text
+    val pens1 = (file \\ "pens1" \ "@pens1").text
+    val pens2 = (file \\ "pens2" \ "@pens2").text
+    val roll = (file \\ "roll" \ "@roll").text
+    val size = (file \\ "size" \ "@size").text
+    println("flflflflflflflflf" + pens1 + pens2 + roll + size)
+    var field: FieldInterface = new Field(new Matrix(size.toInt, HoleO))
 
-//     val game = new Game(field, (names0, names1), pens1, pens2, roll)
-//     game
-//   }
+    val holeNodes = (file \\ "cell")
+    for (cell <- holeNodes) {
+      val pos: Int = (cell \ "@pos").text.toInt
+      val holestate: String = cell.text
+      holestate match {
+        case "O" => field = field.putO(pos)
+        case "X" => field = field.putX(pos)
+        case _   =>
+      }
+    }
+    val game =
+      new Game(field, (names0, names1), pens1.toInt, pens2.toInt, roll.toInt)
+    game
+  }
 
-//   override def save(game: Game): Unit =
-//     saveString(game)
+  def loadStat: Int = {
+    val file = scala.xml.XML.loadFile("game.xml")
+    val stat = (file \ "state").text
+    stat.toInt
+  }
 
-//   def saveXML(game: Game): Unit = {
-//     scala.xml.XML.save("game.xml", fieldToXml(game.field, game.names))
-//   }
+  def save(game: Game, stat: Int): Unit = {
+    import java.io._
+    val pw = new PrintWriter(new File("game.xml"))
+    val prettyPrinter = new PrettyPrinter(120, 4)
+    val xml = prettyPrinter.format(fieldToXml(game, stat))
+    pw.write(xml)
+    pw.close
+  }
 
-//   def saveString(game: Game): Unit = {
-//     import java.io._
-//     val pw = new PrintWriter(new File("game.xml"))
-//     val prettyPrinter = new PrettyPrinter(120, 4)
-//     val xml = prettyPrinter.format(fieldToXml(game.field, game.names))
-//     pw.write(xml)
-//     pw.close
-//   }
-//   def fieldToXml(field: FieldInterface, names: (String, String)) = {
-//     <field size={field.size.toString}>
-//       {
-//         <names(0)>{names[0]}</names(0)>
-//         <names(1)>{names[1]}</names(1)>
-//       for {
-//         pos <- 0 until field.size
-//       } yield cellToXml(field, pos)
-//     }
-//     </field>
-//   }
+  def fieldToXml(game: Game, stat: Int) = {
+    <entry> {game.toXml()} <state> {stat.toString} </state>
+    <field> {
+      for {
+        pos <- 0 until game.field.size * game.field.size
+      } yield cellToXml(game.field, pos)
+    }
+    </field>
+    </entry>
+  }
 
-//   def cellToXml(field: FieldInterface, pos: Int) = {
-//     <cell pos={pos.toString}>
-//     {field.get(pos).toString}
-//     </cell>
-//   }
+  def cellToXml(field: FieldInterface, pos: Int) = {
+    <cell pos={pos.toString}>
+      {field.get(pos).toString}
+    </cell>
+  }
+}
