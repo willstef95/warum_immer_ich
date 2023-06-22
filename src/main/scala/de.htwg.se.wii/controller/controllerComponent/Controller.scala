@@ -29,7 +29,7 @@ case class Controller @Inject() (
 
   val size = field.size
   val dice = Dice((size * size))
-  var game = new Game(("Spieler1", "Spieler2"), penscount, penscount, 0)
+  var game = new Game(field, ("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
 
   // val injector = Guice.createInjector(new WiiModule)
@@ -43,31 +43,35 @@ case class Controller @Inject() (
       stat: Int
   ) =
     field = doThis(hole, stat)
+    game = game.copy(field = field)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
       notifyObservers(Event.Roll)
     }
+
+  // def doAndPublish()
 
   def doAndPublish(doThis: => FieldInterface) =
     field = doThis
+    game = game.copy(field = field)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
       notifyObservers(Event.Roll)
     }
 
-  def undo: FieldInterface = undoManager.undoStep(field)
-  def redo: FieldInterface = undoManager.redoStep(field)
+  def undo: FieldInterface = undoManager.undoStep(game.field)
+  def redo: FieldInterface = undoManager.redoStep(game.field)
 
   def putX(hole: Hole, stat: Int): FieldInterface =
-    undoManager.doStep(field, PutXCommand(this, hole, stat))
+    undoManager.doStep(game.field, PutXCommand(this, hole, stat))
 
   def putO(hole: Hole, stat: Int): FieldInterface =
-    undoManager.doStep(field, PutOCommand(this, hole, stat))
+    undoManager.doStep(game.field, PutOCommand(this, hole, stat))
 
   def get(pos: Int): HoleState = {
-    val hole = field.get(pos)
+    val hole = game.field.get(pos)
     hole
   }
 
@@ -143,43 +147,22 @@ case class Controller @Inject() (
     true
   }
 
-  def oRSetzen(gewurfelt: Int): Boolean = {
-    doAndPublish(putO, Hole(HoleO, gewurfelt), Stat.stat)
-    true
-  }
-
-  def xRSetzen(gewurfelt: Int): Boolean = {
-    doAndPublish(putX, Hole(HoleO, gewurfelt), Stat.stat)
-    true
-  }
-
   def save = {
     print("sacve save")
-    fileIo.save(game, field, Stat.stat)
+    fileIo.save(game, Stat.stat)
     print("save save")
   }
 
   def load = {
-    // field fileIo.loadField
-    // game = game.copy(fileIo.loadGame())
 
     Stat.stat = fileIo.loadStat
 
     game = fileIo.loadGame
 
-    val str = fileIo.loadField
-    var xxx = 0
-    for (char <- str) {
-      if (char == 'O') {
-        field.putO(xxx)
-      } else {
-        field.putX(xxx)
-      }
-      xxx = xxx + 1;
-    }
+    println(game.field.toString())
 
-    notifyObservers(Event.Start)
   }
+
   def isFinish(): Boolean = {
     var r = false
     if (game.pens1 == 0 || game.pens2 == 0) {

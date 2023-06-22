@@ -1,9 +1,10 @@
 {
   "size": 3,
-  "pens1": 5,
-  "pens2": 7,
+  "pens1": 2,
+  "pens2": 4,
   "name1": "Stefan",
   "name2": "Hannes",
-  "statfield": "OXOOOOOOO",
-  "stat": 2
+  "statfield": "OOOOXOXXX",
+  "stat": 2,
+  "roll": 8
 }
