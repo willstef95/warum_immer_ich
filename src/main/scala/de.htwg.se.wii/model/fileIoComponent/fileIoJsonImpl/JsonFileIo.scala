@@ -7,11 +7,11 @@ import de.htwg.se.wii.model.FieldComponent.Field
 import de.htwg.se.wii.model.MatrixComponent.Matrix
 import de.htwg.se.wii.model.holes.HoleO
 import scala.io.Source
-import play.api.libs.json.*
+import play.api.libs.json._
 import scala.util.control._
 import scala.util.control.Breaks
 
-class FileIO extends FileIOInterface:
+class JsonFileIo extends FileIOInterface {
 
   override def save(game: Game, stat: Int): Unit = {
     print("json save")
@@ -80,7 +80,7 @@ class FileIO extends FileIOInterface:
         // print(s"Feld: $pos" + eol)
 
         if (pos < size * size)
-          // print(cell)
+        // print(cell)
           if (cell == 'O') {
             // print(s"O: $cell" + eol)
             field = field.putO(pos)
@@ -101,3 +101,4 @@ class FileIO extends FileIOInterface:
     val game = new Game(field, (name1, name2), pens1, pens2, 0)
     game
   }
+}

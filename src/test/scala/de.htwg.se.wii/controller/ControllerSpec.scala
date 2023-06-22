@@ -1,8 +1,9 @@
 package de.htwg.se.wii
 package controller
 
-import model.FieldComponent.*
-import model.holes.*
+import model.FieldComponent._
+import model.holes._
+import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.XmlFileIo
 import util.Observable
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
@@ -15,7 +16,8 @@ class ControllerSpec extends AnyWordSpec {
   "A wii controller" when {}
   "filled with Empty" should {
     val field = new Field(new Matrix(3, HoleO))
-    val controller = Controller(field, 3)
+    val fileIo = new XmlFileIo
+    val controller = Controller(field, fileIo, 3)
     var game = new Game(field, ("Spieler1", "Spieler2"), 2, 2, 0)
 
     "be initiall with O" in {

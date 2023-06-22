@@ -4,17 +4,19 @@ package tui
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.aview.TUI
-import de.htwg.se.wii.model.FieldComponent.*
-import de.htwg.se.wii.model.holes.*
-import de.htwg.se.wii.controller.*
+import de.htwg.se.wii.model.FieldComponent._
+import de.htwg.se.wii.model.holes._
+import de.htwg.se.wii.controller._
 import de.htwg.se.wii.model.Game
+import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.XmlFileIo
 import java.util.Observer
 import de.htwg.se.wii.model.MatrixComponent.Matrix
 
 class TUISpec extends AnyWordSpec {
 
-  var field = new Field(new Matrix(3, HoleO))
-  val controller = Controller(field, 3)
+  val field = new Field(new Matrix(3, HoleO))
+  val fileIo = new XmlFileIo
+  val controller = Controller(field, fileIo, 3)
   val tui = new TUI(controller)
   var game = new Game(field, ("Spieler1", "Spieler2"), 1, 0, 0)
 

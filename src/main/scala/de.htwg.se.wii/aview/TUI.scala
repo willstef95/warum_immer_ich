@@ -40,6 +40,8 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
           printt()
         }
       }
+      case Event.Load => { println("Willkommen zurück!")
+      printt()}
       case Event.Quit => print("quit")
       case Event.Finish => {
         println(s"Es wurde ${controller.game.roll} gewuerfelt" + eol)
@@ -79,7 +81,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
     }
   }
 
-  def printt(): Boolean = {
+  def   printt(): Boolean = {
     println(s"${controller.game.names(0)} hat: ${controller.game.pens1} Stifte")
     println(
       s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte" + eol

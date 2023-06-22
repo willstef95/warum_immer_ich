@@ -9,7 +9,7 @@ import de.htwg.se.wii.model.holes.HoleO
 
 import scala.xml.PrettyPrinter
 
-class FileIO @Inject() extends FileIOInterface {
+class XmlFileIo @Inject() extends FileIOInterface {
 
   override def loadGame: Game = {
     val file = scala.xml.XML.loadFile("game.xml")
@@ -21,13 +21,14 @@ class FileIO @Inject() extends FileIOInterface {
     val size = (file \\ "size" \ "@size").text
     var field: FieldInterface = new Field(new Matrix(3, HoleO))
 
-    val holeNodes = (file \\ "cell")
+    val holeNodes = (file \ "field" \ "cell")
+    print(holeNodes)
     for (cell <- holeNodes) {
       val pos: Int = (cell \ "@pos").text.toInt
-      val holestate: String = cell.text
-      holestate match {
-        case "O" => field = field.putO(pos)
-        case "X" => field = field.putX(pos)
+      val holestate = cell.text
+      holestate(1) match {
+        case 'O' => field = field.putO(pos)
+        case 'X' => field = field.putX(pos)
         case _   =>
       }
     }
