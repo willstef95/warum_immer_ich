@@ -34,7 +34,8 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
         controller.save
       })
       contents += new MenuItem(Action("load") {
-        controller.load
+        val l = controller.load
+        update(Event.Roll)
       })
       contents += new MenuItem(Action("Redo") {
         controller.doAndPublish(controller.redo)
