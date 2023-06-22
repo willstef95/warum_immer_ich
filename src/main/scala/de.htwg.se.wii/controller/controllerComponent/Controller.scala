@@ -52,6 +52,7 @@ case class Controller @Inject() (
 
   def doAndPublish(doThis: => FieldInterface) =
     field = doThis
+    game = game.copy(field = field)
     if (isFinish() == true) {
       notifyObservers(Event.Finish)
     } else {
@@ -151,9 +152,9 @@ case class Controller @Inject() (
   }
 
   def load = {
-    print("sacve save")
-    val game = fileIo.load
-    game
+    print("load-----------------------------------ü-ü-üü")
+    game = fileIo.load
+    //doAndPublish()
   }
 
   def isFinish(): Boolean = {

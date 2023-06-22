@@ -15,12 +15,11 @@ class FileIO @Inject() extends FileIOInterface {
     val file = scala.xml.XML.loadFile("game.xml")
     val names0 = (file \ "name1").text
     val names1 = (file \ "name2").text
-    val pens1 = (file \ "pens1").text.toInt
-    val pens2 = (file \ "pens2").text.toInt
-    val roll = (file \ "roll").text.toInt
-    val size = (file \\ "field").text.toInt
-    var field: FieldInterface = new Field(new Matrix(size, HoleO))
-    new Matrix(size, HoleO)
+    val pens1 = (file \ "pens1" \ "@pens1").text
+    val pens2 = (file \ "pens2" \ "@pens2").text
+    val roll = (file \ "roll" \ "@roll").text
+    val size = (file \\ "field" \ "@field").text
+    var field: FieldInterface = new Field(new Matrix(size.toInt, HoleO))
 
     val holeNodes = (file \\ "cell")
     for (cell <- holeNodes) {
@@ -32,7 +31,7 @@ class FileIO @Inject() extends FileIOInterface {
         case _ =>
       }
     }
-    val game = new Game(field, (names0, names1), pens1, pens2, roll)
+    val game = new Game(field, (names0, names1), pens1.toInt, pens2.toInt, roll.toInt)
     game
   }
 

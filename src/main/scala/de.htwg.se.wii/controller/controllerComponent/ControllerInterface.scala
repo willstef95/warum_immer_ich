@@ -39,7 +39,7 @@ trait ControllerInterface extends Observable {
   def xSetzen(gewurfelt: Int): Boolean
   def isFinish(): Boolean
   def save: Unit
-  def load: Game
+  def load: Unit
 
   def undo: FieldInterface
   def redo: FieldInterface
