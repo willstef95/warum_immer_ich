@@ -29,7 +29,7 @@ case class Controller @Inject() (
 
   val size = field.size
   val dice = Dice((size * size))
-  var game = new Game(field, ("Spieler1", "Spieler2"), penscount, penscount, 0)
+  var game = new Game(("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
 
   // val injector = Guice.createInjector(new WiiModule)
@@ -57,17 +57,17 @@ case class Controller @Inject() (
       notifyObservers(Event.Roll)
     }
 
-  def undo: FieldInterface = undoManager.undoStep(game.field)
-  def redo: FieldInterface = undoManager.redoStep(game.field)
+  def undo: FieldInterface = undoManager.undoStep(field)
+  def redo: FieldInterface = undoManager.redoStep(field)
 
   def putX(hole: Hole, stat: Int): FieldInterface =
-    undoManager.doStep(game.field, PutXCommand(this, hole, stat))
+    undoManager.doStep(field, PutXCommand(this, hole, stat))
 
   def putO(hole: Hole, stat: Int): FieldInterface =
-    undoManager.doStep(game.field, PutOCommand(this, hole, stat))
+    undoManager.doStep(field, PutOCommand(this, hole, stat))
 
   def get(pos: Int): HoleState = {
-    val hole = game.field.get(pos)
+    val hole = field.get(pos)
     hole
   }
 
@@ -145,7 +145,7 @@ case class Controller @Inject() (
 
   def save = {
     print("sacve save")
-    fileIo.save(game)
+    fileIo.save(game, field, Stat.stat)
     print("save save")
 
     // gameStatus = SAVED

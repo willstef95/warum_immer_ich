@@ -13,24 +13,37 @@ import play.api.libs.json.*
 
 class FileIO extends FileIOInterface:
 
-  override def save(game: Game): Unit = {
+  override def save(game: Game, field: FieldInterface, stat: Int): Unit = {
     print("json save")
     import java.io._
     val pw = new PrintWriter(new File("field.json"))
-    pw.write(ToJson(game))
+    pw.write(ToJson(game, field, stat))
     pw.close
   }
 
-  def ToJson(game: Game) = {
+  def ToJson(game: Game, field: FieldInterface, stat: Int) = {
     print("   tojson       ")
     import play.api.libs.json._
+
+    var str = field.get(0).toString
+    var x = 1
+    while (x < 9) {
+      var str2 = field.get(x).toString
+      str = s"$str$str2"
+      x = x + 1;
+    }
+
+    print(str)
+
     Json.prettyPrint(
       Json.obj(
-        "size" -> game.field.size,
+        "size" -> field.size,
         "pens1" -> game.pens1,
         "pens2" -> game.pens2,
         "name1" -> game.names(0),
-        "name2" -> game.names(1)
+        "name2" -> game.names(1),
+        "statfield" -> str,
+        "stat" -> stat
       )
     )
   }

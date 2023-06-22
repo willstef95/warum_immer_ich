@@ -13,7 +13,7 @@ import de.htwg.se.wii.model.holes.HoleO
 import de.htwg.se.wii.model.fileIoComponent.fileIoJsonImpl.{
   FileIO => JsonFileIo
 }
-import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.{FileIO => XmlFileIo}
+// import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.{FileIO => XmlFileIo}
 
 class WiiModule extends AbstractModule {
 
@@ -25,7 +25,7 @@ class WiiModule extends AbstractModule {
   override def configure() = {
 
     val field = new Field(defaultSize, defaultHole)
-    val fileIo = new XmlFileIo
+    val fileIo = new JsonFileIo
     bind(classOf[ControllerInterface]).toInstance(
       new Controller(field, fileIo, penscount)
     )
