@@ -147,9 +147,19 @@ case class Controller @Inject() (
     print("sacve save")
     fileIo.save(game, field, Stat.stat)
     print("save save")
+  }
 
-    // gameStatus = SAVED
-    // publish(new CellChanged)
+  def load = {
+    print("loaasd")
+    // field fileIo.loadField
+    // game = game.copy(fileIo.loadGame())
+
+    Stat.stat = fileIo.loadStat
+
+    game = fileIo.loadGame
+
+    notifyObservers(Event.Start)
+
   }
   def isFinish(): Boolean = {
     var r = false

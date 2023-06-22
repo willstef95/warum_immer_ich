@@ -48,23 +48,43 @@ class FileIO extends FileIOInterface:
     )
   }
 
+  def loadStat: Int = {
+    import java.io._
+    val source: String = Source.fromFile("field.json").getLines.mkString
+    val json: JsValue = Json.parse(source)
+    val size = (json \ "stat").get.toString.toInt
+    size
+  }
+
+  def loadGame: Game = {
+    val source: String = Source.fromFile("field.json").getLines.mkString
+    val json: JsValue = Json.parse(source)
+    val pens1 = (json \ "pens1").get.toString.toInt
+    val pens2 = (json \ "pens2").get.toString.toInt
+    val name1 = (json \ "name1").get.toString
+    val name2 = (json \ "name2").get.toString
+
+    val game = new Game((name1, name2), pens1, pens2, 0)
+    game
+  }
+
   // override def load: Game = {
-  // val source: String = Source.fromFile("field.json").getLines.mkString
-  // val json: JsValue = Json.parse(source)
-  // val size = (json \ "field" \ "size").get.toString.toInt
-  // val playerState = (json \ "field" \ "playerState").get.toString
+  //   val source: String = Source.fromFile("field.json").getLines.mkString
+  //   val json: JsValue = Json.parse(source)
+  //   val size = (json \ "field" \ "size").get.toString.toInt
+  //   val playerState = (json \ "field" \ "playerState").get.toString
 
-  // var field: FieldInterface = new Field(new Matrix(size, HoleO))
+  //   var field: FieldInterface = new Field(new Matrix(size, HoleO))
 
-  // for (index <- 0 until size * size) {
-  //   val row = (json \\ "row")(index).as[Int]
-  //   val col = (json \\ "col")(index).as[Int]
-  //   val value = (json \\ "cell")(index).as[String]
-  //   value match {
-  //     case "O" => field = field.putO(pos)
-  //     case "X" => field = field.putX(pos)
-  //     case _   =>
+  //   for (index <- 0 until size * size) {
+  //     val row = (json \\ "row")(index).as[Int]
+  //     val col = (json \\ "col")(index).as[Int]
+  //     val value = (json \\ "cell")(index).as[String]
+  //     value match {
+  //       case "O" => field = field.putO(pos)
+  //       case "X" => field = field.putX(pos)
+  //       case _   =>
+  //     }
   //   }
-  // }
-  // (field, player)
+  //   (field, player)
   // }

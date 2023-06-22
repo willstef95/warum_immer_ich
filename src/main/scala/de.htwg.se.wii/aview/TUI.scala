@@ -93,6 +93,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
       case "y" => controller.doAndPublish(controller.redo); true
       case "z" => controller.doAndPublish(controller.undo); true
       case "s" => controller.save; true
+      case "l" => controller.load; true
       case "q" =>
         processInputReturn = false;
         false
