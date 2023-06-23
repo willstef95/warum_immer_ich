@@ -1,16 +1,15 @@
-package de.htwg.se.wii
-package controller
+package de.htwg.se.wii.controller
 
-import model.FieldComponent._
-import model.holes._
+import de.htwg.se.wii.model.FieldComponent._
+import de.htwg.se.wii.model.holes._
 import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.XmlFileIo
-import util.Observable
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.matchers.should.Matchers._
-import de.htwg.se.wii.controller.Controller
+import de.htwg.se.wii.controller.controllerComponent.*
 import de.htwg.se.wii.model.Game
 import de.htwg.se.wii.model.Dice
 import de.htwg.se.wii.model.MatrixComponent.Matrix
+import de.htwg.se.wii.util.Observable
+import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.matchers.should.Matchers._
 
 class ControllerSpec extends AnyWordSpec {
   "A wii controller" when {}

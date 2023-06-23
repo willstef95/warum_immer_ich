@@ -1,12 +1,11 @@
-package de.htwg.se.wii
-package tui
+package de.htwg.se.wii.tui
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import de.htwg.se.wii.aview.TUI
 import de.htwg.se.wii.model.FieldComponent._
 import de.htwg.se.wii.model.holes._
-import de.htwg.se.wii.controller._
+import de.htwg.se.wii.controller.controllerComponent.Controller
 import de.htwg.se.wii.model.Game
 import de.htwg.se.wii.model.fileIoComponent.fileIoXmlImpl.XmlFileIo
 import java.util.Observer
@@ -20,9 +19,6 @@ class TUISpec extends AnyWordSpec {
   val tui = new TUI(controller)
   var game = new Game(field, ("Spieler1", "Spieler2"), 1, 0, 0)
 
-//   "init is set to Stefan and Hannes" in {
-//     tui.init() should be("Stefan", "Hannes")
-//   }
   controller.doAndPublish(controller.putX, Hole(HoleX, 2), 1)
   controller.doAndPublish(controller.putX, Hole(HoleX, 5), 1)
 
@@ -32,7 +28,7 @@ class TUISpec extends AnyWordSpec {
     }
 
     "Text ausgegeben" in {
-      tui.printt() should be(true)
+      tui.printGameStat() should be(true)
     }
 
     "get Hole.x back" in {

@@ -6,7 +6,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.wii.aview.TUI
 import de.htwg.se.wii.model.FieldComponent._
 import de.htwg.se.wii.model.holes._
-import de.htwg.se.wii.controller._
+import de.htwg.se.wii.controller.controllerComponent.Controller
 import de.htwg.se.wii.model.Game
 import de.htwg.se.wii.model.fileIoComponent.fileIoJsonImpl.JsonFileIo
 import java.util.Observer
@@ -27,7 +27,7 @@ class JsonFileIoSpec extends AnyWordSpec with Matchers {
     "ToJson is running it" should {
       val game = fileIo.ToJson
       "have returned" in {
-        game.toString() shouldBe a [String]
+        game.toString() shouldBe a[String]
       }
     }
   }
@@ -35,7 +35,7 @@ class JsonFileIoSpec extends AnyWordSpec with Matchers {
     "loadStat is running it" should {
       val state = fileIo.loadStat
       "have returned" in {
-        state shouldBe a [Int]
+        state shouldBe a[Int]
       }
     }
   }
