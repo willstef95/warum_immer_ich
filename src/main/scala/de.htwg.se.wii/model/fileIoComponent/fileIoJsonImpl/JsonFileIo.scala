@@ -14,7 +14,7 @@ import scala.util.control.Breaks
 class JsonFileIo extends FileIOInterface {
 
   override def save(game: Game, stat: Int): Unit = {
-    print("json save")
+    //print("json save")
     import java.io._
     val pw = new PrintWriter(new File("field.json"))
     pw.write(ToJson(game, stat))
@@ -22,7 +22,7 @@ class JsonFileIo extends FileIOInterface {
   }
 
   def ToJson(game: Game, stat: Int) = {
-    print("   tojson       ")
+    //print("   tojson       ")
     import play.api.libs.json._
 
     var str = game.field.get(0).toString
@@ -33,7 +33,7 @@ class JsonFileIo extends FileIOInterface {
       x = x + 1;
     }
 
-    print(str)
+    //print(str)
 
     Json.prettyPrint(
       Json.obj(
@@ -69,7 +69,7 @@ class JsonFileIo extends FileIOInterface {
     val roll = (json \ "roll").get.toString.toInt
     val eol = sys.props("line.separator")
 
-    print("game return1" + eol)
+    //print("game return1" + eol)
 
     var field: FieldInterface = new Field(new Matrix(size, HoleO))
 
