@@ -2,7 +2,6 @@ package de.htwg.se.wii.controller.controllerComponent
 
 import de.htwg.se.wii.controller.PutOCommand
 import de.htwg.se.wii.controller.PutXCommand
-
 import de.htwg.se.wii.model.FieldComponent.FieldInterface
 import de.htwg.se.wii.model.FieldComponent.Field
 import de.htwg.se.wii.model.MatrixComponent.Matrix
@@ -16,8 +15,6 @@ import de.htwg.se.wii.util.Stat
 import de.htwg.se.wii.model.Dice
 import de.htwg.se.wii.model.Game
 import scala.runtime.LazyVals.Names
-// import Default.given
-
 import java.util.Observer
 import de.htwg.se.wii.controller.controllerComponent.ControllerInterface
 import com.google.inject.Inject
@@ -38,9 +35,6 @@ case class Controller @Inject() (
   var game = new Game(field, ("Spieler1", "Spieler2"), penscount, penscount, 0)
   val undoManager = new UndoManager[FieldInterface]
 
-  // val injector = Guice.createInjector(new WiiModule)
-  // val fileIo = injector.getInstance(classOf[FileIOInterface])
-
   override def toString = field.toString
 
   def doAndPublish(
@@ -55,8 +49,6 @@ case class Controller @Inject() (
     } else {
       notifyObservers(Event.Roll)
     }
-
-  // def doAndPublish()
 
   def doAndPublish(doThis: => FieldInterface) =
     field = doThis
@@ -154,15 +146,11 @@ case class Controller @Inject() (
   }
 
   def save = {
-    // print("sacve save")
     fileIo.save(game, Stat.stat)
-    // print("save save")
   }
 
   def load = {
-    // println("load controller")
     Stat.stat = fileIo.loadStat
-    // println("load Game")
     game = fileIo.loadGame
     println(game.field.toString())
   }

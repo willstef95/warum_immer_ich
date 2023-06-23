@@ -22,7 +22,6 @@ class XmlFileIo @Inject() extends FileIOInterface {
     var field: FieldInterface = new Field(new Matrix(3, HoleO))
 
     val holeNodes = (file \ "field" \ "cell")
-    //print(holeNodes)
     for (cell <- holeNodes) {
       val pos: Int = (cell \ "@pos").text.toInt
       val holestate = cell.text

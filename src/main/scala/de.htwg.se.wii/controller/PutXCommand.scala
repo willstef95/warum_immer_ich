@@ -5,7 +5,6 @@ import de.htwg.se.wii.model.FieldComponent.Field
 import de.htwg.se.wii.model.MatrixComponent.Matrix
 import de.htwg.se.wii.model.MatrixComponent.MatrixInterface
 import de.htwg.se.wii.controller.controllerComponent.Controller
-
 import de.htwg.se.wii.util.Command
 import de.htwg.se.wii.model.holes.Hole
 import de.htwg.se.wii.util.Stat

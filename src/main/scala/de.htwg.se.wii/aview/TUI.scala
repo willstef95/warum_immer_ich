@@ -3,15 +3,15 @@ package de.htwg.se.wii.aview
 import de.htwg.se.wii.model.holes.*
 import de.htwg.se.wii.util.Observer
 import de.htwg.se.wii.util.Event
+import de.htwg.se.wii.util.Stat
+import de.htwg.se.wii.controller.controllerComponent.Controller
+import de.htwg.se.wii.controller.controllerComponent.ControllerInterface
+import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
+import scala.util.{Try, Success, Failure}
 import scala.util.Random
 import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
-import de.htwg.se.wii.util.Stat
-import de.htwg.se.wii.controller.controllerComponent.Controller
-import scala.util.{Try, Success, Failure}
-import de.htwg.se.wii.controller.controllerComponent.ControllerInterface
-import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
 class TUI(controller: ControllerInterface) extends GameUI, Observer:
   controller.add(this)
@@ -32,17 +32,17 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
         if (controller.game.roll == 0) {
           println("Es wurde 0 gewurfelt das spielfeld bleibt gleich")
           println(controller.field.toString())
-          printt()
+          printGameStat()
         } else {
           println(s"Es wurde ${controller.game.roll} gewuerfelt" + eol)
           println(controller.field.toString())
-          printt()
+          printGameStat()
         }
       }
       case Event.Load => {
         println("Willkommen zurück!")
         println(controller.field.toString())
-        printt()
+        printGameStat()
       }
       case Event.Quit => print("quit")
       case Event.Finish => {
@@ -54,7 +54,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
         println("Auf Wiedersehen")
         processInputReturn = false
       }
-      case Event.Start => printt()
+      case Event.Start => printGameStat()
   }
 
   def gameLoop(): Unit = {
@@ -67,15 +67,14 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
         controller.init(player1, player2)
         input = readLine
       }
-
-      printt()
+      printGameStat()
       val xx = Try(
         processInput(input)
       )
       xx match
         case Failure(i) =>
           println("Falsche eingabe")
-          printt()
+          printGameStat()
           gameLoop()
         case Success(i) => {
           gameLoop()
@@ -83,11 +82,9 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
     }
   }
 
-  def printt(): Boolean = {
+  def printGameStat(): Boolean = {
     println(s"${controller.game.names(0)} hat: ${controller.game.pens1} Stifte")
-    println(
-      s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte" + eol
-    )
+    println(s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte")
     println(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
     println("'w' fuer Wuerfeln eingeben")
     true
@@ -98,7 +95,11 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
       case "y" => controller.doAndPublish(controller.redo); true
       case "z" => controller.doAndPublish(controller.undo); true
       case "s" => controller.save; true
-      case "l" => { controller.load; true }
+      case "l" => {
+        controller.load;
+        printGameStat()
+        true
+      }
       case "q" =>
         processInputReturn = false;
         false
@@ -106,5 +107,4 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
         controller.round()
         true
       }
-
   }

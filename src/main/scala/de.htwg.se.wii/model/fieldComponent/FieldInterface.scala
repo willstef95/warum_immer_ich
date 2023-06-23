@@ -14,13 +14,4 @@ trait FieldInterface {
   def putO(pos: Int): FieldInterface
   def get(pos: Int): HoleState
   def translateW(roll: Int): (Int, Int)
-
 }
-
-// trait MatrixInterface[T] {
-//   def size: Int
-//   def row(row: Int): Vector[T]
-//   def cell(row: Int, col: Int): Vector[T]
-//   def fill(filling: T): MatrixInterface[T]
-//   def replaceCell(row: Int, col: Int, cell: T): MatrixInterface[T]
-// }

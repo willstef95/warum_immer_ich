@@ -56,6 +56,4 @@ case class Field @Inject() (matrix: Matrix[HoleState]) extends FieldInterface {
       else roll / size
     (x, y)
   }
-
 }
-// def this(size: Int, filling: Hole(HoleState)) = this(new Matrix(size, filling))
