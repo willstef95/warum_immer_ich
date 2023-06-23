@@ -1,10 +1,10 @@
 {
   "size" : 3,
-  "pens1" : 3,
-  "pens2" : 5,
-  "name1" : "hgfjh",
-  "name2" : "dfjgdj",
-  "statfield" : "OOOOXXOOO",
-  "stat" : 1,
-  "roll" : 4
+  "pens1" : 6,
+  "pens2" : 1,
+  "name1" : "Stefan",
+  "name2" : "Hannes",
+  "statfield" : "OXOOOOXOX",
+  "stat" : 2,
+  "roll" : 3
 }

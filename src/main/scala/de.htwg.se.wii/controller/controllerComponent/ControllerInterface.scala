@@ -1,12 +1,10 @@
-package de.htwg.se.wii
-package controller.controllerComponent
+package de.htwg.se.wii.controller.controllerComponent
 
 import de.htwg.se.wii.model.FieldComponent.FieldInterface
-import model.holes._
-import util.{Event, Observable, UndoManager}
-
-import scala.collection.mutable.ListBuffer
-import scala.util.{Failure, Success, Try}
+import de.htwg.se.wii.model.holes.*
+import de.htwg.se.wii.util.Event
+import de.htwg.se.wii.util.Observable
+import de.htwg.se.wii.util.UndoManager
 import de.htwg.se.wii.model.Dice
 import de.htwg.se.wii.model.Game
 

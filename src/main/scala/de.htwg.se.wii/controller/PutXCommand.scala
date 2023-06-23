@@ -1,12 +1,14 @@
-package de.htwg.se.wii
-package controller
+package de.htwg.se.wii.controller
 
-import model.FieldComponent.*
-import model.MatrixComponent.*
+import de.htwg.se.wii.model.FieldComponent.FieldInterface
+import de.htwg.se.wii.model.FieldComponent.Field
+import de.htwg.se.wii.model.MatrixComponent.Matrix
+import de.htwg.se.wii.model.MatrixComponent.MatrixInterface
+import de.htwg.se.wii.controller.controllerComponent.Controller
 
-import util.Command
-import model.holes.Hole
-import util.Stat
+import de.htwg.se.wii.util.Command
+import de.htwg.se.wii.model.holes.Hole
+import de.htwg.se.wii.util.Stat
 
 class PutXCommand(controller: Controller, hole: Hole, stat: Int)
     extends Command[FieldInterface] {

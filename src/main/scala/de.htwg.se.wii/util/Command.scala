@@ -1,6 +1,6 @@
 package de.htwg.se.wii.util
 
-import de.htwg.se.wii.controller.Controller
+import de.htwg.se.wii.controller.controllerComponent.Controller
 import de.htwg.se.wii.aview.TUI
 import de.htwg.se.wii.util.Stat
 

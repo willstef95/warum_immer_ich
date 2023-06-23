@@ -1,7 +1,15 @@
-package de.htwg.se.wii
-package aview
+package de.htwg.se.wii.aview
 
-import model.holes.*
+import de.htwg.se.wii.aview.GameUI
+import de.htwg.se.wii.controller.controllerComponent.Controller
+import de.htwg.se.wii.controller.controllerComponent.ControllerInterface
+import de.htwg.se.wii.util.Observer
+import de.htwg.se.wii.util.Event
+import de.htwg.se.wii.model.holes.HoleState
+import de.htwg.se.wii.util.Stat
+import scala.swing.Reactions.Reaction
+import scala.io.StdIn.readLine
+import de.htwg.se.wii.model.holes.*
 import swing._
 import event._
 import java.awt.BorderLayout
@@ -9,16 +17,6 @@ import java.awt.Dimension
 import javax.swing.JFrame
 import javax.swing.JScrollPane
 import javax.swing.JTextArea
-
-import de.htwg.se.wii.aview.GameUI
-import controller.Controller
-import util.Observer
-import util.Event
-import scala.io.StdIn.readLine
-import de.htwg.se.wii.model.holes.HoleState
-import scala.swing.Reactions.Reaction
-import de.htwg.se.wii.util.Stat
-import controller.controllerComponent.ControllerInterface
 
 class GUI(controller: ControllerInterface) extends Frame with Observer:
   minimumSize = new Dimension(400, 300)
@@ -253,7 +251,7 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
     case Event.Quit   => sys.exit(0)
     case Event.Finish => contents = updateContents(Update.Finish)
     case Event.Start  => contents = updateContents(Update.Start)
-    case Event.Load  => contents = updateContents(Update.Load)
+    case Event.Load   => contents = updateContents(Update.Load)
     case Event.Roll => {
       if (controller.game.roll == 0) {
         contents = updateContents(Update.Zero)

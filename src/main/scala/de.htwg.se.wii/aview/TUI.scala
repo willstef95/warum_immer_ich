@@ -1,17 +1,16 @@
-package de.htwg.se.wii
-package aview
+package de.htwg.se.wii.aview
 
-import model.holes.*
-import util.Observer
-import util.Event
+import de.htwg.se.wii.model.holes.*
+import de.htwg.se.wii.util.Observer
+import de.htwg.se.wii.util.Event
 import scala.util.Random
 import scala.annotation.switch
 import scala.util.control.Breaks._
 import scala.io.StdIn.readLine
-import util.Stat
-import controller.Controller
+import de.htwg.se.wii.util.Stat
+import de.htwg.se.wii.controller.controllerComponent.Controller
 import scala.util.{Try, Success, Failure}
-import controller.controllerComponent.ControllerInterface
+import de.htwg.se.wii.controller.controllerComponent.ControllerInterface
 import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
 
 class TUI(controller: ControllerInterface) extends GameUI, Observer:
@@ -40,9 +39,11 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
           printt()
         }
       }
-      case Event.Load => { println("Willkommen zurück!")
-      println(controller.field.toString())
-      printt()}
+      case Event.Load => {
+        println("Willkommen zurück!")
+        println(controller.field.toString())
+        printt()
+      }
       case Event.Quit => print("quit")
       case Event.Finish => {
         println(s"Es wurde ${controller.game.roll} gewuerfelt" + eol)
@@ -82,7 +83,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
     }
   }
 
-  def   printt(): Boolean = {
+  def printt(): Boolean = {
     println(s"${controller.game.names(0)} hat: ${controller.game.pens1} Stifte")
     println(
       s"${controller.game.names(1)} hat: ${controller.game.pens2} Stifte" + eol
@@ -97,8 +98,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
       case "y" => controller.doAndPublish(controller.redo); true
       case "z" => controller.doAndPublish(controller.undo); true
       case "s" => controller.save; true
-      case "l" => {controller.load; true
-      }
+      case "l" => { controller.load; true }
       case "q" =>
         processInputReturn = false;
         false

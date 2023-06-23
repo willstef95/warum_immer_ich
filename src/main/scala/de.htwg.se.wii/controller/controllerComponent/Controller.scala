@@ -1,19 +1,25 @@
-package de.htwg.se.wii
-package controller
+package de.htwg.se.wii.controller.controllerComponent
 
-import model.FieldComponent.*
-import model.MatrixComponent.*
-import model.holes.*
-import util.Observable
-import model.Dice
-import util.Event
-import model.Game
+import de.htwg.se.wii.controller.PutOCommand
+import de.htwg.se.wii.controller.PutXCommand
+
+import de.htwg.se.wii.model.FieldComponent.FieldInterface
+import de.htwg.se.wii.model.FieldComponent.Field
+import de.htwg.se.wii.model.MatrixComponent.Matrix
+import de.htwg.se.wii.model.MatrixComponent.MatrixInterface
+import de.htwg.se.wii.model.holes.*
+import de.htwg.se.wii.util.Event
+import de.htwg.se.wii.util.Observable
+import de.htwg.se.wii.util.UndoManager
+import de.htwg.se.wii.util.Command
+import de.htwg.se.wii.util.Stat
+import de.htwg.se.wii.model.Dice
+import de.htwg.se.wii.model.Game
 import scala.runtime.LazyVals.Names
-import util.Command
-import util.Stat
+// import Default.given
+
 import java.util.Observer
-import util.UndoManager
-import controller.controllerComponent.ControllerInterface
+import de.htwg.se.wii.controller.controllerComponent.ControllerInterface
 import com.google.inject.Inject
 import com.google.inject.Guice
 import de.htwg.se.wii.model.fileIoComponent.FileIOInterface
@@ -148,15 +154,15 @@ case class Controller @Inject() (
   }
 
   def save = {
-    //print("sacve save")
+    // print("sacve save")
     fileIo.save(game, Stat.stat)
-    //print("save save")
+    // print("save save")
   }
 
   def load = {
-    //println("load controller")
+    // println("load controller")
     Stat.stat = fileIo.loadStat
-    //println("load Game")
+    // println("load Game")
     game = fileIo.loadGame
     println(game.field.toString())
   }
