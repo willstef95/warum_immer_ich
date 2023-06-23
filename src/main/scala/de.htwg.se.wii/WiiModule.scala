@@ -23,7 +23,7 @@ class WiiModule extends AbstractModule {
   override def configure() = {
 
     val field = new Field(defaultSize, defaultHole)
-    val fileIo = new JsonFileIo
+    val fileIo = new XmlFileIo
     bind(classOf[ControllerInterface]).toInstance(
       new Controller(field, fileIo, penscount)
     )

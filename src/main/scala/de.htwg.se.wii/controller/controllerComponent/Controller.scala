@@ -148,17 +148,17 @@ case class Controller @Inject() (
   }
 
   def save = {
-    print("sacve save")
+    //print("sacve save")
     fileIo.save(game, Stat.stat)
-    print("save save")
+    //print("save save")
   }
 
   def load = {
-    println("load controller")
+    //println("load controller")
     Stat.stat = fileIo.loadStat
-    println("load Game")
+    //println("load Game")
     game = fileIo.loadGame
-    println(game.field.toString())
+    //println(game.field.toString())
   }
 
   def isFinish(): Boolean = {

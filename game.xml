@@ -1,20 +1,20 @@
 <entry>
     <game>
         <field size="3"> </field>
-        <name1 name1="hannes"> </name1>
-        <name2 name2="peter"> </name2>
-        <pens1 pens1="3"> </pens1>
+        <name1 name1="koko"> </name1>
+        <name2 name2="lolo"> </name2>
+        <pens1 pens1="4"> </pens1>
         <pens2 pens2="4"> </pens2>
         <roll roll="4"> </roll>
     </game>
-    <state state="2"></state>
+    <state state="1"></state>
     <field>
         <cell pos="0"> O </cell>
         <cell pos="1"> O </cell>
         <cell pos="2"> O </cell>
-        <cell pos="3"> X </cell>
+        <cell pos="3"> O </cell>
         <cell pos="4"> X </cell>
-        <cell pos="5"> O </cell>
+        <cell pos="5"> X </cell>
         <cell pos="6"> O </cell>
         <cell pos="7"> O </cell>
         <cell pos="8"> O </cell>

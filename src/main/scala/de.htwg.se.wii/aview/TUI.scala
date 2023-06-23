@@ -41,6 +41,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
         }
       }
       case Event.Load => { println("Willkommen zurück!")
+      println(controller.field.toString())
       printt()}
       case Event.Quit => print("quit")
       case Event.Finish => {
@@ -96,10 +97,7 @@ class TUI(controller: ControllerInterface) extends GameUI, Observer:
       case "y" => controller.doAndPublish(controller.redo); true
       case "z" => controller.doAndPublish(controller.undo); true
       case "s" => controller.save; true
-      case "l" => {
-        controller.load
-        printt()
-        true
+      case "l" => {controller.load; true
       }
       case "q" =>
         processInputReturn = false;
