@@ -158,7 +158,7 @@ case class Controller @Inject() (
     Stat.stat = fileIo.loadStat
     //println("load Game")
     game = fileIo.loadGame
-    //println(game.field.toString())
+    println(game.field.toString())
   }
 
   def isFinish(): Boolean = {
