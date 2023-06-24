@@ -43,7 +43,7 @@ This project provides a digital version of the "Warum immer Ich?" game, allowing
 To install and run the digital version of "Warum immer Ich?" on your local machine, follow these steps:
 
 1. Clone the repository to your local machine using the following command:
-git clone https://github.com/your-username/warum-immer-ich.git
+git clone [https://github.com/your-username/warum-immer-ich.git](https://github.com/willstef95/warum_immer_ich.git)
 
 2. Navigate to the project directory:
 open your IDE and run the Game with "scala run"
