@@ -108,13 +108,15 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
       if (update == Update.Zero) {
         c.gridx = 1
         c.gridy = 0
-        layout(new Label("Es wurde 0 gewurfelt, das Spielfeld bleibt gleich")) =
+        layout(new Label("Es wurde 0 gewürfelt, das Spielfeld bleibt gleich")) =
           c
 
         c.gridx = 1
         c.gridy = 2
         layout(
-          new Label(s"Es ist ${controller.game.names(Stat.stat - 1)} ")
+          new Label(
+            s"Es ist ${controller.game.names(Stat.stat - 1)} an der Reihe"
+          )
         ) = c
 
         c.gridx = 1
@@ -167,7 +169,7 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
       } else {
         c.gridx = 1
         c.gridy = 0
-        layout(new Label(s"Es wurde ${controller.game.roll} gewuerfelt")) = c
+        layout(new Label(s"Es wurde ${controller.game.roll} gewürfelt")) = c
 
         c.gridx = 1
         c.gridy = 2
