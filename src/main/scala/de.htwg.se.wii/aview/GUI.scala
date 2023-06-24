@@ -52,7 +52,7 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
     val namefield1 = new TextField { columns = 5 }
     val namefield2 = new TextField { columns = 5 }
 
-    val button2 = new Button("Update")
+    val button2 = new Button("Start")
 
     val panel = new GridBagPanel {
       border = Swing.EmptyBorder(10)
