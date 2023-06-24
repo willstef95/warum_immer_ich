@@ -13,7 +13,7 @@ For more information on the sbt-dotty plugin, see the
 
 # Warum immer Ich? - Digital Game
 
-![Warum immer Ich?](game_screenshot.png)
+![Warum immer Ich?](game-play2.png)
 
 Welcome to the Warum immer Ich? digital game repository! This project aims to recreate the popular German physical game "Warum immer Ich?" in a digital format. With this digital version, players can enjoy the game on their computers or mobile devices without the need for physical game components.
 
@@ -22,7 +22,6 @@ Welcome to the Warum immer Ich? digital game repository! This project aims to re
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Game Description
@@ -47,3 +46,21 @@ git clone [https://github.com/your-username/warum-immer-ich.git](https://github.
 
 2. Navigate to the project directory:
 open your IDE and run the Game with "scala run"
+
+## Usage
+In the first screen you can give your players names.
+
+![Init your names](game-welcome.png)
+
+Then you are ready to go !
+Use the "würfeln" button when its your turn and play Wii !
+
+### Options 
+You can save, load (last save), do and undo any time.
+
+![Your Options](game-options.png)
+
+## License
+this Project is complete open. Do what you want
+
+
