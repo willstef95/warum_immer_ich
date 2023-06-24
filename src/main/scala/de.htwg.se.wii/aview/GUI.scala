@@ -52,7 +52,7 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
     val namefield1 = new TextField { columns = 5 }
     val namefield2 = new TextField { columns = 5 }
 
-    val button2 = new Button("Start")
+    val buttonStart = new Button("Start")
 
     val panel = new GridBagPanel {
       border = Swing.EmptyBorder(10)
@@ -62,11 +62,6 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
       c.gridy = 0
       c.insets = new Insets(5, 5, 5, 5)
       layout(new Label("Willkommen zu Wii")) = c
-
-      c.gridx = 0
-      c.gridy = 1
-      c.insets = new Insets(5, 5, 5, 5)
-      layout(new Label("Name 1:")) = c
 
       c.gridx = 0
       c.gridy = 1
@@ -90,10 +85,10 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
 
       c.gridx = 2
       c.gridy = 2
-      layout(button2) = c
+      layout(buttonStart) = c
     }
 
-    button2.reactions += { case ButtonClicked(_) =>
+    buttonStart.reactions += { case ButtonClicked(_) =>
       controller.init(namefield1.text, namefield2.text)
     }
     panel
@@ -269,8 +264,6 @@ class GUI(controller: ControllerInterface) extends Frame with Observer:
     ) yield (x, y, controller.field.matrix.cell(x, y))).foreach(t =>
       contents += new CellButton(t._1, t._2, t._3)
     )
-
-  def button(stone: String) = new Button(stone)
 
   class CellButton(x: Int, y: Int, hole: HoleState)
       extends Button(hole.toString())
