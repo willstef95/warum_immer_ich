@@ -26,19 +26,18 @@ Welcome to the Warum immer Ich? digital game repository! This project aims to re
 - [License](#license)
 
 ## Game Description
-"Warum immer Ich?" (translates to "Why always me?") is a popular German physical board game that involves rolling dice and strategic decision-making. The game is played by multiple players, each taking turns to roll the dice and moving their game pieces accordingly on the game board. The objective is to reach the end of the board before other players by strategically navigating through various challenges and obstacles.
+"Warum immer Ich?" (translates to "Why always me?") is a popular German physical board game that involves rolling dice. The game is played by multiple players, each taking turns to roll the dice and moving their pens on the game board. The objective is to reach the end of the own pens before other players.
 
 This project provides a digital version of the "Warum immer Ich?" game, allowing players to experience the game virtually. The digital game retains the core mechanics and rules of the physical version, providing an immersive and engaging gameplay experience.
 
 ## Features
 - Digital recreation of the "Warum immer Ich?" board game.
-- Single-player and multiplayer modes.
+- Two-Playermode 
 - Intuitive user interface for easy gameplay.
 - Randomized dice rolling and movement mechanics.
-- Interactive game board with various challenges and obstacles.
-- Support for multiple languages, including German and English.
+- Dynamic board size
 - Save and load game functionality.
-- Sound effects and visual feedback for an enhanced gaming experience.
+- Do and Undo game functionality.
 
 ## Installation
 To install and run the digital version of "Warum immer Ich?" on your local machine, follow these steps:
@@ -47,4 +46,4 @@ To install and run the digital version of "Warum immer Ich?" on your local machi
 git clone https://github.com/your-username/warum-immer-ich.git
 
 2. Navigate to the project directory:
-open your IDE and run the Game
+open your IDE and run the Game with "scala run"
