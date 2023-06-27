@@ -13,11 +13,18 @@ import de.htwg.se.wii.model.MatrixComponent.Matrix
 
 class TUISpec extends AnyWordSpec {
 
+<<<<<<< HEAD
   val field = new Field(new Matrix(3, HoleO))
   val fileIo = new XmlFileIo
   val controller = Controller(field, fileIo, 3)
   val tui = new TUI(controller)
   var game = new Game(field, ("Spieler1", "Spieler2"), 1, 0, 0)
+=======
+  var field = new Field()
+  val controller = Controller(field, 3)
+  val tui = new TUI(controller, 3)
+  var game = new Game(("Spieler1", "Spieler2"), 2, 2)
+>>>>>>> master
 
   controller.doAndPublish(controller.putX, Hole(HoleX, 2), 1)
   controller.doAndPublish(controller.putX, Hole(HoleX, 5), 1)
@@ -57,9 +64,12 @@ class TUISpec extends AnyWordSpec {
     "field set on X" in {
       controller.xSetzen(1) should be(true)
     }
+<<<<<<< HEAD
     "name spieler 1 abfragen" in {
       controller.game.names(0) should be("Spieler1")
     }
+=======
+>>>>>>> master
 
     // "One players has 0pins" in {
     //   controller.isFinish() should be(false)
