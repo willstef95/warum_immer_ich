@@ -6,5 +6,5 @@ RUN apt-get update && apt-get install -y \
 ENV DISPLAY=host.docker.internal:0
 WORKDIR /warum_immer_ich
 ADD . /warum_immer_ich
-#EXPOSE 8080
+
 CMD sbt run
