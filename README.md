@@ -50,7 +50,7 @@ open your IDE and run the Game with "scala run"
 ## Usage
 In the first screen you can give your players names.
 
-![Init your names](game-welcome.png)
+<img src="game-welcome.png" alt="game-play2" width="350"/>
 
 Then you are ready to go !
 Use the "würfeln" button when its your turn and play Wii !
@@ -58,7 +58,7 @@ Use the "würfeln" button when its your turn and play Wii !
 ### Options 
 You can save, load (last save), do and undo any time.
 
-![Your Options](game-options.png)
+<img src="game-options.png" alt="game-play2" width="350"/>
 
 ## License
 this Project is complete open. Do what you want
