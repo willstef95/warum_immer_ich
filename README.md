@@ -13,7 +13,7 @@ For more information on the sbt-dotty plugin, see the
 
 # Warum immer Ich? - Digital Game
 
-![Warum immer Ich?](game-play2.png)
+![Warum immer Ich?](game-play2.png =200x100)
 
 Welcome to the Warum immer Ich? digital game repository! This project aims to recreate the popular German physical game "Warum immer Ich?" in a digital format. With this digital version, players can enjoy the game on their computers or mobile devices without the need for physical game components.
 
