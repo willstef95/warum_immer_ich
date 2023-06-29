@@ -79,6 +79,16 @@ class TUISpec extends AnyWordSpec {
     "tui y" in {
       tui.processInput("y") should be(true)
     }
+    "tui s" in {
+      tui.processInput("s") should be(true)
+    }
+    "tui l" in {
+      tui.processInput("l") should be(true)
+    }
+
+    "tui print gamestat" in {
+      tui.printGameStat() should be(true)
+    }
   }
   // "A TUI" when {
   //   "None player has 0 pins" in {
