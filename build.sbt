@@ -19,6 +19,9 @@ lazy val root = project
     libraryDependencies += "net.codingwell" %% "scala-guice" % "7.0.0",
     libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.1.0",
     libraryDependencies += "io.spray" %% "spray-json" % "1.3.6",
+    jacocoExcludes := Seq(
+            "*src.*"
+    )
     libraryDependencies ++= {
       // Determine OS version of JavaFX binaries
       lazy val osName = System.getProperty("os.name") match {
@@ -29,8 +32,7 @@ lazy val root = project
       }
       Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
         .map(m => "org.openjfx" % s"javafx-$m" % "16" classifier osName)
-    },
-    jacocoExcludes := Seq(
-            "*gui.*"
-    )
+    }
+
   )
+  .enablePlugins(JacocoCoverallsPlugin)
